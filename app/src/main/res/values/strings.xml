@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PetFunding</string>
+    <string name="fbButtonLogin">Login com o Facebook</string>
 </resources>
