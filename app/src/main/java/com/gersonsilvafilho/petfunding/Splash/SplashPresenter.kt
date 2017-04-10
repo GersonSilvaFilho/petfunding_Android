@@ -1,21 +1,48 @@
 package com.gersonsilvafilho.petfunding.Splash
 
+import com.facebook.FacebookException
+import com.facebook.login.LoginResult
+
+
 /**
  * Created by GersonSilva on 3/21/17.
  */
 class SplashPresenter(splashView: SplashContract.View){
 
+
+
+
+
     private val mSplashView: SplashContract.View
+
+
+
 
     init {
         mSplashView = splashView
 
-        splashView.onLoginClick().subscribe { login() }
+
+
     }
 
-
-    private fun login()
+    fun facebookSuccess(loginResult: LoginResult)
     {
-        mSplashView.showToast()
+
     }
+
+    fun facebookCancel()
+    {
+
+    }
+
+    fun facebokkOnError(error: FacebookException)
+    {
+
+    }
+    fun firebaseSuccess()
+    {
+        mSplashView.showFirebaseSuccess()
+    }
+
+
 }

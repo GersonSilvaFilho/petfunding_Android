@@ -38,13 +38,19 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'io.reactivex:rxkotlin:0.55.0'
 
-    compile 'com.google.firebase:firebase-auth:9.6.1'
+    compile 'com.google.firebase:firebase-auth:10.2.1'
 
     compile 'com.jakewharton.rxbinding2:rxbinding-kotlin:2.0.0'
 
     compile 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:2.0.0'
     compile 'com.jakewharton.rxbinding2:rxbinding-support-v4-kotlin:2.0.0'
+
+    compile 'com.github.frangsierra:rx2firebase:1.0.0'
+
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
 }
 repositories {
     mavenCentral()
 }
+
+apply plugin: 'com.google.gms.google-services'

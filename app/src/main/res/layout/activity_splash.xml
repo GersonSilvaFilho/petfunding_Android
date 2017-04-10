@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.gersonsilvafilho.petfunding.Splash.SplashActivity">
 
-    <Button
+    <com.facebook.login.widget.LoginButton
         android:id="@+id/fbLoginButton"
         android:layout_width="333dp"
         android:layout_height="64dp"
