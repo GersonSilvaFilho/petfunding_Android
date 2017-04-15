@@ -1,4 +1,4 @@
-package com.gersonsilvafilho.petfunding.Splash
+package com.gersonsilvafilho.petfunding.splash
 
 /**
  * Created by GersonSilva on 3/21/17.

@@ -1,4 +1,4 @@
-package com.gersonsilvafilho.petfunding.Splash
+package com.gersonsilvafilho.petfunding.splash
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,7 +10,8 @@ import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginResult
 import com.gersonsilvafilho.petfunding.R
-import com.gersonsilvafilho.petfunding.Splash.SplashContract.View
+import com.gersonsilvafilho.petfunding.splash.SplashContract.View
+import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseApp
@@ -19,39 +20,43 @@ import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import durdinapps.rxfirebase2.RxFirebaseAuth
 import kotlinx.android.synthetic.main.activity_splash.*
-
+import javax.inject.Inject
 
 class SplashActivity : AppCompatActivity() , View{
 
     private var mFacebookCallback: FacebookCallback<LoginResult>? = null
     private var mAuth: FirebaseAuth? = null
     var callbackManager: CallbackManager? = null
-    private var  mActionsListener: SplashPresenter? = null
     private var mAuthListener: FirebaseAuth.AuthStateListener? = null
 
+    @Inject
+    internal var googleApiClient: GoogleApiClient? = null
 
+    @Inject
+    lateinit var  mActionsListener: SplashPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        mActionsListener = SplashPresenter(this)
-
+        DaggerSplashComponent.builder()
+                .splashModule(SplashModule(this))
+                .build().inject(this)
 
         callbackManager = CallbackManager.Factory.create()
         fbLoginButton.setReadPermissions("email", "public_profile")
         mFacebookCallback = object : FacebookCallback<LoginResult> {
             override fun onSuccess(loginResult: LoginResult) {
                 handleFacebookAccessToken(loginResult.accessToken)
-                (mActionsListener!!).facebookSuccess(loginResult)
+                mActionsListener.facebookSuccess(loginResult)
             }
 
             override fun onCancel() {
-                (mActionsListener!!).facebookCancel()
+                mActionsListener.facebookCancel()
             }
 
             override fun onError(error: FacebookException) {
-                (mActionsListener!!).facebokkOnError(error)
+                mActionsListener.facebokkOnError(error)
             }
         }
 
@@ -116,7 +121,7 @@ class SplashActivity : AppCompatActivity() , View{
         (mAuth!!).signInWithCredential(credential).addOnCompleteListener(object: OnCompleteListener<AuthResult> {
             override fun onComplete(task: Task<AuthResult>) {
                 if (!task.isSuccessful()) {
-                    (mActionsListener!!).firebaseSuccess()
+                    mActionsListener.firebaseSuccess()
                 }
             }
         })

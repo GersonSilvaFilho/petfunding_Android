@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">PetFunding</string>
     <string name="fbButtonLogin">Login com o Facebook</string>
+    <string name="facebook_app_id">960747287393872</string>
 </resources>

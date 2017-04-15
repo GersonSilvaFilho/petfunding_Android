@@ -1,4 +1,4 @@
-package com.gersonsilvafilho.petfunding.Util
+package com.gersonsilvafilho.petfunding.util
 
 import android.content.Context
 import android.widget.Toast
