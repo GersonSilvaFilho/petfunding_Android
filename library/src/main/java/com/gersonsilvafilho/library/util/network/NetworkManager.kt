@@ -1,7 +1,5 @@
 package com.gersonsilvafilho.library.util.network
 
-import kotlin.reflect.KFunction0
-
 /**
  * Created by GersonSilva on 4/10/17.
  */
@@ -32,7 +30,7 @@ interface NetworkManager {
      * *
      * @param listener network availability listener
      */
-    fun add(tag: String, listener: KFunction0<Unit>)
+    fun add(tag: String, bar: () -> Unit)
 
     /**
      * Remove a listener to network availability by a unique tag

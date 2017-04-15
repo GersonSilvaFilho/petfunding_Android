@@ -35,6 +35,7 @@ dependencies {
 
     compile globalDependencies.design
     compile globalDependencies.lombok
+    compile 'io.reactivex:rxjava:1.1.1'
 }
 repositories {
     mavenCentral()

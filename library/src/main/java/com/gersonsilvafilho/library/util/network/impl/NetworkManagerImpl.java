@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import kotlin.Unit;
-import kotlin.reflect.KFunction;
+import kotlin.jvm.functions.Function0;
 
 public class NetworkManagerImpl extends BroadcastReceiver implements NetworkManager {
 
@@ -23,7 +23,7 @@ public class NetworkManagerImpl extends BroadcastReceiver implements NetworkMana
 
     private IntentFilter connectivityIntentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
 
-    private Map<String, NetworkManager.Listener> listeners = new HashMap<>();
+    private Map<String, Function0<Unit>> listeners = new HashMap<>();
 
     public NetworkManagerImpl(Context context) {
         this.context = context;
@@ -52,11 +52,6 @@ public class NetworkManagerImpl extends BroadcastReceiver implements NetworkMana
     }
 
     @Override
-    public void add(@NotNull String tag, @NotNull KFunction<Unit> listener) {
-        listeners.put(tag, listener);
-    }
-
-    @Override
     public void remove(String tag) {
         listeners.remove(tag);
     }
@@ -65,12 +60,17 @@ public class NetworkManagerImpl extends BroadcastReceiver implements NetworkMana
     public void onReceive(Context context, Intent intent) {
         if (isNetworkAvailable()) {
             if (!isInitialStickyBroadcast()) {
-                for (Listener listener : listeners.values()) {
+                for (@NotNull Function0<Unit>  listener : listeners.values()) {
                     if (listener != null) {
-                        listener.onNetworkAvailable();
+                        listener.invoke();
                     }
                 }
             }
         }
+    }
+
+    @Override
+    public void add(@NotNull String tag, @NotNull Function0<Unit> bar) {
+        listeners.put(tag, bar);
     }
 }

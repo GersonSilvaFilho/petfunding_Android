@@ -11,7 +11,6 @@ import com.facebook.FacebookException
 import com.facebook.login.LoginResult
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.splash.SplashContract.View
-import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseApp
@@ -30,18 +29,15 @@ class SplashActivity : AppCompatActivity() , View{
     private var mAuthListener: FirebaseAuth.AuthStateListener? = null
 
     @Inject
-    internal var googleApiClient: GoogleApiClient? = null
-
-    @Inject
     lateinit var  mActionsListener: SplashPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        DaggerSplashComponent.builder()
-                .splashModule(SplashModule(this))
-                .build().inject(this)
+//        DaggerSplashComponent.builder()
+//                .splashModule(SplashModule(this))
+//                .build().inject(this)
 
         callbackManager = CallbackManager.Factory.create()
         fbLoginButton.setReadPermissions("email", "public_profile")
