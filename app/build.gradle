@@ -1,21 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-//need to include for compile error on kotlin extensions for android
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-
-
-buildscript {
-    ext.kotlin_version = '1.1.0'
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        //to avoid problems with kotlin extensions
-        classpath "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
-    }
-}
 
 android {
     compileSdkVersion 25
@@ -35,23 +21,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    configurations.all {
-        resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
-    }
-
-    dexOptions {
-        incremental = true;
-        preDexLibraries = false
-        javaMaxHeapSize "4g"
-        incremental true
-    }
     //exclude meta inf that are not used at runtime
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
-    }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
     }
 }
 
@@ -62,27 +34,30 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
     compile 'com.android.support:animated-vector-drawable:25.1.1'
     compile 'com.android.support:cardview-v7:25.1.1'
     compile 'com.android.support:appcompat-v7:25.0.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta3'
     testCompile 'junit:junit:4.12'
-    compile 'io.reactivex:rxkotlin:0.55.0'
-    compile 'com.google.firebase:firebase-auth:10.2.1'
-    compile 'com.jakewharton.rxbinding2:rxbinding-kotlin:2.0.0'
-    compile 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:2.0.0'
-    compile 'com.jakewharton.rxbinding2:rxbinding-support-v4-kotlin:2.0.0'
-    compile 'com.github.frangsierra:rx2firebase:1.0.0'
-    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
-    compile 'com.google.dagger:dagger-android:2.10'
-    compile 'com.google.dagger:dagger-android-support:2.10' // if you use the support libraries
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.10'
-    compile 'com.android.support:multidex:1.0.1'
-    compile 'org.jetbrains.kotlin:kotlin-reflect:1.1.0'
 
-    compile ('au.com.gridstone.rxstore:rxstore:5.0.5') { exclude group: 'org.jetbrains'}
-    compile ('au.com.gridstone.rxstore:rxstore-kotlin:5.0.5') { exclude group: 'org.jetbrains'}
-    compile ('au.com.gridstone.rxstore:converter-moshi:5.0.5') { exclude group: 'org.jetbrains'}
+
+    //Firebase
+    compile 'com.google.firebase:firebase-auth:10.2.1'
+
+    //RxKotlin
+    compile 'io.reactivex:rxkotlin:0.55.0'
+    compile 'com.github.frangsierra:rx2firebase:1.0.0'
+
+
+    //Facebook SDK
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+
+    //Dagger
+    compile "com.google.dagger:dagger:2.5"
+    kapt "com.google.dagger:dagger-compiler:2.5"
+
+//    compile 'com.android.support:multidex:1.0.1'
 
 
 }

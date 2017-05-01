@@ -10,7 +10,6 @@ import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginResult
 import com.gersonsilvafilho.petfunding.R
-import com.gersonsilvafilho.petfunding.Splash.SplashPresenter
 import com.gersonsilvafilho.petfunding.splash.SplashContract.View
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
@@ -56,8 +55,6 @@ class SplashActivity : AppCompatActivity() , View{
                 mActionsListener.facebokkOnError(error)
             }
         }
-
-
 
         fbLoginButton.registerCallback(callbackManager, mFacebookCallback)
 
