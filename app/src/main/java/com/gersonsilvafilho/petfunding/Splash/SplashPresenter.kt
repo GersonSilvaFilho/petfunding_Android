@@ -1,7 +1,6 @@
 package com.gersonsilvafilho.petfunding.splash
 
 import com.facebook.FacebookException
-import com.facebook.login.LoginResult
 
 
 /**
@@ -10,17 +9,17 @@ import com.facebook.login.LoginResult
 class SplashPresenter constructor(var mSplashView: SplashContract.View) : SplashContract.Presenter  {
 
 
-    override fun facebookSuccess(loginResult: LoginResult)
+    override fun facebookSuccess(accessToken:String)
     {
 
     }
 
     override fun facebookCancel()
     {
-
+        mSplashView.showFacebookError()
     }
 
-    override fun facebokkOnError(error: FacebookException)
+    override fun facebookOnError(error: FacebookException)
     {
         mSplashView.showFacebookError()
     }

@@ -1,7 +1,6 @@
 package com.gersonsilvafilho.petfunding.splash
 
 import com.facebook.FacebookException
-import com.facebook.login.LoginResult
 
 
 /**
@@ -16,9 +15,9 @@ interface SplashContract {
     }
 
     interface Presenter {
-        fun facebookSuccess(loginResult: LoginResult)
+        fun facebookSuccess(accessToken:String)
         fun facebookCancel()
-        fun facebokkOnError(error: FacebookException)
+        fun facebookOnError(error: FacebookException)
         fun firebaseSuccess()
     }
 }

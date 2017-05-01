@@ -44,7 +44,7 @@ class SplashActivity : AppCompatActivity() , View{
         mFacebookCallback = object : FacebookCallback<LoginResult> {
             override fun onSuccess(loginResult: LoginResult) {
                 handleFacebookAccessToken(loginResult.accessToken)
-                mActionsListener.facebookSuccess(loginResult)
+                mActionsListener.facebookSuccess(loginResult.accessToken.toString())
             }
 
             override fun onCancel() {
@@ -52,7 +52,7 @@ class SplashActivity : AppCompatActivity() , View{
             }
 
             override fun onError(error: FacebookException) {
-                mActionsListener.facebokkOnError(error)
+                mActionsListener.facebookOnError(error)
             }
         }
 
