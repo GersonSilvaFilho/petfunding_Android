@@ -12,6 +12,7 @@ interface SplashContract {
         fun showFacebookError()
         fun showToast()
         fun showFirebaseSuccess()
+        fun goToMainMenuActivity()
     }
 
     interface Presenter {

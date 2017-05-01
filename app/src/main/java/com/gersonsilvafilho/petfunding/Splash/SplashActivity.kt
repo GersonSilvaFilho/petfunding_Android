@@ -10,6 +10,7 @@ import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginResult
 import com.gersonsilvafilho.petfunding.R
+import com.gersonsilvafilho.petfunding.main.MainMenuActivity
 import com.gersonsilvafilho.petfunding.splash.SplashContract.View
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
@@ -19,10 +20,10 @@ import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import durdinapps.rxfirebase2.RxFirebaseAuth
 import kotlinx.android.synthetic.main.activity_splash.*
+import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
 class SplashActivity : AppCompatActivity() , View{
-
     private var mFacebookCallback: FacebookCallback<LoginResult>? = null
     private var mAuth: FirebaseAuth? = null
     var callbackManager: CallbackManager? = null
@@ -64,7 +65,7 @@ class SplashActivity : AppCompatActivity() , View{
         mAuthListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             val user = firebaseAuth.currentUser
             if (user != null) {
-
+                mActionsListener.firebaseSuccess()
             } else {
 
             }
@@ -115,10 +116,13 @@ class SplashActivity : AppCompatActivity() , View{
         (mAuth!!).signInWithCredential(credential).addOnCompleteListener(object: OnCompleteListener<AuthResult> {
             override fun onComplete(task: Task<AuthResult>) {
                 if (!task.isSuccessful()) {
-                    mActionsListener.firebaseSuccess()
                 }
             }
         })
+    }
+
+    override fun goToMainMenuActivity() {
+        startActivity<MainMenuActivity>()
     }
 
 }

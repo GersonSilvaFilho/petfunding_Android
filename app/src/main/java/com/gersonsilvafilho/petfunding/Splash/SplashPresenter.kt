@@ -9,6 +9,8 @@ import com.facebook.FacebookException
 class SplashPresenter constructor(var mSplashView: SplashContract.View) : SplashContract.Presenter  {
 
 
+    private var firebaseIsConnected:Boolean = false
+
     override fun facebookSuccess(accessToken:String)
     {
 
@@ -25,7 +27,12 @@ class SplashPresenter constructor(var mSplashView: SplashContract.View) : Splash
     }
     override fun firebaseSuccess()
     {
-        mSplashView.showFirebaseSuccess()
+        if (!firebaseIsConnected)
+        {
+            mSplashView.showFirebaseSuccess()
+            mSplashView.goToMainMenuActivity()
+            firebaseIsConnected = true
+        }
     }
 
 
