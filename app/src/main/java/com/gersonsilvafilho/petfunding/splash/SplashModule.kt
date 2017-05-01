@@ -1,13 +1,14 @@
 package com.gersonsilvafilho.petfunding.splash
 
+import com.gersonsilvafilho.petfunding.Splash.SplashPresenter
 import dagger.Module
 import dagger.Provides
 
 @Module
-class SplashModule(private val splashView: SplashContract.View) {
+class SplashModule(val splashView: SplashContract.View) {
 
     @Provides
-    internal fun providesSplashContractView(): SplashContract.View {
-        return splashView
+    fun provideSplashPresenter(): SplashPresenter{
+        return  SplashPresenter(splashView)
     }
 }

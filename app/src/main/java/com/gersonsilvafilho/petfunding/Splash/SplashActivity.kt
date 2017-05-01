@@ -10,6 +10,7 @@ import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginResult
 import com.gersonsilvafilho.petfunding.R
+import com.gersonsilvafilho.petfunding.Splash.SplashPresenter
 import com.gersonsilvafilho.petfunding.splash.SplashContract.View
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
@@ -35,9 +36,9 @@ class SplashActivity : AppCompatActivity() , View{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-//        DaggerSplashComponent.builder()
-//                .splashModule(SplashModule(this))
-//                .build().inject(this)
+        DaggerSplashComponent.builder()
+                .splashModule(SplashModule(this))
+                .build().inject(this)
 
         callbackManager = CallbackManager.Factory.create()
         fbLoginButton.setReadPermissions("email", "public_profile")
