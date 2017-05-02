@@ -12,40 +12,41 @@ import com.facebook.login.LoginResult
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.main.MainMenuActivity
 import com.gersonsilvafilho.petfunding.splash.SplashContract.View
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseApp
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
-import durdinapps.rxfirebase2.RxFirebaseAuth
 import kotlinx.android.synthetic.main.activity_splash.*
 import org.jetbrains.anko.startActivity
 import javax.inject.Inject
+import javax.inject.Singleton
 
 class SplashActivity : AppCompatActivity() , View{
-    private var mFacebookCallback: FacebookCallback<LoginResult>? = null
-    private var mAuth: FirebaseAuth? = null
-    var callbackManager: CallbackManager? = null
-    private var mAuthListener: FirebaseAuth.AuthStateListener? = null
 
+    private var mFacebookCallback: FacebookCallback<LoginResult>? = null
+    var callbackManager: CallbackManager? = null
+
+    @Singleton
     @Inject
-    lateinit var  mActionsListener: SplashPresenter
+    lateinit var mActionsListener: SplashPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        DaggerSplashComponent.builder()
-                .splashModule(SplashModule(this))
-                .build().inject(this)
+        DaggerSplashComponent
+                .builder()
+                .splashModule(SplashModule(this, FirebaseAuth.getInstance()))
+                .build()
+                .inject(this)
+
+
 
         callbackManager = CallbackManager.Factory.create()
         fbLoginButton.setReadPermissions("email", "public_profile")
         mFacebookCallback = object : FacebookCallback<LoginResult> {
             override fun onSuccess(loginResult: LoginResult) {
                 handleFacebookAccessToken(loginResult.accessToken)
-                mActionsListener.facebookSuccess(loginResult.accessToken.toString())
+                mActionsListener.facebookSuccess()
             }
 
             override fun onCancel() {
@@ -58,30 +59,19 @@ class SplashActivity : AppCompatActivity() , View{
         }
 
         fbLoginButton.registerCallback(callbackManager, mFacebookCallback)
-
         FirebaseApp.initializeApp(this)
-        mAuth = FirebaseAuth.getInstance()
-
-        mAuthListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
-            val user = firebaseAuth.currentUser
-            if (user != null) {
-                mActionsListener.firebaseSuccess()
-            } else {
-
-            }
-        }
     }
 
     public override fun onStart() {
         super.onStart()
-        (mAuth!!).addAuthStateListener(mAuthListener!!)
+        //(mAuth!!).addAuthStateListener(mAuthListener!!)
     }
 
     public override fun onStop() {
         super.onStop()
-        if (mAuthListener != null) {
-            (mAuth!!).removeAuthStateListener(mAuthListener!!)
-        }
+//        if (mAuthListener != null) {
+//            (mAuth!!).removeAuthStateListener(mAuthListener!!)
+//        }
     }
 
     override fun showToast()
@@ -110,19 +100,16 @@ class SplashActivity : AppCompatActivity() , View{
     }
 
     private fun handleFacebookAccessToken(token: AccessToken) {
-
         val credential = FacebookAuthProvider.getCredential(token.getToken())
-        RxFirebaseAuth.signInWithCredential((mAuth!!), credential)
-        (mAuth!!).signInWithCredential(credential).addOnCompleteListener(object: OnCompleteListener<AuthResult> {
-            override fun onComplete(task: Task<AuthResult>) {
-                if (!task.isSuccessful()) {
-                }
-            }
-        })
+        mActionsListener.firebaseSuccess(credential)
     }
 
     override fun goToMainMenuActivity() {
         startActivity<MainMenuActivity>()
+    }
+
+    override fun startSelfActivity() {
+        startActivity<SplashActivity>()
     }
 
 }
