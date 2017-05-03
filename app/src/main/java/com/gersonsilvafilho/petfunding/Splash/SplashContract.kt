@@ -1,6 +1,7 @@
 package com.gersonsilvafilho.petfunding.splash
 
 import com.facebook.FacebookException
+import com.google.firebase.auth.AuthCredential
 
 
 /**
@@ -12,12 +13,14 @@ interface SplashContract {
         fun showFacebookError()
         fun showToast()
         fun showFirebaseSuccess()
+        fun goToMainMenuActivity()
+        fun startSelfActivity()
     }
 
     interface Presenter {
-        fun facebookSuccess(accessToken:String)
+        fun facebookSuccess()
         fun facebookCancel()
         fun facebookOnError(error: FacebookException)
-        fun firebaseSuccess()
+        fun firebaseSuccess(credentials: AuthCredential)
     }
 }

@@ -1,15 +1,55 @@
 package com.gersonsilvafilho.petfunding.splash
 
+import android.util.Log
 import com.facebook.FacebookException
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.FirebaseAuth
+import durdinapps.rxfirebase2.RxFirebaseAuth
+import io.reactivex.disposables.Disposable
+import javax.inject.Singleton
 
 
 /**
  * Created by GersonSilva on 3/21/17.
  */
-class SplashPresenter constructor(var mSplashView: SplashContract.View) : SplashContract.Presenter  {
+@Singleton
+class SplashPresenter  : SplashContract.Presenter  {
 
+    var mAuth: FirebaseAuth?
+    var mSplashView: SplashContract.View
 
-    override fun facebookSuccess(accessToken:String)
+    private var firebaseIsConnected:Boolean = false
+    private var  loginSubs: Disposable? = null
+    private var  authObserverSubs: Disposable? = null
+
+    constructor(splashView: SplashContract.View, auth: FirebaseAuth)
+    {
+        mSplashView = splashView
+        mAuth = auth
+
+        authObserverSubs = RxFirebaseAuth.observeAuthState(mAuth!!)
+                .map { t -> t.currentUser != null }
+                .subscribe { logged -> run {
+                    if(firebaseIsConnected != logged)
+                    {
+                        if(logged)
+                        {
+                            mSplashView.showFirebaseSuccess()
+                            mSplashView.goToMainMenuActivity()
+                        }
+                        else
+                        {
+                            mSplashView.startSelfActivity()
+                            authObserverSubs!!.dispose()
+                        }
+                        firebaseIsConnected = logged
+                    }
+                    Log.i("Rxfirebase2", "User logged " + logged)
+                } }
+
+    }
+
+    override fun facebookSuccess()
     {
 
     }
@@ -23,9 +63,16 @@ class SplashPresenter constructor(var mSplashView: SplashContract.View) : Splash
     {
         mSplashView.showFacebookError()
     }
-    override fun firebaseSuccess()
+
+    override fun firebaseSuccess(credential: AuthCredential)
     {
-        mSplashView.showFirebaseSuccess()
+        loginSubs = RxFirebaseAuth.signInWithCredential((mAuth!!), credential)
+                .map { authResult -> authResult.getUser() != null }
+                .subscribe{  logged -> run {
+                    Log.i("Rxfirebase2", "User logged " + logged)
+                    loginSubs!!.dispose()
+                } }
+
     }
 
 
