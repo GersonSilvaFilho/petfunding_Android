@@ -19,13 +19,15 @@ class SplashPresenter  : SplashContract.Presenter  {
     var mSplashView: SplashContract.View
 
     private var firebaseIsConnected:Boolean = false
+    private var  loginSubs: Disposable? = null
+    private var  authObserverSubs: Disposable? = null
 
     constructor(splashView: SplashContract.View, auth: FirebaseAuth)
     {
         mSplashView = splashView
         mAuth = auth
 
-        RxFirebaseAuth.observeAuthState(mAuth!!)
+        authObserverSubs = RxFirebaseAuth.observeAuthState(mAuth!!)
                 .map { t -> t.currentUser != null }
                 .subscribe { logged -> run {
                     if(firebaseIsConnected != logged)
@@ -38,12 +40,13 @@ class SplashPresenter  : SplashContract.Presenter  {
                         else
                         {
                             mSplashView.startSelfActivity()
+                            authObserverSubs!!.dispose()
                         }
                         firebaseIsConnected = logged
                     }
                     Log.i("Rxfirebase2", "User logged " + logged)
-
                 } }
+
     }
 
     override fun facebookSuccess()
@@ -61,16 +64,13 @@ class SplashPresenter  : SplashContract.Presenter  {
         mSplashView.showFacebookError()
     }
 
-
-    private var  subscription: Disposable? = null
-
     override fun firebaseSuccess(credential: AuthCredential)
     {
-        subscription = RxFirebaseAuth.signInWithCredential((mAuth!!), credential)
+        loginSubs = RxFirebaseAuth.signInWithCredential((mAuth!!), credential)
                 .map { authResult -> authResult.getUser() != null }
                 .subscribe{  logged -> run {
                     Log.i("Rxfirebase2", "User logged " + logged)
-                    subscription!!.dispose()
+                    loginSubs!!.dispose()
                 } }
 
     }

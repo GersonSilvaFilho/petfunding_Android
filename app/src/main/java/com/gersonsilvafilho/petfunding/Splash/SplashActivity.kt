@@ -39,8 +39,6 @@ class SplashActivity : AppCompatActivity() , View{
                 .build()
                 .inject(this)
 
-
-
         callbackManager = CallbackManager.Factory.create()
         fbLoginButton.setReadPermissions("email", "public_profile")
         mFacebookCallback = object : FacebookCallback<LoginResult> {
@@ -64,14 +62,10 @@ class SplashActivity : AppCompatActivity() , View{
 
     public override fun onStart() {
         super.onStart()
-        //(mAuth!!).addAuthStateListener(mAuthListener!!)
     }
 
     public override fun onStop() {
         super.onStop()
-//        if (mAuthListener != null) {
-//            (mAuth!!).removeAuthStateListener(mAuthListener!!)
-//        }
     }
 
     override fun showToast()
