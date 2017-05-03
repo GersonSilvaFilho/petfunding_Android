@@ -6,7 +6,9 @@ import com.wenchao.cardstack.CardStack
  * Created by GersonSilva on 5/2/17.
  */
 
-class SwipeListener : CardStack.CardEventListener {
+class SwipeListener (val clickListener:mClickListener): CardStack.CardEventListener{
+
+
     //implement card event interface
     override fun swipeEnd(direction: Int, distance: Float): Boolean {
         //if "return true" the dismiss animation will be triggered
@@ -36,7 +38,13 @@ class SwipeListener : CardStack.CardEventListener {
         //this callback invoked when dismiss animation is finished.
     }
 
-    override fun topCardTapped() {
+    override fun topCardTapped()
+    {
+        clickListener.mClick()
         //this callback invoked when a top card is tapped by user.
+    }
+
+    interface mClickListener {
+        fun mClick()
     }
 }

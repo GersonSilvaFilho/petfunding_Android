@@ -1,9 +1,12 @@
 package com.gersonsilvafilho.petfunding.main
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
@@ -14,11 +17,28 @@ import android.view.MenuItem
 import android.view.View
 import com.facebook.login.LoginManager
 import com.gersonsilvafilho.petfunding.R
+import com.gersonsilvafilho.petfunding.detail.DetailActivity
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.card_layout.*
 import kotlinx.android.synthetic.main.content_navigation.*
 import javax.inject.Inject
 
-class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , NavigationView.OnNavigationItemSelectedListener{
+class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , NavigationView.OnNavigationItemSelectedListener, SwipeListener.mClickListener{
+
+    override fun mClick() {
+        launch(this, content)
+    }
+
+    // Methods inside this block are static
+    companion object {
+        fun launch(activity: Activity, sharedView: View) {
+            val transitionName = activity.resources.getString(R.string.image_transition_name)
+            val launcher = Intent(activity, DetailActivity::class.java)
+
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, sharedView, transitionName)
+            activity.startActivity(launcher, options.toBundle())
+        }
+    }
 
     @Inject
     lateinit var  mActionsListener: MainMenuPresenter
@@ -31,8 +51,6 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
                 .mainMenuModule(MainMenuModule(this))
                 .build().inject(this)
 
-
-
         cardStack.setContentResource(R.layout.card_layout)
         cardStack.setStackMargin(20)
 
@@ -43,7 +61,7 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         mCardAdapter.add("test4")
         mCardAdapter.add("test5")
         cardStack.setAdapter(mCardAdapter)
-        val listn = SwipeListener()
+        val listn = SwipeListener(this)
         cardStack.setListener(listn)
 
         val toolbar = findViewById(R.id.toolbar) as Toolbar
