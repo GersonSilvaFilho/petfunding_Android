@@ -98,15 +98,10 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         // Handle navigation view item clicks here.
         val id = item.itemId
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_main) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_add) {
+            //Add new pet activity
 
         } else if (id == R.id.nav_logout) {
             firebaseLgout()
