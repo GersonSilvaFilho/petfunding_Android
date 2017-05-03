@@ -65,10 +65,18 @@ dependencies {
     compile 'org.jetbrains.anko:anko-support-v4:0.9.1' // In case you need support-v4 bindings
     compile 'org.jetbrains.anko:anko-appcompat-v7:0.9.1' // For appcompat-v7 bindings
 
+    //Swipe cards
+    //compile 'com.github.wenchaojiang:AndroidSwipeableCardStack:0.1.5'
+    //compile 'com.github.wenchaojiang:AndroidSwipeableCardStack:0.*.*'
+
+    compile(name:'android-card-stack-0.1.6', ext:'aar')
 
 }
+
 repositories {
-    mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }
 }
 
 apply plugin: 'com.google.gms.google-services'

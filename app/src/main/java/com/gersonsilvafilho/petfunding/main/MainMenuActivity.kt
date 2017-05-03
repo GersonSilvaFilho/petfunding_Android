@@ -15,6 +15,7 @@ import android.view.View
 import com.facebook.login.LoginManager
 import com.gersonsilvafilho.petfunding.R
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.content_navigation.*
 import javax.inject.Inject
 
 class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , NavigationView.OnNavigationItemSelectedListener{
@@ -30,6 +31,20 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
                 .mainMenuModule(MainMenuModule(this))
                 .build().inject(this)
 
+
+
+        cardStack.setContentResource(R.layout.card_layout)
+        cardStack.setStackMargin(20)
+
+        var mCardAdapter = CardsDataAdapter(applicationContext, 0)
+        mCardAdapter.add("test1")
+        mCardAdapter.add("test2")
+        mCardAdapter.add("test3")
+        mCardAdapter.add("test4")
+        mCardAdapter.add("test5")
+        cardStack.setAdapter(mCardAdapter)
+        val listn = SwipeListener()
+        cardStack.setListener(listn)
 
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
