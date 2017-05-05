@@ -29,6 +29,9 @@ class DetailActivity : AppCompatActivity() {
         }
         setupViewPager(viewpager)
         tabs.setupWithViewPager(viewpager)
+
+        val pagerAdapter = ImagePagerAdapter(this)
+        imageviewpager.adapter = pagerAdapter
     }
 
     private fun setupViewPager(viewPager: ViewPager) {

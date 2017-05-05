@@ -36,11 +36,16 @@
                 android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:cropToPadding="false"
                 android:scaleType="centerCrop"
-                app:layout_collapseMode="parallax"
-                android:transitionName="@string/image_transition_name"
                 android:src="@drawable/nino" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/imageviewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_collapseMode="parallax"
+                android:cropToPadding="false"
+                />
 
 
             <android.support.v7.widget.Toolbar
