@@ -10,7 +10,6 @@ import android.support.v7.widget.Toolbar
 import android.widget.TextView
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.detail.ContactFragment
-import com.gersonsilvafilho.petfunding.detail.StatusFragment
 import kotlinx.android.synthetic.main.activity_detail.*
 import java.util.*
 
@@ -34,7 +33,7 @@ class AddPetActivity : AppCompatActivity() {
         val adapter = ViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(AboutAddFragment(), "Info")
         adapter.addFragment(InfoAddFragment(), "Dados")
-        adapter.addFragment(StatusFragment(), "Condição")
+        adapter.addFragment(ConditionAddFragment(), "Condição")
         adapter.addFragment(ContactFragment(), "Contato")
         viewPager.adapter = adapter
     }

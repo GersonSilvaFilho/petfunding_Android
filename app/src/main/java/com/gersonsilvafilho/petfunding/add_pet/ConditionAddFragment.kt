@@ -17,7 +17,7 @@ class ConditionAddFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater!!.inflate(R.layout.about_add_fragment, container, false)
+        return inflater!!.inflate(R.layout.condition_add_fragment, container, false)
     }
 
 }// Required empty public constructor
