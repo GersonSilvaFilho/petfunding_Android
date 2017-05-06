@@ -34,7 +34,7 @@ class AddPetActivity : AppCompatActivity() {
         adapter.addFragment(AboutAddFragment(), "Info")
         adapter.addFragment(InfoAddFragment(), "Dados")
         adapter.addFragment(ConditionAddFragment(), "Condição")
-        adapter.addFragment(ContactFragment(), "Contato")
+        adapter.addFragment(ContactAddFragment(), "Contato")
         viewPager.adapter = adapter
     }
 

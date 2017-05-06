@@ -169,12 +169,14 @@
                     android:id="@+id/spinnerYear"
                     android:layout_width="0dp"
                     android:layout_weight="3"
+                    android:hint="Anos"
                     android:layout_height="wrap_content"/>
 
                 <com.jaredrummler.materialspinner.MaterialSpinner
                     android:id="@+id/spinnerMonth"
                     android:layout_width="0dp"
                     android:layout_weight="3"
+                    android:hint="Meses"
                     android:layout_height="wrap_content"/>
 
             </LinearLayout>

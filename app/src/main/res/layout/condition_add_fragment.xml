@@ -145,9 +145,8 @@
         android:layout_height="wrap_content"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         card_view:cardElevation="2dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_margin="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:gravity="center"
         card_view:cardCornerRadius="5dp">
 
@@ -172,7 +171,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 app:tbgFlow="false"
-                android:padding="10dp">
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
 
                 <com.nex3z.togglebuttongroup.button.LabelToggle
                     android:id="@+id/choice_motion"
@@ -199,6 +199,89 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Comportamento"/>
+
+            </com.nex3z.togglebuttongroup.MultiSelectToggleGroup>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        card_view:cardElevation="2dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        card_view:cardCornerRadius="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:text="Personalidade:"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <com.nex3z.togglebuttongroup.MultiSelectToggleGroup
+                android:id="@+id/group_choices_person"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:tbgFlow="true"
+                card_view:tbgRowSpacing="auto"
+                card_view:tbgChildSpacing="auto"
+                android:padding="10dp">
+
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:id="@+id/choice_carinhoso"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Carinhoso" />
+
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:id="@+id/choice_brincalhao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Brincalhão"/>
+
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:id="@+id/choice_preguicoso"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Preguiçoso"/>
+
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:id="@+id/choice_companheiro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Conpanheiro"/>
+
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:id="@+id/choice_tranquilo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tranquilo"/>
+
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:id="@+id/choice_cuidadoso"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cuidadoso"/>
+
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:id="@+id/choice_esperto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Esperto"/>
 
             </com.nex3z.togglebuttongroup.MultiSelectToggleGroup>
         </LinearLayout>
