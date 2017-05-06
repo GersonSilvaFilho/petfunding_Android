@@ -31,7 +31,11 @@
         <activity
             android:name=".detail.DetailActivity"
             android:label="Nino"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".add_pet.AddPetActivity"
+            android:label="Adicionar Pet"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
