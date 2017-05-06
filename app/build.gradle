@@ -74,6 +74,8 @@ dependencies {
     testCompile 'org.mockito:mockito-core:2.+'
     kapt 'com.google.dagger:dagger-compiler:2.5'
 
+    compile 'com.nex3z:toggle-button-group:1.0.0'
+
     compile 'com.makeramen:roundedimageview:2.3.0'
 }
 
