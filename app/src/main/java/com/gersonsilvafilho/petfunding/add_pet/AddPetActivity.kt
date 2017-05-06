@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.widget.TextView
 import com.gersonsilvafilho.petfunding.R
-import com.gersonsilvafilho.petfunding.detail.ContactFragment
 import kotlinx.android.synthetic.main.activity_detail.*
 import java.util.*
 
@@ -23,7 +22,11 @@ class AddPetActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_pet)
 
         val toolbar = findViewById(R.id.toolbar) as Toolbar
+
+        toolbar.setTitle("Adicionar PET")
         setSupportActionBar(toolbar)
+        getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
+
 
         setupViewPager(viewpager)
         tabs.setupWithViewPager(viewpager)

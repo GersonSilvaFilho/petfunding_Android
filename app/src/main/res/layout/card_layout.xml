@@ -15,6 +15,7 @@
         android:layout_height="400dp"
         android:cropToPadding="false"
         android:scaleType="centerCrop"
+        android:layout_margin="20dp"
         android:src="@drawable/nino" />
 
 

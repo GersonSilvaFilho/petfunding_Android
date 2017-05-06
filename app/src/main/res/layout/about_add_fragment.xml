@@ -164,7 +164,7 @@
             android:layout_height="200dp"
             android:ems="10"
             android:hint="Descrição do pet =)"
-            android:gravity="center"
+            android:gravity="center|top"
 
             android:inputType="textMultiLine" />
     </android.support.design.widget.TextInputLayout></android.support.v7.widget.CardView>

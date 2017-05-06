@@ -237,8 +237,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 app:tbgFlow="true"
-                card_view:tbgRowSpacing="auto"
-                card_view:tbgChildSpacing="auto"
+                app:tbgChildSpacing="auto"
+                app:tbgChildSpacingForLastRow="align"
+                app:tbgRowSpacing="8dp"
                 android:padding="10dp">
 
                 <com.nex3z.togglebuttongroup.button.LabelToggle
@@ -263,7 +264,7 @@
                     android:id="@+id/choice_companheiro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Conpanheiro"/>
+                    android:text="Companheiro"/>
 
                 <com.nex3z.togglebuttongroup.button.LabelToggle
                     android:id="@+id/choice_tranquilo"

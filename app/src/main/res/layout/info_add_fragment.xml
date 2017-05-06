@@ -347,26 +347,24 @@
                 app:tbgFlow="true"
                 app:tbgChildSpacing="auto"
                 app:tbgChildSpacingForLastRow="align"
+                android:padding="5dp"
                 app:tbgRowSpacing="8dp">
 
                 <com.nex3z.togglebuttongroup.button.LabelToggle
                     android:id="@+id/choice_black"
                     android:layout_width="wrap_content"
-                    card_view:tbgMarkerColor="@android:color/black"
                     android:layout_height="wrap_content"
                     android:text="Preto" />
 
                 <com.nex3z.togglebuttongroup.button.LabelToggle
                     android:id="@+id/choice_medium"
                     android:layout_width="wrap_content"
-                    card_view:tbgMarkerColor="@android:color/background_light"
                     android:layout_height="wrap_content"
                     android:text="Branco"/>
 
                 <com.nex3z.togglebuttongroup.button.LabelToggle
                     android:id="@+id/choice_carame"
                     android:layout_width="wrap_content"
-                    card_view:tbgMarkerColor="@android:color/holo_blue_bright"
                     android:layout_height="wrap_content"
                     android:text="Caramelo"/>
 
