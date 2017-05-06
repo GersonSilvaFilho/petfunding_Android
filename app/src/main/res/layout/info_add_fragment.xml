@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        card_view:cardElevation="2dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        card_view:cardCornerRadius="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/txtHeaderType"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:text="Tipo:"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
+                android:id="@+id/group_choices_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                app:tbgCheckedButton="@+id/choice_a">
+
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:id="@+id/choice_dog"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Cachorro" />
+
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="wrap_content" />
+
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:id="@+id/choice_cat"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Gato"/>
+
+                <Space
+                    android:layout_width="5dp"
+                    android:layout_height="wrap_content" />
+
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:id="@+id/choice_other"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Outro"/>
+
+            </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        card_view:cardElevation="2dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        card_view:cardCornerRadius="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:orientation="horizontal">
+        <TextView
+            android:id="@+id/txtHeader"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:text="Sexo:"
+            android:layout_height="match_parent" />
+        </LinearLayout>
+
+            <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
+                android:id="@+id/group_choices"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                app:tbgCheckedButton="@+id/choice_a">
+
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:id="@+id/choice_a"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Feminino" />
+
+                <Space
+                    android:layout_width="20dp"
+                    android:layout_height="wrap_content" />
+
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:id="@+id/choice_b"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Masculino"/>
+
+            </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        card_view:cardElevation="2dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        card_view:cardCornerRadius="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:text="Idade:"
+                    android:layout_height="match_parent" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:weightSum="6">
+
+                <com.jaredrummler.materialspinner.MaterialSpinner
+                    android:id="@+id/spinnerYear"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:hint="Anos"
+                    android:layout_height="wrap_content"/>
+
+                <com.jaredrummler.materialspinner.MaterialSpinner
+                    android:id="@+id/spinnerMonth"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:hint="Meses"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        card_view:cardElevation="2dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        card_view:cardCornerRadius="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:text="Tamanho:"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
+                android:id="@+id/group_choices_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                app:tbgCheckedButton="@+id/choice_a">
+
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:id="@+id/choice_small"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Pequeno" />
+
+                <Space
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content" />
+
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:id="@+id/choice_medium_size"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Medio"/>
+
+                <Space
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content" />
+
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:id="@+id/choice_big"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Grande"/>
+
+            </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        card_view:cardElevation="2dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        card_view:cardCornerRadius="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:text="Pelo:"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
+                android:id="@+id/group_choices_fur"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                app:tbgCheckedButton="@+id/choice_a">
+
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:id="@+id/choice_short"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Curto" />
+
+                <Space
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content" />
+
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:id="@+id/choice_medium_fur"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Medio"/>
+
+                <Space
+                    android:layout_width="10dp"
+                    android:layout_height="wrap_content" />
+
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:id="@+id/choice_long"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Longo"/>
+
+            </com.nex3z.togglebuttongroup.SingleSelectToggleGroup>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        card_view:cardElevation="2dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        card_view:cardCornerRadius="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:text="Cores:"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <com.nex3z.togglebuttongroup.MultiSelectToggleGroup
+                android:id="@+id/group_dummy"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="16dp"
+                app:tbgFlow="true"
+                app:tbgChildSpacing="auto"
+                app:tbgChildSpacingForLastRow="align"
+                android:padding="5dp"
+                app:tbgRowSpacing="8dp">
+
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:id="@+id/choice_black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Preto" />
+
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:id="@+id/choice_medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Branco"/>
+
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:id="@+id/choice_carame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Caramelo"/>
+
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:id="@+id/choice_brown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Marron"/>
+
+                <com.nex3z.togglebuttongroup.button.LabelToggle
+                    android:id="@+id/choice_gray"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cinza"/>
+
+            </com.nex3z.togglebuttongroup.MultiSelectToggleGroup>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>
