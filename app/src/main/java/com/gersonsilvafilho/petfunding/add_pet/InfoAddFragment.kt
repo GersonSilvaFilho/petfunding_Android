@@ -1,18 +1,15 @@
 package com.gersonsilvafilho.petfunding.add_pet
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.gersonsilvafilho.petfunding.R
-import com.jaredrummler.materialspinner.MaterialSpinner
 import com.nex3z.togglebuttongroup.button.LabelToggle
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.info_add_fragment.*
 import java.util.*
-
 
 class InfoAddFragment(private val presenter: AddPetContract.Presenter) : Fragment(), AddPetContract.ViewInfo {
 
@@ -29,10 +26,7 @@ class InfoAddFragment(private val presenter: AddPetContract.Presenter) : Fragmen
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         spinnerMonth.setItems("1 Mês", "2 Meses", "3 Meses","4 Meses", "5 Meses", "6 Meses", "7 Meses", "8 Meses", "9 Meses", "10 Meses", "11 Meses")
-        spinnerMonth.setOnItemSelectedListener(MaterialSpinner.OnItemSelectedListener<String> { view, position, id, item -> Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show() })
-
         spinnerYear.setItems("0 Anos", "1 Ano", "2 anos", "3 anos","4 anos", "5 anos", "6 anos", "7 anos", "8 anos", "9 anos", "10 anos", "11 anos", "12 anos")
-        spinnerYear.setOnItemSelectedListener(MaterialSpinner.OnItemSelectedListener<String> { view, position, id, item -> Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show() })
 
     }
 
@@ -57,20 +51,3 @@ class InfoAddFragment(private val presenter: AddPetContract.Presenter) : Fragmen
 
 }
 
-fun com.nex3z.togglebuttongroup.SingleSelectToggleGroup.OnCheckedChangeListener() : Observable<CharSequence> {
-    return Observable.defer<CharSequence> {
-        Observable.create {
-            if (!it.isDisposed) {
-                setOnCheckedChangeListener { group, checkedId ->  it.onNext((group.findViewById(checkedId) as LabelToggle).text)}
-            }
-        }}
-}
-
-fun com.nex3z.togglebuttongroup.MultiSelectToggleGroup.OnCheckedStateChangeListener() : Observable<List<String>> {
-    return Observable.defer<List<String>> {
-        Observable.create {
-            if (!it.isDisposed) {
-                setOnCheckedChangeListener { group, checkedId, isChecked -> it.onNext(checkedIds.map { id -> (group.findViewById(id) as LabelToggle).text.toString()  }.toList())}
-            }
-        }}
-}

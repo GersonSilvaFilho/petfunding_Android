@@ -20,7 +20,6 @@ class AddPetPresenter : AddPetContract.Presenter {
     constructor(addPetView: AddPetContract.View)
     {
         mView = addPetView
-
         mView.saveButtonClick().subscribe { validatePet(mCurrentPet) }
     }
 
@@ -69,25 +68,8 @@ class AddPetPresenter : AddPetContract.Presenter {
 
     }
 
-
-//    private fun setPet()
-//    {
-//        mCurrentPet.name = mAddPetView.getPetName()
-//        mCurrentPet.description = mAddPetView.getPetDescription()
-//        mCurrentPet.type = mAddPetView.getPetType()
-//        mCurrentPet.sex = mAddPetView.getPetSex()
-//        mCurrentPet.birthDate = mAddPetView.getPetBirth()
-//        mCurrentPet.size = mAddPetView.getPetSize()
-//        mCurrentPet.furSize = mAddPetView.getPetFurSize()
-//    }
-
     private fun validatePet(pet:Pet)
     {
         Log.d("RXAndroid", "Valido!")
-    }
-
-
-    private data class LoginDetails(val username: String, val password: String) {
-        fun isValid(): Boolean = username.isNotBlank() && password.isNotBlank()
     }
 }
