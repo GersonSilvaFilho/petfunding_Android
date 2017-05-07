@@ -7,11 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.gersonsilvafilho.petfunding.R
+import com.jakewharton.rxbinding2.widget.textChanges
 import com.jaredrummler.materialspinner.MaterialSpinner
+import io.reactivex.Observable
 import kotlinx.android.synthetic.main.contact_add_fragment.*
 
 
-class ContactAddFragment : Fragment() {
+class ContactAddFragment(private val presenter: AddPetContract.Presenter) : Fragment(), AddPetContract.ViewContact {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,5 +36,20 @@ class ContactAddFragment : Fragment() {
         spinnerOng.setOnItemSelectedListener(MaterialSpinner.OnItemSelectedListener<String> { view, position, id, item -> Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show() })
 
     }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.initContact(this)
+    }
+
+    override fun ufChanges(): Observable<CharSequence> = spinnerState.textChanges()
+
+    override fun cityChanges(): Observable<CharSequence> = spinnerCity.textChanges()
+
+    override fun contactNameChanges(): Observable<CharSequence> = editTextContactName.textChanges()
+
+    override fun contactPhoneChanges(): Observable<CharSequence> = editTextContactPhone.textChanges()
+
+    override fun ongChanges(): Observable<CharSequence> = spinnerOng.textChanges()
 
 }// Required empty public constructor

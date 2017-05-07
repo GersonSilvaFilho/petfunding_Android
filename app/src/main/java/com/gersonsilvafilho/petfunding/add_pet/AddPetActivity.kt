@@ -7,15 +7,18 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.widget.TextView
 import com.gersonsilvafilho.petfunding.R
-import kotlinx.android.synthetic.main.activity_detail.*
+import com.jakewharton.rxbinding2.view.clicks
+import io.reactivex.Observable
+import kotlinx.android.synthetic.main.activity_add_pet.*
 import java.util.*
 
-class AddPetActivity : AppCompatActivity() {
 
-    private var mTextMessage: TextView? = null
+class AddPetActivity : AppCompatActivity(), AddPetContract.View {
 
+    override fun saveButtonClick(): Observable<Unit> = addPetButtonSave.clicks()
+
+    lateinit var mActionsListener: AddPetContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,17 +30,19 @@ class AddPetActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
 
+        mActionsListener = AddPetPresenter(this)
 
         setupViewPager(viewpager)
         tabs.setupWithViewPager(viewpager)
+
     }
 
     private fun setupViewPager(viewPager: ViewPager) {
         val adapter = ViewPagerAdapter(supportFragmentManager)
-        adapter.addFragment(AboutAddFragment(), "Info")
-        adapter.addFragment(InfoAddFragment(), "Dados")
-        adapter.addFragment(ConditionAddFragment(), "Condição")
-        adapter.addFragment(ContactAddFragment(), "Contato")
+        adapter.addFragment(AboutAddFragment(mActionsListener), "Info")
+        adapter.addFragment(InfoAddFragment(mActionsListener), "Dados")
+        adapter.addFragment(ConditionAddFragment(mActionsListener), "Condição")
+        adapter.addFragment(ContactAddFragment(mActionsListener), "Contato")
         viewPager.adapter = adapter
     }
 
@@ -62,5 +67,4 @@ class AddPetActivity : AppCompatActivity() {
             return mFragmentTitleList.get(position)
         }
     }
-
 }

@@ -39,7 +39,7 @@
         </LinearLayout>
 
             <com.nex3z.togglebuttongroup.MultiSelectToggleGroup
-                android:id="@+id/group_choices"
+                android:id="@+id/group_choices_state"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
