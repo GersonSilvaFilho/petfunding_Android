@@ -11,6 +11,7 @@ class Pet {
     {
     }
 
+    var uid:String = ""
     var name:String = ""
 
     var description:String? = null
@@ -44,7 +45,7 @@ class Pet {
 
     var photosUrl:List<String>? = null
 
-    var includedBy:String = ""
+    var createdBy:String = ""
     var createdAt:Date = Date()
     var adoptedAt:Date? = null
     var updatedAt:Date = Date()

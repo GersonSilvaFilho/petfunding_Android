@@ -1,6 +1,7 @@
 package com.gersonsilvafilho.petfunding.add_pet
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
@@ -11,10 +12,12 @@ import com.gersonsilvafilho.petfunding.R
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_add_pet.*
+import org.jetbrains.anko.contentView
 import java.util.*
 
 
 class AddPetActivity : AppCompatActivity(), AddPetContract.View {
+
 
     override fun saveButtonClick(): Observable<Unit> = addPetButtonSave.clicks()
 
@@ -45,6 +48,15 @@ class AddPetActivity : AppCompatActivity(), AddPetContract.View {
         adapter.addFragment(ContactAddFragment(mActionsListener), "Contato")
         viewPager.adapter = adapter
     }
+
+    override fun finishActivity() {
+        finish()
+    }
+
+    override fun showSuccessMessage() {
+        Snackbar.make(this.contentView!!, "Adicionado com sucesso", Snackbar.LENGTH_LONG)
+    }
+
 
     internal inner class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
         private val mFragmentList = ArrayList<Fragment>()

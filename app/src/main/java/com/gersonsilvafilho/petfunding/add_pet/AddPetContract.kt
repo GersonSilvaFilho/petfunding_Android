@@ -46,6 +46,8 @@ interface AddPetContract {
     interface View
     {
         fun saveButtonClick(): Observable<Unit>
+        fun finishActivity()
+        fun showSuccessMessage()
     }
 
     interface Presenter

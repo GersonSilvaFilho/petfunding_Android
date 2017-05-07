@@ -2,6 +2,8 @@ package com.gersonsilvafilho.petfunding.add_pet
 
 import android.util.Log
 import com.gersonsilvafilho.petfunding.model.Pet
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 /**
  * Created by GersonSilva on 5/6/17.
@@ -71,5 +73,18 @@ class AddPetPresenter : AddPetContract.Presenter {
     private fun validatePet(pet:Pet)
     {
         Log.d("RXAndroid", "Valido!")
+
+        pet.createdBy = FirebaseAuth.getInstance().currentUser!!.uid
+
+        val database = FirebaseDatabase.getInstance()
+        val myRef = database.getReference("pet")
+
+
+
+        //RxFirebaseDatabase.updateChildren(database.getReference().child("pets"), pet)
+        val key = myRef.push().key
+        database.getReference().child("pets").child(key).setValue(pet).addOnCompleteListener { task ->
+            mView.showSuccessMessage()
+            mView.finishActivity() }
     }
 }
