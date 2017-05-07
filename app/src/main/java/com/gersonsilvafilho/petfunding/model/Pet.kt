@@ -20,15 +20,20 @@ class Pet {
     var birthDate:Date? = null
     var size:String = ""
     var furSize:String = ""
-    var furColor:String = ""
+    var furColors:List<String>? = null
 
-    var vaccinated:Boolean = false
-    var dewormed:Boolean = false
-    var castrated:Boolean = false
+    var isVaccinated:Boolean = false
+    var isDewormed:Boolean = false
+    var isCastrated:Boolean = false
 
     var likeChildren:Boolean = false
     var likeAnimals:Boolean = false
     var likeElders:Boolean = false
+
+    var hasLocomotionProblems:Boolean = false
+    var isBlind:Boolean = false
+    var hasBadBehaviour:Boolean = false
+
     var behaviour:List<String>? = null
 
     var state:String = ""

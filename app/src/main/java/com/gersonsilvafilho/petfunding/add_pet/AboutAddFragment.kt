@@ -28,9 +28,7 @@ class AboutAddFragment(private val presenter: AddPetContract.Presenter) : Fragme
 
     override fun onResume() {
         super.onResume()
-//        addEditTextName.textChanges().subscribe { a -> Log.d("OPA", a.toString())  }
-
-        presenter.init(this)
+        presenter.initAbout(this)
     }
 
-}// Required empty public constructor
+}

@@ -6,13 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.gersonsilvafilho.petfunding.R
+import io.reactivex.Observable
+import kotlinx.android.synthetic.main.condition_add_fragment.*
 
 
-class ConditionAddFragment : Fragment() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+class ConditionAddFragment(private val presenter: AddPetContract.Presenter)  : Fragment(), AddPetContract.ViewCondition {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -20,4 +18,18 @@ class ConditionAddFragment : Fragment() {
         return inflater!!.inflate(R.layout.condition_add_fragment, container, false)
     }
 
-}// Required empty public constructor
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.initCondition(this)
+    }
+
+    override fun stateChanges(): Observable<List<String>> = group_choices_state.OnCheckedStateChangeListener()
+    override fun likeChanges(): Observable<List<String>> = group_choices_like.OnCheckedStateChangeListener()
+    override fun specialNeedsChanges(): Observable<List<String>> = group_choices_special.OnCheckedStateChangeListener()
+    override fun personalityChanges(): Observable<List<String>> = group_choices_person.OnCheckedStateChangeListener()
+
+}

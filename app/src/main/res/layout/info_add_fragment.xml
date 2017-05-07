@@ -43,6 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:padding="10dp"
+                card_view:tbgChildSpacing="5dp"
                 app:tbgCheckedButton="@+id/choice_a">
 
                 <com.nex3z.togglebuttongroup.button.LabelToggle
@@ -51,9 +52,6 @@
                     android:layout_height="wrap_content"
                     android:text="Cachorro" />
 
-                <Space
-                    android:layout_width="5dp"
-                    android:layout_height="wrap_content" />
 
                 <com.nex3z.togglebuttongroup.button.LabelToggle
                     android:id="@+id/choice_cat"
@@ -61,9 +59,6 @@
                     android:layout_height="wrap_content"
                     android:text="Gato"/>
 
-                <Space
-                    android:layout_width="5dp"
-                    android:layout_height="wrap_content" />
 
                 <com.nex3z.togglebuttongroup.button.LabelToggle
                     android:id="@+id/choice_other"
@@ -104,11 +99,12 @@
         </LinearLayout>
 
             <com.nex3z.togglebuttongroup.SingleSelectToggleGroup
-                android:id="@+id/group_choices"
+                android:id="@+id/group_choices_sex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:padding="10dp"
+                card_view:tbgChildSpacing="10dp"
                 app:tbgCheckedButton="@+id/choice_a">
 
                 <com.nex3z.togglebuttongroup.button.LabelToggle
@@ -117,9 +113,6 @@
                     android:layout_height="wrap_content"
                     android:text="Feminino" />
 
-                <Space
-                    android:layout_width="20dp"
-                    android:layout_height="wrap_content" />
 
                 <com.nex3z.togglebuttongroup.button.LabelToggle
                     android:id="@+id/choice_b"
@@ -217,6 +210,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:padding="10dp"
+                card_view:tbgChildSpacing="10dp"
                 app:tbgCheckedButton="@+id/choice_a">
 
                 <com.nex3z.togglebuttongroup.button.LabelToggle
@@ -225,9 +219,6 @@
                     android:layout_height="wrap_content"
                     android:text="Pequeno" />
 
-                <Space
-                    android:layout_width="10dp"
-                    android:layout_height="wrap_content" />
 
                 <com.nex3z.togglebuttongroup.button.LabelToggle
                     android:id="@+id/choice_medium_size"
@@ -235,9 +226,6 @@
                     android:layout_height="wrap_content"
                     android:text="Medio"/>
 
-                <Space
-                    android:layout_width="10dp"
-                    android:layout_height="wrap_content" />
 
                 <com.nex3z.togglebuttongroup.button.LabelToggle
                     android:id="@+id/choice_big"
@@ -340,7 +328,7 @@
             </LinearLayout>
 
             <com.nex3z.togglebuttongroup.MultiSelectToggleGroup
-                android:id="@+id/group_dummy"
+                android:id="@+id/group_choices_fur_color"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_marginTop="16dp"

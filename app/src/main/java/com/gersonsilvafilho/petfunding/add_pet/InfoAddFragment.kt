@@ -8,10 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import com.gersonsilvafilho.petfunding.R
 import com.jaredrummler.materialspinner.MaterialSpinner
+import com.nex3z.togglebuttongroup.button.LabelToggle
+import io.reactivex.Observable
 import kotlinx.android.synthetic.main.info_add_fragment.*
+import java.util.*
 
 
-class InfoAddFragment : Fragment() {
+class InfoAddFragment(private val presenter: AddPetContract.Presenter) : Fragment(), AddPetContract.ViewInfo {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,4 +36,41 @@ class InfoAddFragment : Fragment() {
 
     }
 
-}// Required empty public constructor
+    override fun typeChanges(): Observable<CharSequence> = group_choices_type.OnCheckedChangeListener()
+
+    override fun sexChanges(): Observable<CharSequence>  = group_choices_sex.OnCheckedChangeListener()
+
+    override fun ageChanges(): Observable<Date> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun sizeChanges(): Observable<CharSequence> = group_choices_size.OnCheckedChangeListener()
+
+    override fun furSizeChanges(): Observable<CharSequence> = group_choices_fur.OnCheckedChangeListener()
+
+    override fun furColorChanges(): Observable<List<String>> = group_choices_fur_color.OnCheckedStateChangeListener()
+
+    override fun onResume() {
+        super.onResume()
+        presenter.initInfo(this)
+    }
+
+}
+
+fun com.nex3z.togglebuttongroup.SingleSelectToggleGroup.OnCheckedChangeListener() : Observable<CharSequence> {
+    return Observable.defer<CharSequence> {
+        Observable.create {
+            if (!it.isDisposed) {
+                setOnCheckedChangeListener { group, checkedId ->  it.onNext((group.findViewById(checkedId) as LabelToggle).text)}
+            }
+        }}
+}
+
+fun com.nex3z.togglebuttongroup.MultiSelectToggleGroup.OnCheckedStateChangeListener() : Observable<List<String>> {
+    return Observable.defer<List<String>> {
+        Observable.create {
+            if (!it.isDisposed) {
+                setOnCheckedChangeListener { group, checkedId, isChecked -> it.onNext(checkedIds.map { id -> (group.findViewById(id) as LabelToggle).text.toString()  }.toList())}
+            }
+        }}
+}

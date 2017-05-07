@@ -1,6 +1,7 @@
 package com.gersonsilvafilho.petfunding.add_pet
 
 import io.reactivex.Observable
+import java.util.*
 
 
 /**
@@ -15,41 +16,43 @@ interface AddPetContract {
     }
 
 
+    interface ViewInfo
+    {
+        fun typeChanges(): Observable<CharSequence>
+        fun sexChanges(): Observable<CharSequence>
+        fun ageChanges(): Observable<Date>
+        fun sizeChanges(): Observable<CharSequence>
+        fun furSizeChanges(): Observable<CharSequence>
+        fun furColorChanges(): Observable<List<String>>
+    }
+
+    interface ViewCondition
+    {
+        fun stateChanges(): Observable<List<String>>
+        fun likeChanges(): Observable<List<String>>
+        fun specialNeedsChanges(): Observable<List<String>>
+        fun personalityChanges(): Observable<List<String>>
+    }
+
+    interface ViewContact
+    {
+        fun ufChanges(): Observable<CharSequence>
+        fun cityChanges(): Observable<CharSequence>
+        fun contactNameChanges(): Observable<CharSequence>
+        fun contactPhoneChanges(): Observable<CharSequence>
+        fun ongChanges(): Observable<CharSequence>
+    }
+
     interface View
     {
         fun saveButtonClick(): Observable<Unit>
-//        fun descriptionChanges(): Observable<CharSequence>
-//        fun typeChanges(): Observable<CharSequence>
-//        fun sexChanges(): Observable<CharSequence>
-//        fun birthChanges(): Observable<Date>
-//        fun sizeChanges(): Observable<CharSequence>
-//        fun furSizeChanges() : Observable<CharSequence>
-//        fun getPetFunColor() : Observable<List<String>>
-//
-//        fun isPetVaccinated() : Observable<Boolean>
-//        fun isPetDewormed() : Boolean
-//        fun isPetCastrated() : Boolean
-//
-//        fun isPetLikeChildren() : Boolean
-//        fun isPetLikeOtherAnimals() : Boolean
-//        fun isPetLikeElder() : Boolean
-//
-//        fun isPetPhisicalProblem() : Boolean
-//        fun isPetBlind() : Boolean
-//        fun isPetBehaviour() : Boolean
-//
-//        fun getPetPersonality() : List<String>
-//
-//        fun getPetUf(): String
-//        fun getPetCity(): String
-//        fun getContactName(): String
-//        fun getContectPhone(): String
-//        fun getPetOng(): String
     }
 
     interface Presenter
     {
-        fun  init(aboutAddFragment: AboutAddFragment)
-
+        fun  initAbout(aboutAddFragment: AddPetContract.ViewAbout)
+        fun  initInfo(infoAddFragment: AddPetContract.ViewInfo)
+        fun  initCondition(conditionView: AddPetContract.ViewCondition)
+        fun  initContact(contactView: AddPetContract.ViewContact)
     }
 }
