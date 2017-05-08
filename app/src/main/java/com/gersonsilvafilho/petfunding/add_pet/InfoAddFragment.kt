@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.gersonsilvafilho.petfunding.R
-import com.nex3z.togglebuttongroup.button.LabelToggle
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.info_add_fragment.*
 import java.util.*

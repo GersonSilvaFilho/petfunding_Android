@@ -90,6 +90,12 @@ dependencies {
 
     //Firebase database
     compile 'com.google.firebase:firebase-database:10.2.1'
+    compile 'com.google.firebase:firebase-storage:10.2.1'
+
+    //RxPaparazzo for camera / galery loading
+    compile "com.github.miguelbcr:RxPaparazzo:0.5.2-2.x"
+
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }
 
 repositories {

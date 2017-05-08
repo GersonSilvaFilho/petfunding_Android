@@ -43,7 +43,7 @@ class Pet {
     var contactPhone:String = ""
     var ongName:String = ""
 
-    var photosUrl:List<String>? = null
+    var photosUrl:HashMap<String, String> = HashMap<String, String>()
 
     var createdBy:String = ""
     var createdAt:Date = Date()
