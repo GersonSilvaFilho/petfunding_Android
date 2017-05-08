@@ -45,7 +45,7 @@ class AddPetPresenter : AddPetContract.Presenter {
         //mInfoView!!.ageChanges().subscribe { a -> mCurrentPet.birthDate = a.toString() }
         mInfoView!!.sizeChanges().subscribe { a -> mCurrentPet.size = a.toString() }
         mInfoView!!.furSizeChanges().subscribe { a -> mCurrentPet.furSize = a.toString() }
-        mInfoView!!.furColorChanges().subscribe { a -> mCurrentPet.furColors = a }
+        mInfoView!!.furColorChanges().subscribe { a -> mCurrentPet.furColors = a as ArrayList<String> }
     }
 
     override fun initCondition(conditionView: AddPetContract.ViewCondition)
@@ -63,7 +63,7 @@ class AddPetPresenter : AddPetContract.Presenter {
                                                          mCurrentPet.isBlind = a.contains("Cego")
                                                          mCurrentPet.hasBadBehaviour = a.contains("Comportamento")}
 
-        mConditionView!!.personalityChanges().subscribe { a -> mCurrentPet.behaviour = a}
+        mConditionView!!.personalityChanges().subscribe { a -> mCurrentPet.behaviour = a as ArrayList<String> }
     }
 
     override fun initContact(contactView: AddPetContract.ViewContact) {
@@ -84,9 +84,7 @@ class AddPetPresenter : AddPetContract.Presenter {
         pet.createdBy = FirebaseAuth.getInstance().currentUser!!.uid
 
         val database = FirebaseDatabase.getInstance()
-        val myRef = database.getReference("pet")
-
-
+        val myRef = database.getReference("pets")
         val key = myRef.push().key
         database.getReference().child("pets").child(key).setValue(pet).addOnCompleteListener { task ->
             mView.showSuccessMessage()
@@ -97,6 +95,6 @@ class AddPetPresenter : AddPetContract.Presenter {
         val storage = FirebaseStorage.getInstance()
         RxFirebaseStorage.putFile(storage.getReferenceFromUrl("gs://petfunding-7ab38.appspot.com/pets").child(UUID.randomUUID().toString()), Uri.fromFile(file))
                          .subscribe { a -> Log.d("RXAndroid", "Deu boa! - " + a.bytesTransferred)
-                                            mCurrentPet.photosUrl.put(num.toString(), a.downloadUrl.toString())}
+                                            mCurrentPet.photosUrl.add(a.downloadUrl.toString())}
     }
 }

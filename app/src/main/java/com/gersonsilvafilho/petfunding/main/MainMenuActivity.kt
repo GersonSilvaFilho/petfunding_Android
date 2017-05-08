@@ -19,6 +19,7 @@ import com.facebook.login.LoginManager
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.add_pet.AddPetActivity
 import com.gersonsilvafilho.petfunding.detail.DetailActivity
+import com.gersonsilvafilho.petfunding.model.Pet
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.card_layout.*
 import kotlinx.android.synthetic.main.content_navigation.*
@@ -26,9 +27,16 @@ import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
 class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , NavigationView.OnNavigationItemSelectedListener, SwipeListener.mClickListener{
+    override fun updateCardAdapter(pets: List<Pet>) {
+        var mCardAdapter = CardsDataAdapter(applicationContext, 0)
+        mCardAdapter.addAll(pets)
+        cardStack.setAdapter(mCardAdapter)
+    }
+
+
 
     override fun mClick() {
-        launch(this, content)
+        launch(this, card_full)
     }
 
     // Methods inside this block are static
@@ -56,13 +64,6 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         cardStack.setContentResource(R.layout.card_layout)
         cardStack.setStackMargin(20)
 
-        var mCardAdapter = CardsDataAdapter(applicationContext, 0)
-        mCardAdapter.add("test1")
-        mCardAdapter.add("test2")
-        mCardAdapter.add("test3")
-        mCardAdapter.add("test4")
-        mCardAdapter.add("test5")
-        cardStack.setAdapter(mCardAdapter)
         val listn = SwipeListener(this)
         cardStack.setListener(listn)
 
@@ -83,6 +84,8 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
 
         val navigationView = findViewById(R.id.nav_view) as NavigationView
         navigationView.setNavigationItemSelectedListener(this)
+
+        mActionsListener.loadPets()
     }
 
     override fun onBackPressed() {

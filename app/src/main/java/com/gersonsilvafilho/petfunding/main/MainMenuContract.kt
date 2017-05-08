@@ -1,13 +1,19 @@
 package com.gersonsilvafilho.petfunding.main
 
+import com.gersonsilvafilho.petfunding.model.Pet
+
 
 /**
  * Created by GersonSilva on 3/21/17.
  */
 interface MainMenuContract {
     interface View {
+
+        fun updateCardAdapter(pets:List<Pet>)
     }
 
-    interface Presenter {
+    interface Presenter
+    {
+        fun loadPets()
     }
 }
