@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.gersonsilvafilho.petfunding.R
-import com.gersonsilvafilho.petfunding.model.Pet
+import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.squareup.picasso.Picasso
 
 class CardsDataAdapter(context: Context, @LayoutRes resource: Int) : ArrayAdapter<Pet>(context, resource) {

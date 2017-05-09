@@ -1,7 +1,7 @@
 package com.gersonsilvafilho.petfunding.splash
 
 import android.util.Log
-import com.gersonsilvafilho.petfunding.model.UserRepository
+import com.gersonsilvafilho.petfunding.model.user.UserRepository
 import io.reactivex.disposables.Disposable
 import javax.inject.Singleton
 
@@ -18,7 +18,7 @@ class SplashPresenter  : SplashContract.Presenter  {
     private var firebaseIsConnected:Boolean = false
     private var  authObserverSubs: Disposable
 
-    constructor(splashView: SplashContract.View, userRepository:UserRepository)
+    constructor(splashView: SplashContract.View, userRepository: UserRepository)
     {
         mSplashView = splashView
         mUserRepository = userRepository

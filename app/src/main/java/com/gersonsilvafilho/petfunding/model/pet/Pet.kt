@@ -1,4 +1,4 @@
-package com.gersonsilvafilho.petfunding.model
+package com.gersonsilvafilho.petfunding.model.pet
 
 import com.google.firebase.database.Exclude
 import java.util.*
@@ -23,7 +23,7 @@ class Pet {
     //var birthDate:Date? = null
     var size:String = ""
     var furSize:String = ""
-    var furColors:ArrayList<String> = ArrayList<String>()
+    var furColors: ArrayList<String> = ArrayList<String>()
 
     var isVaccinated:Boolean = false
     var isDewormed:Boolean = false
@@ -37,7 +37,7 @@ class Pet {
     var isBlind:Boolean = false
     var hasBadBehaviour:Boolean = false
 
-    var behaviour:ArrayList<String> = ArrayList<String>()
+    var behaviour: ArrayList<String> = ArrayList<String>()
 
     var state:String = ""
     var city:String = ""
@@ -45,12 +45,12 @@ class Pet {
     var contactPhone:String = ""
     var ongName:String = ""
 
-    var photosUrl:ArrayList<String> = ArrayList<String>()
+    var photosUrl: ArrayList<String> = ArrayList<String>()
 
     var createdBy:String = ""
-    var createdAt:Date = Date()
-    var adoptedAt:Date? = null
-    var updatedAt:Date = Date()
+    var createdAt: Date = Date()
+    var adoptedAt: Date? = null
+    var updatedAt: Date = Date()
     var adoptedBy:String? = null
 
 

@@ -2,7 +2,7 @@ package com.gersonsilvafilho.petfunding.add_pet
 
 import android.net.Uri
 import android.util.Log
-import com.gersonsilvafilho.petfunding.model.Pet
+import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -45,7 +45,7 @@ class AddPetPresenter : AddPetContract.Presenter {
         //mInfoView!!.ageChanges().subscribe { a -> mCurrentPet.birthDate = a.toString() }
         mInfoView!!.sizeChanges().subscribe { a -> mCurrentPet.size = a.toString() }
         mInfoView!!.furSizeChanges().subscribe { a -> mCurrentPet.furSize = a.toString() }
-        mInfoView!!.furColorChanges().subscribe { a -> mCurrentPet.furColors = a as ArrayList<String> }
+        mInfoView!!.furColorChanges().subscribe { a -> mCurrentPet.furColors = ArrayList<String>(a)  }
     }
 
     override fun initCondition(conditionView: AddPetContract.ViewCondition)
@@ -63,7 +63,7 @@ class AddPetPresenter : AddPetContract.Presenter {
                                                          mCurrentPet.isBlind = a.contains("Cego")
                                                          mCurrentPet.hasBadBehaviour = a.contains("Comportamento")}
 
-        mConditionView!!.personalityChanges().subscribe { a -> mCurrentPet.behaviour = a as ArrayList<String> }
+        mConditionView!!.personalityChanges().subscribe { a -> mCurrentPet.behaviour = ArrayList<String>(a) }
     }
 
     override fun initContact(contactView: AddPetContract.ViewContact) {
@@ -77,7 +77,7 @@ class AddPetPresenter : AddPetContract.Presenter {
 
     }
 
-    private fun validatePet(pet:Pet)
+    private fun validatePet(pet: Pet)
     {
         Log.d("RXAndroid", "Valido!")
 

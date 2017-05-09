@@ -1,4 +1,4 @@
-package com.gersonsilvafilho.petfunding.model
+package com.gersonsilvafilho.petfunding.model.user
 
 import io.reactivex.Observable
 
@@ -10,4 +10,5 @@ interface UserRepository
 {
     fun loginWithFacebook(token: String): Observable<Boolean>
     fun userStatus(): Observable<Boolean>
+    fun userLogout()
 }

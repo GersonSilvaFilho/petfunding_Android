@@ -1,6 +1,6 @@
 package com.gersonsilvafilho.petfunding.splash
 
-import com.gersonsilvafilho.petfunding.model.UserRepository
+import com.gersonsilvafilho.petfunding.model.user.UserRepository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

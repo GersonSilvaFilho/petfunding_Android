@@ -11,7 +11,7 @@ import com.facebook.FacebookException
 import com.facebook.login.LoginResult
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.main.MainMenuActivity
-import com.gersonsilvafilho.petfunding.model.UserFirebaseRepository
+import com.gersonsilvafilho.petfunding.model.user.UserFirebaseRepository
 import com.gersonsilvafilho.petfunding.splash.SplashContract.View
 import kotlinx.android.synthetic.main.activity_splash.*
 import org.jetbrains.anko.startActivity

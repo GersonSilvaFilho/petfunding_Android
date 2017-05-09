@@ -9,6 +9,10 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import com.gersonsilvafilho.petfunding.R
+import com.gersonsilvafilho.petfunding.add_pet.fragments.AboutAddFragment
+import com.gersonsilvafilho.petfunding.add_pet.fragments.ConditionAddFragment
+import com.gersonsilvafilho.petfunding.add_pet.fragments.ContactAddFragment
+import com.gersonsilvafilho.petfunding.add_pet.fragments.InfoAddFragment
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_add_pet.*

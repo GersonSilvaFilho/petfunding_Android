@@ -19,7 +19,7 @@ import com.facebook.login.LoginManager
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.add_pet.AddPetActivity
 import com.gersonsilvafilho.petfunding.detail.DetailActivity
-import com.gersonsilvafilho.petfunding.model.Pet
+import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.card_layout.*
 import kotlinx.android.synthetic.main.content_navigation.*
@@ -27,6 +27,8 @@ import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
 class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , NavigationView.OnNavigationItemSelectedListener, SwipeListener.mClickListener{
+
+
     override fun updateCardAdapter(pets: List<Pet>) {
         var mCardAdapter = CardsDataAdapter(applicationContext, 0)
         mCardAdapter.addAll(pets)
@@ -128,7 +130,7 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
             //Add new pet activity
 
         } else if (id == R.id.nav_logout) {
-            firebaseLgout()
+            mActionsListener.userLogout()
         }
 
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
@@ -136,10 +138,4 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         return true
     }
 
-    private fun firebaseLgout()
-    {
-        LoginManager.getInstance().logOut()
-        val mAuth = FirebaseAuth.getInstance()
-        mAuth.signOut()
-    }
 }

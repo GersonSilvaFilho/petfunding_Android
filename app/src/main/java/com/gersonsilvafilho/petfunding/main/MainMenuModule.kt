@@ -1,5 +1,7 @@
 package com.gersonsilvafilho.petfunding.main
 
+import com.gersonsilvafilho.petfunding.model.pet.PetFirebaseRepository
+import com.gersonsilvafilho.petfunding.model.user.UserFirebaseRepository
 import dagger.Module
 import dagger.Provides
 
@@ -9,6 +11,6 @@ class MainMenuModule(val mainMenuView: MainMenuContract.View) {
 
     @Provides
     fun provideMainMenuPresenter(): MainMenuPresenter {
-        return  MainMenuPresenter(mainMenuView)
+        return  MainMenuPresenter(PetFirebaseRepository(), UserFirebaseRepository(), mainMenuView)
     }
 }
