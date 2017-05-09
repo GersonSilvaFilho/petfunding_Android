@@ -1,6 +1,7 @@
 package com.gersonsilvafilho.petfunding.util
 
 import android.app.Application
+import com.google.firebase.FirebaseApp
 import com.miguelbcr.ui.rx_paparazzo2.RxPaparazzo
 
 /**
@@ -11,5 +12,6 @@ class PetApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         RxPaparazzo.register(this)
+        FirebaseApp.initializeApp(this)
     }
 }

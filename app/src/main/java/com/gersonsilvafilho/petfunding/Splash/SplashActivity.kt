@@ -11,10 +11,8 @@ import com.facebook.FacebookException
 import com.facebook.login.LoginResult
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.main.MainMenuActivity
+import com.gersonsilvafilho.petfunding.model.UserFirebaseRepository
 import com.gersonsilvafilho.petfunding.splash.SplashContract.View
-import com.google.firebase.FirebaseApp
-import com.google.firebase.auth.FacebookAuthProvider
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_splash.*
 import org.jetbrains.anko.startActivity
 import javax.inject.Inject
@@ -35,7 +33,7 @@ class SplashActivity : AppCompatActivity() , View{
 
         DaggerSplashComponent
                 .builder()
-                .splashModule(SplashModule(this, FirebaseAuth.getInstance()))
+                .splashModule(SplashModule(this, UserFirebaseRepository()))
                 .build()
                 .inject(this)
 
@@ -52,12 +50,11 @@ class SplashActivity : AppCompatActivity() , View{
             }
 
             override fun onError(error: FacebookException) {
-                mActionsListener.facebookOnError(error)
+                mActionsListener.facebookOnError()
             }
         }
 
         fbLoginButton.registerCallback(callbackManager, mFacebookCallback)
-        FirebaseApp.initializeApp(this)
     }
 
     public override fun onStart() {
@@ -94,8 +91,7 @@ class SplashActivity : AppCompatActivity() , View{
     }
 
     private fun handleFacebookAccessToken(token: AccessToken) {
-        val credential = FacebookAuthProvider.getCredential(token.getToken())
-        mActionsListener.firebaseSuccess(credential)
+        mActionsListener.firebaseSuccess(token.token)
     }
 
     override fun goToMainMenuActivity() {
