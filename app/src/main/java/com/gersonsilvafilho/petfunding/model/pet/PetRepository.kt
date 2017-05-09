@@ -1,6 +1,8 @@
 package com.gersonsilvafilho.petfunding.model.pet
 
+import io.reactivex.Completable
 import io.reactivex.Observable
+import java.io.File
 
 
 /**
@@ -8,4 +10,7 @@ import io.reactivex.Observable
  */
 interface PetRepository {
     fun getPets(): Observable<List<Pet>>
+    fun addPet(pet:Pet): Completable
+    fun sendPetPhoto(index:Int, file:File): Observable<String>
+
 }

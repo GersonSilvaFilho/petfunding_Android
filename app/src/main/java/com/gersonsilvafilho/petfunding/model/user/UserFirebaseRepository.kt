@@ -11,6 +11,8 @@ import io.reactivex.Observable
  */
 class UserFirebaseRepository : UserRepository
 {
+
+
     private val  mAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
     override fun userStatus(): Observable<Boolean> {
@@ -30,5 +32,8 @@ class UserFirebaseRepository : UserRepository
         mAuth.signOut()
     }
 
+    override fun getCurrentUserId(): String {
+        return FirebaseAuth.getInstance().currentUser!!.uid
+    }
 
 }

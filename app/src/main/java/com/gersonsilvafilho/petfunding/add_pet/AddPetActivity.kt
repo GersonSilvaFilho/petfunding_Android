@@ -13,6 +13,8 @@ import com.gersonsilvafilho.petfunding.add_pet.fragments.AboutAddFragment
 import com.gersonsilvafilho.petfunding.add_pet.fragments.ConditionAddFragment
 import com.gersonsilvafilho.petfunding.add_pet.fragments.ContactAddFragment
 import com.gersonsilvafilho.petfunding.add_pet.fragments.InfoAddFragment
+import com.gersonsilvafilho.petfunding.model.pet.PetFirebaseRepository
+import com.gersonsilvafilho.petfunding.model.user.UserFirebaseRepository
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_add_pet.*
@@ -37,7 +39,7 @@ class AddPetActivity : AppCompatActivity(), AddPetContract.View {
         setSupportActionBar(toolbar)
         getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
 
-        mActionsListener = AddPetPresenter(this)
+        mActionsListener = AddPetPresenter(this, PetFirebaseRepository(), UserFirebaseRepository())
 
         setupViewPager(viewpager)
         tabs.setupWithViewPager(viewpager)

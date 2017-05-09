@@ -1,12 +1,9 @@
 package com.gersonsilvafilho.petfunding.add_pet
 
-import android.net.Uri
 import android.util.Log
 import com.gersonsilvafilho.petfunding.model.pet.Pet
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.storage.FirebaseStorage
-import durdinapps.rxfirebase2.RxFirebaseStorage
+import com.gersonsilvafilho.petfunding.model.pet.PetRepository
+import com.gersonsilvafilho.petfunding.model.user.UserRepository
 import java.io.File
 import java.util.*
 
@@ -19,6 +16,9 @@ class AddPetPresenter : AddPetContract.Presenter {
 
     private var mCurrentPet: Pet = Pet()
 
+    private var  mUserRepository: UserRepository
+    private var mPetRepository: PetRepository
+
     var mView : AddPetContract.View
     var mAboutView : AddPetContract.ViewAbout? = null
     var mInfoView : AddPetContract.ViewInfo? = null
@@ -26,10 +26,15 @@ class AddPetPresenter : AddPetContract.Presenter {
     var mContactView : AddPetContract.ViewContact? = null
 
 
-    constructor(addPetView: AddPetContract.View)
+
+
+    constructor(addPetView: AddPetContract.View, petRepository: PetRepository, userRepository: UserRepository)
     {
         mView = addPetView
         mView.saveButtonClick().subscribe { validatePet(mCurrentPet) }
+
+        mPetRepository = petRepository
+        mUserRepository = userRepository
     }
 
     override fun initAbout(aboutAddFragment: AddPetContract.ViewAbout) {
@@ -80,21 +85,18 @@ class AddPetPresenter : AddPetContract.Presenter {
     private fun validatePet(pet: Pet)
     {
         Log.d("RXAndroid", "Valido!")
-
-        pet.createdBy = FirebaseAuth.getInstance().currentUser!!.uid
-
-        val database = FirebaseDatabase.getInstance()
-        val myRef = database.getReference("pets")
-        val key = myRef.push().key
-        database.getReference().child("pets").child(key).setValue(pet).addOnCompleteListener { task ->
+        pet.createdBy = mUserRepository.getCurrentUserId()
+        mPetRepository.addPet(pet).doOnComplete {
             mView.showSuccessMessage()
-            mView.finishActivity() }
+            mView.finishActivity()
+        }.doOnError {
+            //Error
+        }.subscribe()
     }
 
     override fun imageReady(num: Int, file: File) {
-        val storage = FirebaseStorage.getInstance()
-        RxFirebaseStorage.putFile(storage.getReferenceFromUrl("gs://petfunding-7ab38.appspot.com/pets").child(UUID.randomUUID().toString()), Uri.fromFile(file))
-                         .subscribe { a -> Log.d("RXAndroid", "Deu boa! - " + a.bytesTransferred)
-                                            mCurrentPet.photosUrl.add(a.downloadUrl.toString())}
+        mPetRepository.sendPetPhoto(num, file)
+                .subscribe { a -> Log.d("RXAndroid", "Deu boa! - " + a)
+            mCurrentPet.photosUrl.add(a)}
     }
 }
