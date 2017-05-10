@@ -1,6 +1,7 @@
 package com.gersonsilvafilho.petfunding.add_pet
 
 import io.reactivex.Observable
+import java.io.File
 import java.util.*
 
 
@@ -46,6 +47,8 @@ interface AddPetContract {
     interface View
     {
         fun saveButtonClick(): Observable<Unit>
+        fun finishActivity()
+        fun showSuccessMessage()
     }
 
     interface Presenter
@@ -54,5 +57,7 @@ interface AddPetContract {
         fun  initInfo(infoAddFragment: AddPetContract.ViewInfo)
         fun  initCondition(conditionView: AddPetContract.ViewCondition)
         fun  initContact(contactView: AddPetContract.ViewContact)
+
+        fun  imageReady(num:Int, file: File)
     }
 }

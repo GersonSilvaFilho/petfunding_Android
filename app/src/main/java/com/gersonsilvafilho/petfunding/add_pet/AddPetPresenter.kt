@@ -1,14 +1,23 @@
 package com.gersonsilvafilho.petfunding.add_pet
 
 import android.util.Log
-import com.gersonsilvafilho.petfunding.model.Pet
+import com.gersonsilvafilho.petfunding.model.pet.Pet
+import com.gersonsilvafilho.petfunding.model.pet.PetRepository
+import com.gersonsilvafilho.petfunding.model.user.UserRepository
+import java.io.File
+import java.util.*
+
 
 /**
  * Created by GersonSilva on 5/6/17.
  */
 class AddPetPresenter : AddPetContract.Presenter {
 
+
     private var mCurrentPet: Pet = Pet()
+
+    private var  mUserRepository: UserRepository
+    private var mPetRepository: PetRepository
 
     var mView : AddPetContract.View
     var mAboutView : AddPetContract.ViewAbout? = null
@@ -17,10 +26,15 @@ class AddPetPresenter : AddPetContract.Presenter {
     var mContactView : AddPetContract.ViewContact? = null
 
 
-    constructor(addPetView: AddPetContract.View)
+
+
+    constructor(addPetView: AddPetContract.View, petRepository: PetRepository, userRepository: UserRepository)
     {
         mView = addPetView
         mView.saveButtonClick().subscribe { validatePet(mCurrentPet) }
+
+        mPetRepository = petRepository
+        mUserRepository = userRepository
     }
 
     override fun initAbout(aboutAddFragment: AddPetContract.ViewAbout) {
@@ -36,7 +50,7 @@ class AddPetPresenter : AddPetContract.Presenter {
         //mInfoView!!.ageChanges().subscribe { a -> mCurrentPet.birthDate = a.toString() }
         mInfoView!!.sizeChanges().subscribe { a -> mCurrentPet.size = a.toString() }
         mInfoView!!.furSizeChanges().subscribe { a -> mCurrentPet.furSize = a.toString() }
-        mInfoView!!.furColorChanges().subscribe { a -> mCurrentPet.furColors = a }
+        mInfoView!!.furColorChanges().subscribe { a -> mCurrentPet.furColors = ArrayList<String>(a)  }
     }
 
     override fun initCondition(conditionView: AddPetContract.ViewCondition)
@@ -54,7 +68,7 @@ class AddPetPresenter : AddPetContract.Presenter {
                                                          mCurrentPet.isBlind = a.contains("Cego")
                                                          mCurrentPet.hasBadBehaviour = a.contains("Comportamento")}
 
-        mConditionView!!.personalityChanges().subscribe { a -> mCurrentPet.behaviour = a}
+        mConditionView!!.personalityChanges().subscribe { a -> mCurrentPet.behaviour = ArrayList<String>(a) }
     }
 
     override fun initContact(contactView: AddPetContract.ViewContact) {
@@ -68,8 +82,21 @@ class AddPetPresenter : AddPetContract.Presenter {
 
     }
 
-    private fun validatePet(pet:Pet)
+    private fun validatePet(pet: Pet)
     {
         Log.d("RXAndroid", "Valido!")
+        pet.createdBy = mUserRepository.getCurrentUserId()
+        mPetRepository.addPet(pet).doOnComplete {
+            mView.showSuccessMessage()
+            mView.finishActivity()
+        }.doOnError {
+            //Error
+        }.subscribe()
+    }
+
+    override fun imageReady(num: Int, file: File) {
+        mPetRepository.sendPetPhoto(num, file)
+                .subscribe { a -> Log.d("RXAndroid", "Deu boa! - " + a)
+            mCurrentPet.photosUrl.add(a)}
     }
 }

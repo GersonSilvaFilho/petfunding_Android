@@ -1,10 +1,7 @@
 package com.gersonsilvafilho.petfunding.splash
 
 import android.util.Log
-import com.facebook.FacebookException
-import com.google.firebase.auth.AuthCredential
-import com.google.firebase.auth.FirebaseAuth
-import durdinapps.rxfirebase2.RxFirebaseAuth
+import com.gersonsilvafilho.petfunding.model.user.UserRepository
 import io.reactivex.disposables.Disposable
 import javax.inject.Singleton
 
@@ -15,38 +12,34 @@ import javax.inject.Singleton
 @Singleton
 class SplashPresenter  : SplashContract.Presenter  {
 
-    var mAuth: FirebaseAuth?
     var mSplashView: SplashContract.View
+    var mUserRepository: UserRepository
 
     private var firebaseIsConnected:Boolean = false
-    private var  loginSubs: Disposable? = null
-    private var  authObserverSubs: Disposable? = null
+    private var  authObserverSubs: Disposable
 
-    constructor(splashView: SplashContract.View, auth: FirebaseAuth)
+    constructor(splashView: SplashContract.View, userRepository: UserRepository)
     {
         mSplashView = splashView
-        mAuth = auth
+        mUserRepository = userRepository
 
-        authObserverSubs = RxFirebaseAuth.observeAuthState(mAuth!!)
-                .map { t -> t.currentUser != null }
-                .subscribe { logged -> run {
-                    if(firebaseIsConnected != logged)
-                    {
-                        if(logged)
-                        {
-                            mSplashView.showFirebaseSuccess()
-                            mSplashView.goToMainMenuActivity()
-                        }
-                        else
-                        {
-                            mSplashView.startSelfActivity()
-                            authObserverSubs!!.dispose()
-                        }
-                        firebaseIsConnected = logged
-                    }
-                    Log.i("Rxfirebase2", "User logged " + logged)
-                } }
-
+        authObserverSubs = mUserRepository.userStatus().subscribe { logged -> run {
+            if(firebaseIsConnected != logged)
+            {
+                if(logged)
+                {
+                    mSplashView.showFirebaseSuccess()
+                    mSplashView.goToMainMenuActivity()
+                }
+                else
+                {
+                    mSplashView.startSelfActivity()
+                    authObserverSubs.dispose()
+                }
+                firebaseIsConnected = logged
+            }
+            Log.i("Rxfirebase2", "User logged " + logged)
+        } }
     }
 
     override fun facebookSuccess()
@@ -59,20 +52,14 @@ class SplashPresenter  : SplashContract.Presenter  {
         mSplashView.showFacebookError()
     }
 
-    override fun facebookOnError(error: FacebookException)
+    override fun facebookOnError()
     {
         mSplashView.showFacebookError()
     }
 
-    override fun firebaseSuccess(credential: AuthCredential)
+    override fun firebaseSuccess(token: String)
     {
-        loginSubs = RxFirebaseAuth.signInWithCredential((mAuth!!), credential)
-                .map { authResult -> authResult.getUser() != null }
-                .subscribe{  logged -> run {
-                    Log.i("Rxfirebase2", "User logged " + logged)
-                    loginSubs!!.dispose()
-                } }
-
+        mUserRepository.loginWithFacebook(token).take(1).subscribe {  }
     }
 
 

@@ -87,6 +87,17 @@ dependencies {
     compile 'com.jaredrummler:material-spinner:1.1.0'
 
     compile 'com.jakewharton.rxbinding2:rxbinding-kotlin:2.0.0'
+
+    //Firebase database
+    compile 'com.google.firebase:firebase-database:10.2.1'
+    compile 'com.google.firebase:firebase-storage:10.2.1'
+
+    //RxPaparazzo for camera / galery loading
+    compile "com.github.miguelbcr:RxPaparazzo:0.5.2-2.x"
+
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.3.1'
 }
 
 repositories {

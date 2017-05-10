@@ -10,6 +10,10 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import com.gersonsilvafilho.petfunding.R
+import com.gersonsilvafilho.petfunding.detail.fragments.AboutFragment
+import com.gersonsilvafilho.petfunding.detail.fragments.ContactFragment
+import com.gersonsilvafilho.petfunding.detail.fragments.InfoFragment
+import com.gersonsilvafilho.petfunding.detail.fragments.StatusFragment
 import kotlinx.android.synthetic.main.activity_detail.*
 import java.util.*
 

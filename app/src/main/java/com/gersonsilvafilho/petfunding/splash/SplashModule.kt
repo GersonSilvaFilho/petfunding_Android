@@ -1,6 +1,6 @@
 package com.gersonsilvafilho.petfunding.splash
 
-import com.google.firebase.auth.FirebaseAuth
+import com.gersonsilvafilho.petfunding.model.user.UserRepository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -9,14 +9,10 @@ import javax.inject.Singleton
 @Module
 class SplashModule{
 
-    var mSplashView: SplashContract.View
-    var mAuth: FirebaseAuth
     var mSplashPresenter: SplashPresenter
 
-    constructor(splashView: SplashContract.View, auth: FirebaseAuth) {
-        mSplashView = splashView
-        mAuth = auth
-        mSplashPresenter = SplashPresenter(mSplashView, mAuth)
+    constructor(splashView: SplashContract.View, userRepository: UserRepository) {
+        mSplashPresenter = SplashPresenter(splashView, userRepository)
     }
 
     @Provides

@@ -1,4 +1,4 @@
-package com.gersonsilvafilho.petfunding.detail
+package com.gersonsilvafilho.petfunding.detail.fragments
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.gersonsilvafilho.petfunding.R
 
 
-class StatusFragment : Fragment() {
+class ContactFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,7 +17,7 @@ class StatusFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater!!.inflate(R.layout.status_fragment, container, false)
+        return inflater!!.inflate(R.layout.contact_fragment, container, false)
     }
 
 }// Required empty public constructor

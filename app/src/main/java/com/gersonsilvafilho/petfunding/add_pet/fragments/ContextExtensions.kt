@@ -1,5 +1,5 @@
 
-package com.gersonsilvafilho.petfunding.add_pet
+package com.gersonsilvafilho.petfunding.add_pet.fragments
 
 import com.nex3z.togglebuttongroup.button.LabelToggle
 import io.reactivex.Observable
