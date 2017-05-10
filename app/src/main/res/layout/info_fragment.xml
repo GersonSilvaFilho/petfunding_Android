@@ -26,6 +26,7 @@
 
 
             <TextView
+                android:id="@+id/textViewDetailSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Médio"
@@ -65,6 +66,7 @@
 
 
             <TextView
+                android:id="@+id/textViewDetailSex"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Masculino"
@@ -104,6 +106,7 @@
 
 
             <TextView
+                android:id="@+id/textViewDetailFurSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Médio"
@@ -138,6 +141,7 @@
 
 
             <TextView
+                android:id="@+id/textViewDetailFurColor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Preto"
@@ -177,6 +181,7 @@
 
 
             <TextView
+                android:id="@+id/textViewDetailLikeChildren"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Sim"
@@ -216,6 +221,7 @@
 
 
             <TextView
+                android:id="@+id/textViewDetailOtherAnimals"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Sim"

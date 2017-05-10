@@ -6,9 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.gersonsilvafilho.petfunding.R
+import com.gersonsilvafilho.petfunding.model.pet.Pet
 
 
-class ContactFragment : Fragment() {
+class ContactFragment (val mPet: Pet): Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

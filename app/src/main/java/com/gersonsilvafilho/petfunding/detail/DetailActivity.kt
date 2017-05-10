@@ -14,6 +14,7 @@ import com.gersonsilvafilho.petfunding.detail.fragments.AboutFragment
 import com.gersonsilvafilho.petfunding.detail.fragments.ContactFragment
 import com.gersonsilvafilho.petfunding.detail.fragments.InfoFragment
 import com.gersonsilvafilho.petfunding.detail.fragments.StatusFragment
+import com.gersonsilvafilho.petfunding.model.pet.Pet
 import kotlinx.android.synthetic.main.activity_detail.*
 import java.util.*
 
@@ -26,24 +27,30 @@ class DetailActivity : AppCompatActivity() {
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
 
+        val pet = intent.getSerializableExtra("pet") as Pet
+
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setTitle(pet.name)
+        supportActionBar!!.setSubtitle("Macho")
+
         val fab = findViewById(R.id.fab) as FloatingActionButton
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
-        setupViewPager(viewpager)
+        setupViewPager(viewpager, pet)
         tabs.setupWithViewPager(viewpager)
 
-        val pagerAdapter = ImagePagerAdapter(this)
+        val pagerAdapter = ImagePagerAdapter(this, pet.photosUrl)
         imageviewpager.adapter = pagerAdapter
     }
 
-    private fun setupViewPager(viewPager: ViewPager) {
+    private fun setupViewPager(viewPager: ViewPager, pet:Pet) {
         val adapter = ViewPagerAdapter(supportFragmentManager)
-        adapter.addFragment(AboutFragment(), "Info")
-        adapter.addFragment(InfoFragment(), "Dados")
-        adapter.addFragment(StatusFragment(), "Condição")
-        adapter.addFragment(ContactFragment(), "Contato")
+        adapter.addFragment(AboutFragment(pet), "Info")
+        adapter.addFragment(InfoFragment(pet), "Dados")
+        adapter.addFragment(StatusFragment(pet), "Condição")
+        adapter.addFragment(ContactFragment(pet), "Contato")
         viewPager.adapter = adapter
     }
 

@@ -10,6 +10,7 @@ interface MainMenuContract {
     interface View
     {
         fun updateCardAdapter(pets:List<Pet>)
+        fun startDetailActivity(pet:Pet)
     }
 
     interface Presenter

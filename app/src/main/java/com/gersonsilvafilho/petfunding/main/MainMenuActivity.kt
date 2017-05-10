@@ -15,13 +15,10 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import com.facebook.login.LoginManager
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.add_pet.AddPetActivity
 import com.gersonsilvafilho.petfunding.detail.DetailActivity
 import com.gersonsilvafilho.petfunding.model.pet.Pet
-import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.card_layout.*
 import kotlinx.android.synthetic.main.content_navigation.*
 import org.jetbrains.anko.startActivity
 import javax.inject.Inject
@@ -29,8 +26,13 @@ import javax.inject.Inject
 class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , NavigationView.OnNavigationItemSelectedListener, SwipeListener.mClickListener{
 
 
+    override fun startDetailActivity(pet: Pet) {
+        startActivity<DetailActivity>("pet" to pet)
+    }
+
+
     override fun updateCardAdapter(pets: List<Pet>) {
-        var mCardAdapter = CardsDataAdapter(applicationContext, 0)
+        var mCardAdapter = CardsDataAdapter(this, applicationContext, 0)
         mCardAdapter.addAll(pets)
         cardStack.setAdapter(mCardAdapter)
     }
@@ -38,7 +40,10 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
 
 
     override fun mClick() {
-        launch(this, card_full)
+        ///launch(this, card_full)
+
+        startActivity<DetailActivity>("pet" to cardStack.adapter.getItem(cardStack.currIndex))
+        //startActivity<DetailActivity>()
     }
 
     // Methods inside this block are static
@@ -46,7 +51,6 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         fun launch(activity: Activity, sharedView: View) {
             val transitionName = activity.resources.getString(R.string.image_transition_name)
             val launcher = Intent(activity, DetailActivity::class.java)
-
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, sharedView, transitionName)
             activity.startActivity(launcher, options.toBundle())
         }

@@ -1,58 +1,76 @@
 package com.gersonsilvafilho.petfunding.model.pet
 
 import com.google.firebase.database.Exclude
+import java.io.Serializable
 import java.util.*
-
 
 
 /**
  * Created by GersonSilva on 5/6/17.
  */
-class Pet {
-
+class Pet : Serializable {
     constructor()
     {
     }
 
-    var uid:String = ""
-    var name:String = ""
-    var description:String = ""
+    var uid: String = ""
 
-    var type:String = "unknown"
-    var sex:String = ""
+    var name: String = ""
+
+    var description: String = ""
+
+    var type: String = "unknown"
+
+    var sex: String = ""
+
     //var birthDate:Date? = null
-    var size:String = ""
-    var furSize:String = ""
+    var size: String = ""
+
+    var furSize: String = ""
+
     var furColors: ArrayList<String> = ArrayList<String>()
 
-    var isVaccinated:Boolean = false
-    var isDewormed:Boolean = false
-    var isCastrated:Boolean = false
+    var isVaccinated: Boolean = false
 
-    var likeChildren:Boolean = false
-    var likeAnimals:Boolean = false
-    var likeElders:Boolean = false
+    var isDewormed: Boolean = false
 
-    var hasLocomotionProblems:Boolean = false
-    var isBlind:Boolean = false
-    var hasBadBehaviour:Boolean = false
+    var isCastrated: Boolean = false
+
+    var likeChildren: Boolean = false
+
+    var likeAnimals: Boolean = false
+
+    var likeElders: Boolean = false
+
+    var hasLocomotionProblems: Boolean = false
+
+    var isBlind: Boolean = false
+
+    var hasBadBehaviour: Boolean = false
 
     var behaviour: ArrayList<String> = ArrayList<String>()
 
-    var state:String = ""
-    var city:String = ""
-    var contactName:String = ""
-    var contactPhone:String = ""
-    var ongName:String = ""
+    var state: String = ""
+
+    var city: String = ""
+
+    var contactName: String = ""
+
+    var contactPhone: String = ""
+
+    var ongName: String = ""
 
     var photosUrl: ArrayList<String> = ArrayList<String>()
 
-    var createdBy:String = ""
-    var createdAt: Date = Date()
-    var adoptedAt: Date? = null
-    var updatedAt: Date = Date()
-    var adoptedBy:String? = null
+    var createdBy: String = ""
 
+    var createdAt: Date = Date()
+
+    var adoptedAt: Date? = null
+
+    var updatedAt: Date = Date()
+
+    var adoptedBy: String? = null
 
     @Exclude
     fun toMap(): Map<String, Any> {
@@ -82,5 +100,4 @@ class Pet {
         return values
 
     }
-
 }

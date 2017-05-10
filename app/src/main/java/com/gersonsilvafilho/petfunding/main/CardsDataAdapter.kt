@@ -11,7 +11,7 @@ import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.squareup.picasso.Picasso
 
-class CardsDataAdapter(context: Context, @LayoutRes resource: Int) : ArrayAdapter<Pet>(context, resource) {
+class CardsDataAdapter(var mView :MainMenuContract.View ,context:Context, @LayoutRes resource: Int) : ArrayAdapter<Pet>(context, resource) {
 
     override fun getView(position: Int, contentView: View?, parent: ViewGroup): View {
 
@@ -20,10 +20,13 @@ class CardsDataAdapter(context: Context, @LayoutRes resource: Int) : ArrayAdapte
                 .load(getItem(position).photosUrl.get(0))
                 .into(imageView)
 
-        val nameTextView = contentView!!.findViewById(R.id.textViewCardName) as TextView
+        val nameTextView = contentView.findViewById(R.id.textViewCardName) as TextView
         nameTextView.text = getItem(position).name
 
-        return contentView!!
+//        contentView.setOnClickListener {
+//            mView.startDetailActivity(getItem(position))
+//        }
+        return contentView
     }
 
 }
