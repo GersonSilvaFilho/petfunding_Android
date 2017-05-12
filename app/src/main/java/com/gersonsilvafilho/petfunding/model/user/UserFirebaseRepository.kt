@@ -69,7 +69,7 @@ class UserFirebaseRepository : UserRepository
                 Log.d("Facebook Parameters", "Passou =" + name)
                 val key = usersRef.child(getCurrentUserId())
                 var user = User()
-                user.name = name
+                user.username = name
                 RxFirebaseDatabase.updateChildren(key,user.toMap()).subscribe()
             } catch (e: JSONException) {
                 Log.d("Facebook Parameters", "Merda")

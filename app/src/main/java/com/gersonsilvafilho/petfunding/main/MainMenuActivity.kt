@@ -18,10 +18,12 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.add_pet.AddPetActivity
+import com.gersonsilvafilho.petfunding.chat.ChatActivity
 import com.gersonsilvafilho.petfunding.detail.DetailActivity
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.squareup.picasso.Picasso
@@ -46,6 +48,9 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
                 .into(imageView)
         val textView = dialog.findViewById(R.id.textViewDialogName) as TextView
         textView.setText((cardStack.adapter.getItem(cardId) as Pet).name + " está muito feliz que você deseja adotá-lo!")
+
+        val button = dialog.findViewById(R.id.buttonMatchMessage) as Button
+        button.setOnClickListener { startActivity<ChatActivity>() }
         dialog.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
     }
