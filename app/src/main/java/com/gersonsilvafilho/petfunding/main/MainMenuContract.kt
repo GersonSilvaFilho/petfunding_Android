@@ -17,5 +17,6 @@ interface MainMenuContract {
     {
         fun loadPets()
         fun userLogout()
+        fun userMatchedPet(petId:String)
     }
 }

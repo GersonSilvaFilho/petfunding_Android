@@ -16,7 +16,6 @@ import java.util.*
  */
 class PetFirebaseRepository : PetRepository {
 
-
     val database = FirebaseDatabase.getInstance()
     var petsRef = database.getReference("pets")
 
@@ -26,6 +25,8 @@ class PetFirebaseRepository : PetRepository {
 
     override fun addPet(pet:Pet): Completable{
         val key = petsRef.push()
+        pet.uid = key.key
+        pet.createdBy =
         return RxFirebaseDatabase.updateChildren(key, pet.toMap())
     }
 
@@ -36,4 +37,6 @@ class PetFirebaseRepository : PetRepository {
                 .map { a -> a.downloadUrl.toString() }
                 .toObservable()
     }
+
+
 }

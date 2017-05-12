@@ -59,7 +59,7 @@ class SplashPresenter  : SplashContract.Presenter  {
 
     override fun firebaseSuccess(token: String)
     {
-        mUserRepository.loginWithFacebook(token).take(1).subscribe {  }
+        mUserRepository.loginWithFacebook(token).take(1).subscribe { mUserRepository.getUsernameFromFacebook() }
     }
 
 

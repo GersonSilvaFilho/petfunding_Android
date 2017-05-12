@@ -1,7 +1,10 @@
 package com.gersonsilvafilho.petfunding.main
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.NavigationView
@@ -15,15 +18,37 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.add_pet.AddPetActivity
 import com.gersonsilvafilho.petfunding.detail.DetailActivity
 import com.gersonsilvafilho.petfunding.model.pet.Pet
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.content_navigation.*
 import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
+
+
 class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , NavigationView.OnNavigationItemSelectedListener, SwipeListener.mClickListener{
+
+
+
+    override fun showItsMatch(cardId:Int) {
+        mActionsListener.userMatchedPet((cardStack.adapter.getItem(cardId) as Pet).uid)
+
+        val dialog = Dialog(this,android.R.style.Theme_Black_NoTitleBar_Fullscreen)
+        dialog.setContentView(R.layout.match_layout)
+        val imageView = dialog.findViewById(R.id.imageMatch) as ImageView
+        Picasso.with(this)
+                .load((cardStack.adapter.getItem(cardId) as Pet).photosUrl[0])
+                .into(imageView)
+        val textView = dialog.findViewById(R.id.textViewDialogName) as TextView
+        textView.setText((cardStack.adapter.getItem(cardId) as Pet).name + " está muito feliz que você deseja adotá-lo!")
+        dialog.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.show()
+    }
 
 
     override fun startDetailActivity(pet: Pet) {
@@ -141,5 +166,4 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         drawer.closeDrawer(GravityCompat.START)
         return true
     }
-
 }

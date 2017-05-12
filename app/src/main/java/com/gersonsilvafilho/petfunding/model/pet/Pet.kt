@@ -88,7 +88,6 @@ class Pet : Serializable {
         values.put("isDewormed", isDewormed)
         values.put("isCastrated", isCastrated)
         values.put("likeChildren", likeChildren)
-
         values.put("likeAnimals", likeAnimals)
         values.put("likeElders", likeElders)
         values.put("hasLocomotionProblems", hasLocomotionProblems)

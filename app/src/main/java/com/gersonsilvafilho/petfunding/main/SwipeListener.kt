@@ -1,5 +1,6 @@
 package com.gersonsilvafilho.petfunding.main
 
+import android.util.Log
 import com.wenchao.cardstack.CardStack
 
 /**
@@ -31,10 +32,14 @@ class SwipeListener (val clickListener:mClickListener): CardStack.CardEventListe
 
     override fun swipeContinue(direction: Int, distanceX: Float, distanceY: Float): Boolean {
 
+
+
         return true
     }
 
     override fun discarded(id: Int, direction: Int) {
+        Log.d("TESTE", "Valores:" + id + " " + direction)
+        clickListener.showItsMatch(id - 1)
         //this callback invoked when dismiss animation is finished.
     }
 
@@ -46,5 +51,6 @@ class SwipeListener (val clickListener:mClickListener): CardStack.CardEventListe
 
     interface mClickListener {
         fun mClick()
+        fun showItsMatch(cardId:Int)
     }
 }

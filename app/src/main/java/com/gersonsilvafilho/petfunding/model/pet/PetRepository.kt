@@ -13,4 +13,5 @@ interface PetRepository {
     fun addPet(pet:Pet): Completable
     fun sendPetPhoto(index:Int, file:File): Observable<String>
 
+
 }

@@ -1,5 +1,6 @@
 package com.gersonsilvafilho.petfunding.model.user
 
+import io.reactivex.Completable
 import io.reactivex.Observable
 
 
@@ -12,4 +13,6 @@ interface UserRepository
     fun userStatus(): Observable<Boolean>
     fun userLogout()
     fun getCurrentUserId():String
+    fun addMatch(petId:String): Completable
+    fun getUsernameFromFacebook()
 }

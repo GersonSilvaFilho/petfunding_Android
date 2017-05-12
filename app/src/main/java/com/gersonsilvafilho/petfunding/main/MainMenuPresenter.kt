@@ -9,6 +9,10 @@ import com.gersonsilvafilho.petfunding.model.user.UserRepository
  */
 class MainMenuPresenter constructor(var mPetRepository: PetRepository, var mUserRepository: UserRepository, var mMainMenuView: MainMenuContract.View) : MainMenuContract.Presenter
 {
+    override fun userMatchedPet(petId: String) {
+        mUserRepository.addMatch(petId).doOnComplete {  }.doOnError {  }.subscribe()
+    }
+
     override fun userLogout()
     {
         mUserRepository.userLogout()
