@@ -13,7 +13,7 @@ import durdinapps.rxfirebase2.RxFirebaseDatabase
 import io.reactivex.Completable
 import io.reactivex.Observable
 import org.json.JSONException
-
+import java.util.*
 
 
 /**
@@ -21,8 +21,11 @@ import org.json.JSONException
  */
 class UserFirebaseRepository : UserRepository
 {
+
+
     val database = FirebaseDatabase.getInstance()
     var usersRef = database.getReference("users")
+    var mCurrentUser = User()
 
     private val  mAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
@@ -47,11 +50,17 @@ class UserFirebaseRepository : UserRepository
         return FirebaseAuth.getInstance().currentUser!!.uid
     }
 
-    override fun addMatch(petId:String): Completable {
+    override fun getCurrentUser(): User {
+        return mCurrentUser
+    }
+
+    override fun addMatch(petId:String): Observable<String>? {
         val key = usersRef.child(getCurrentUserId()).child("matchs").child(petId)
         var match = Match()
-        return RxFirebaseDatabase.updateChildren(key,match.toMap()).doOnComplete {  }.doOnError {  }
-    }
+        val newMap = HashMap(mCurrentUser.matchs)
+        newMap.put(key.key, match!!)
+        mCurrentUser.matchs = newMap
+        return RxFirebaseDatabase.updateChildren(key,match.toMap()).subscribe { match}
 
     override fun getUsernameFromFacebook()
     {
@@ -68,9 +77,9 @@ class UserFirebaseRepository : UserRepository
 
                 Log.d("Facebook Parameters", "Passou =" + name)
                 val key = usersRef.child(getCurrentUserId())
-                var user = User()
-                user.username = name
-                RxFirebaseDatabase.updateChildren(key,user.toMap()).subscribe()
+                mCurrentUser.username = name
+                mCurrentUser.uid = getCurrentUserId()
+                RxFirebaseDatabase.updateChildren(key,mCurrentUser.toMap()).subscribe()
             } catch (e: JSONException) {
                 Log.d("Facebook Parameters", "Merda")
                 e.printStackTrace()

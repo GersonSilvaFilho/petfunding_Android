@@ -13,6 +13,7 @@ interface UserRepository
     fun userStatus(): Observable<Boolean>
     fun userLogout()
     fun getCurrentUserId():String
-    fun addMatch(petId:String): Completable
+    fun addMatch(petId:String): Observable<String>?
     fun getUsernameFromFacebook()
+    fun getCurrentUser():User
 }

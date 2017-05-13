@@ -30,14 +30,15 @@ class Message: IMessage {
     var itext:String = ""
     var userId:String = ""
     var date:Date = Date()
+    @Exclude
     var user:User = User()
 
     @Exclude
     fun toMap(): Map<String, Any> {
         val values = HashMap<String, Any>()
         values.put("uid", uid)
-        values.put("petId", userId)
-        values.put("text", itext)
+        values.put("userId", userId)
+        values.put("itext", itext)
         values.put("date", date)
         return values
 
