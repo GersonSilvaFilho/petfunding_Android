@@ -2,7 +2,12 @@ language: android
 
 jdk:
   - oraclejdk8
-  
+
+licenses:
+    - 'android-sdk-preview-license-.+'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
+    
 android:
   components:
     - tools # to get the new `repository-11.xml`
@@ -15,6 +20,6 @@ android:
 
 script:
    - ./gradlew build connectedCheck
-   
+    
 after_failure: "cat $TRAVIS_BUILD_DIR/app/build/outputs/lint-results-debug.xml"
 
