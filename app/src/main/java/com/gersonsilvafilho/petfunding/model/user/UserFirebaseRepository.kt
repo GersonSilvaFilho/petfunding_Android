@@ -61,7 +61,8 @@ class UserFirebaseRepository : UserRepository
         newMap.put(key.key, match!!)
         mCurrentUser.matchs = newMap
         return RxFirebaseDatabase.updateChildren(key,match.toMap()).subscribe { match}
-
+    }
+    
     override fun getUsernameFromFacebook()
     {
         Log.d("Facebook Parameters", "GetNameFrom FB")
