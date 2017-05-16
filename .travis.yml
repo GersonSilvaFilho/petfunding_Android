@@ -55,8 +55,8 @@
     "echo no | avdmanager create avd -n acib -k \"$EMULATOR\" -f --abi \"$ABI\" --tag \"$TAG\"",
     "emulator -avd acib -engine classic -no-window -camera-back none -camera-front none -verbose -qemu -m 512 &",
     "adb wait-for-device get-serialno",
-    "cd ${TRAVIS_BUILD_DIR}/${DIR} && ./gradlew --version",
-    "cd ${TRAVIS_BUILD_DIR}/${DIR} && ./gradlew clean build",
+    "cd ${TRAVIS_BUILD_DIR} && ./gradlew --version",
+    "cd ${TRAVIS_BUILD_DIR} && ./gradlew clean build",
     "sdkmanager --list || true"
   ],
   "before_script": [
@@ -68,13 +68,13 @@
     "adb shell input keyevent 82 &"
   ],
   "script": [
-    "cd ${TRAVIS_BUILD_DIR}/${DIR} && ./gradlew connectedCheck"
+    "cd ${TRAVIS_BUILD_DIR} && ./gradlew connectedCheck"
   ],
   "after_script": [
-    "cat ${TRAVIS_BUILD_DIR}/${DIR}/*/build/outputs/androidTest-results/connected/*",
-    "cat ${TRAVIS_BUILD_DIR}/${DIR}/*/build/reports/lint-results.xml"
+    "cat ${TRAVIS_BUILD_DIR}/*/build/outputs/androidTest-results/connected/*",
+    "cat ${TRAVIS_BUILD_DIR}/*/build/reports/lint-results.xml"
   ],
-  "global_env": "DIR=constraint-layout-start API=25 TAG=google_apis ABI=armeabi-v7a QEMU_AUDIO_DRV=none GRADLE_USER_HOME=\"${TRAVIS_BUILD_DIR}/gradle\" ANDROID_HOME=/usr/local/android-sdk-24.0.2 TOOLS=${ANDROID_HOME}/tools PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH} ADB_INSTALL_TIMEOUT=20",
+  "global_env": "API=25 TAG=google_apis ABI=armeabi-v7a QEMU_AUDIO_DRV=none GRADLE_USER_HOME=\"${TRAVIS_BUILD_DIR}/gradle\" ANDROID_HOME=/usr/local/android-sdk-24.0.2 TOOLS=${ANDROID_HOME}/tools PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH} ADB_INSTALL_TIMEOUT=20",
   "group": "stable",
   "dist": "precise",
   "os": "linux"
