@@ -3,7 +3,6 @@ package com.gersonsilvafilho.petfunding.chat
 import com.gersonsilvafilho.petfunding.model.chat.Chat
 import com.gersonsilvafilho.petfunding.model.chat.ChatRepository
 import com.gersonsilvafilho.petfunding.model.message.Message
-import com.gersonsilvafilho.petfunding.model.user.Match
 import com.gersonsilvafilho.petfunding.model.user.UserRepository
 
 /**
@@ -23,15 +22,13 @@ class ChatPresenter : ChatContract.Presenter
     private var  mUserRepository: UserRepository
     private var  mCurrentChatId:String? = null
     private var  mCurrentText:String? = null
-    private var  mMatch: Match
 
-    constructor(chatView: ChatContract.View, chatRepository: ChatRepository, userRepository: UserRepository, match: Match)
+    constructor(chatView: ChatContract.View, chatRepository: ChatRepository, userRepository: UserRepository, match: String)
     {
         mView = chatView
         mChatRepository = chatRepository
         mUserRepository = userRepository
-        mMatch = match
-        chatRepository.initNewChat(match)
+        chatRepository.initNewChat(match, userRepository.getCurrentUserId())
                 .doOnComplete{
                     mView.initChatView(userRepository.getCurrentUserId())
                     mCurrentChatId = chatRepository.getCurrentChat().uid

@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.ImageView
 import com.gersonsilvafilho.petfunding.R
-import com.gersonsilvafilho.petfunding.model.chat.Chat
 import com.gersonsilvafilho.petfunding.model.chat.ChatFirebaseRepository
 import com.gersonsilvafilho.petfunding.model.message.Message
-import com.gersonsilvafilho.petfunding.model.user.Match
 import com.gersonsilvafilho.petfunding.model.user.UserFirebaseRepository
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
@@ -26,7 +24,7 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
-        val match = intent.getSerializableExtra("match") as Match
+        val match = intent.getStringExtra("matchId")
         mActionsListener = ChatPresenter(this, ChatFirebaseRepository(), UserFirebaseRepository(), match)
     }
 

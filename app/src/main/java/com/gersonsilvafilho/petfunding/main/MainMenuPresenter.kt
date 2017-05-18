@@ -1,5 +1,6 @@
 package com.gersonsilvafilho.petfunding.main
 
+import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.model.pet.PetRepository
 import com.gersonsilvafilho.petfunding.model.user.UserRepository
 
@@ -9,8 +10,8 @@ import com.gersonsilvafilho.petfunding.model.user.UserRepository
  */
 class MainMenuPresenter constructor(var mPetRepository: PetRepository, var mUserRepository: UserRepository, var mMainMenuView: MainMenuContract.View) : MainMenuContract.Presenter
 {
-    override fun userMatchedPet(petId: String) {
-        mUserRepository.addMatch(petId).doOnComplete {  }.doOnError {  }.subscribe()
+    override fun userMatchedPet(pet: Pet) {
+        mUserRepository.addMatch(pet.uid).toObservable().subscribe {a -> mMainMenuView.showItsMatchDialog(pet, a)}
     }
 
     override fun userLogout()

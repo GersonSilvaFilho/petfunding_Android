@@ -10,8 +10,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import durdinapps.rxfirebase2.RxFirebaseAuth
 import durdinapps.rxfirebase2.RxFirebaseDatabase
-import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Single
 import org.json.JSONException
 import java.util.*
 
@@ -54,13 +54,14 @@ class UserFirebaseRepository : UserRepository
         return mCurrentUser
     }
 
-    override fun addMatch(petId:String): Observable<String>? {
+    override fun addMatch(petId:String): Single<String> {
         val key = usersRef.child(getCurrentUserId()).child("matchs").child(petId)
         var match = Match()
         val newMap = HashMap(mCurrentUser.matchs)
         newMap.put(key.key, match!!)
         mCurrentUser.matchs = newMap
-        return RxFirebaseDatabase.updateChildren(key,match.toMap()).subscribe { match}
+        return RxFirebaseDatabase.updateChildren(key, match.toMap()).toSingle { key.key }
+    }
 
     override fun getUsernameFromFacebook()
     {

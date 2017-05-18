@@ -11,12 +11,13 @@ interface MainMenuContract {
     {
         fun updateCardAdapter(pets:List<Pet>)
         fun startDetailActivity(pet:Pet)
+        fun showItsMatchDialog(pet:Pet, matchId:String)
     }
 
     interface Presenter
     {
         fun loadPets()
         fun userLogout()
-        fun userMatchedPet(petId:String)
+        fun userMatchedPet(pet:Pet)
     }
 }
