@@ -13,30 +13,30 @@ import org.mockito.MockitoAnnotations
  */
 class SplashPresenterTest {
 
-    @Mock
-    lateinit var view : SplashContract.View
-    lateinit var presenter: SplashPresenter
+//     @Mock
+//     lateinit var view : SplashContract.View
+//     lateinit var presenter: SplashPresenter
 
-    @Before
-    fun init()
-    {
-        MockitoAnnotations.initMocks(this)
-        presenter = SplashPresenter(view)
-    }
+//     @Before
+//     fun init()
+//     {
+//         MockitoAnnotations.initMocks(this)
+//         presenter = SplashPresenter(view)
+//     }
 
-    @Test
-    fun testCancelFacebook() {
-        presenter.facebookCancel()
-    }
+//     @Test
+//     fun testCancelFacebook() {
+//         presenter.facebookCancel()
+//     }
 
-    @Test
-    fun testErrorFacebook() {
-        val ex = FacebookException()
-        presenter.facebookOnError(ex)
-    }
+//     @Test
+//     fun testErrorFacebook() {
+//         val ex = FacebookException()
+//         presenter.facebookOnError(ex)
+//     }
 
-    @Test
-    fun testOkFacebook() {
-        presenter.facebookSuccess("androidtest")
-    }
+//     @Test
+//     fun testOkFacebook() {
+//         presenter.facebookSuccess("androidtest")
+//     }
 }
