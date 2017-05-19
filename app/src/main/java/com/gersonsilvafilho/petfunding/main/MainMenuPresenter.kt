@@ -10,7 +10,8 @@ import com.gersonsilvafilho.petfunding.model.user.UserRepository
  */
 class MainMenuPresenter constructor(var mPetRepository: PetRepository, var mUserRepository: UserRepository, var mMainMenuView: MainMenuContract.View) : MainMenuContract.Presenter
 {
-    override fun userMatchedPet(pet: Pet) {
+    override fun userMatchedPet(pet: Pet)
+    {
         mUserRepository.addMatch(pet.uid).toObservable().subscribe {a -> mMainMenuView.showItsMatchDialog(pet, a)}
     }
 

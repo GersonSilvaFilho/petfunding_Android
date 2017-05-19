@@ -30,6 +30,7 @@ class SplashPresenter  : SplashContract.Presenter  {
                 {
                     mSplashView.showFirebaseSuccess()
                     mSplashView.goToMainMenuActivity()
+                    mUserRepository.monitorCurrentUser()
                 }
                 else
                 {

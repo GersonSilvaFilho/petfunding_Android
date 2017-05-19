@@ -5,6 +5,7 @@ import com.google.firebase.database.FirebaseDatabase
 import durdinapps.rxfirebase2.RxFirebaseDatabase
 import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.Single
 import java.util.*
 
 /**
@@ -12,9 +13,6 @@ import java.util.*
  */
 class ChatFirebaseRepository : ChatRepository
 {
-
-
-
     val database = FirebaseDatabase.getInstance()
     var chatRef = database.getReference("chat")
     var usersRef = database.getReference("users")
@@ -30,10 +28,11 @@ class ChatFirebaseRepository : ChatRepository
     }
 
 
-    override fun sendMessage(chatId: String, message: Message): Completable
+    override fun sendMessage(chatId: String, message: Message): Single<String>
     {
-        val key = chatRef.child(chatId).child("messages")
-        return RxFirebaseDatabase.updateChildren(key,message.toMap()).doOnComplete {  }.doOnError {  }
+        val key = chatRef.child(chatId).child("messages").push()
+        message.uid = key.key
+        return RxFirebaseDatabase.updateChildren(key,message.toMap()).toSingle { key.key }
     }
 
     override fun initNewChat(matchId: String, userId: String): Completable {

@@ -16,4 +16,8 @@ interface UserRepository
     fun addMatch(petId:String): Single<String>
     fun getUsernameFromFacebook()
     fun getCurrentUser():User
+    fun checkIfMatchExists(petId: String): Single<Boolean>
+    fun monitorCurrentUser()
+    fun checkIfChatExists(petId: String): String?
+
 }

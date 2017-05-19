@@ -13,7 +13,6 @@ import durdinapps.rxfirebase2.RxFirebaseDatabase
 import io.reactivex.Observable
 import io.reactivex.Single
 import org.json.JSONException
-import java.util.*
 
 
 /**
@@ -21,17 +20,21 @@ import java.util.*
  */
 class UserFirebaseRepository : UserRepository
 {
-
-
     val database = FirebaseDatabase.getInstance()
     var usersRef = database.getReference("users")
     var mCurrentUser = User()
 
     private val  mAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
+
     override fun userStatus(): Observable<Boolean> {
         return RxFirebaseAuth.observeAuthState(mAuth)
                 .map { t -> t.currentUser != null }
+    }
+
+    override fun monitorCurrentUser() {
+        val key = usersRef.child(getCurrentUserId())
+        RxFirebaseDatabase.observeValueEvent(key, User::class.java).subscribe { mCurrentUser = it }
     }
 
     override fun loginWithFacebook(token: String): Observable<Boolean> {
@@ -57,10 +60,13 @@ class UserFirebaseRepository : UserRepository
     override fun addMatch(petId:String): Single<String> {
         val key = usersRef.child(getCurrentUserId()).child("matchs").child(petId)
         var match = Match()
-        val newMap = HashMap(mCurrentUser.matchs)
-        newMap.put(key.key, match!!)
-        mCurrentUser.matchs = newMap
         return RxFirebaseDatabase.updateChildren(key, match.toMap()).toSingle { key.key }
+
+    }
+
+    override fun checkIfMatchExists(petId:String): Single<Boolean> {
+        val key = usersRef.child(getCurrentUserId()).child("matchs").child(petId)
+        return RxFirebaseDatabase.observeSingleValueEvent(key, Match::class.java).isEmpty
     }
 
     override fun getUsernameFromFacebook()
@@ -80,7 +86,9 @@ class UserFirebaseRepository : UserRepository
                 val key = usersRef.child(getCurrentUserId())
                 mCurrentUser.username = name
                 mCurrentUser.uid = getCurrentUserId()
+
                 RxFirebaseDatabase.updateChildren(key,mCurrentUser.toMap()).subscribe()
+
             } catch (e: JSONException) {
                 Log.d("Facebook Parameters", "Merda")
                 e.printStackTrace()
@@ -90,6 +98,11 @@ class UserFirebaseRepository : UserRepository
         parameters.putString("fields", "id,name,email,gender,birthday")
         request.parameters = parameters
         request.executeAsync()
+    }
+
+    override fun checkIfChatExists(petId: String): String?
+    {
+        return getCurrentUser().matchs[petId]?.chatId
     }
 
 }

@@ -10,13 +10,6 @@ import com.gersonsilvafilho.petfunding.model.user.UserRepository
  */
 class ChatPresenter : ChatContract.Presenter
 {
-    override fun sendMessage(message: String) {
-        val msg = Message()
-        msg.itext = message
-        msg.userId = mUserRepository.getCurrentUserId()
-        mChatRepository.sendMessage(mCurrentChatId!!, msg)
-    }
-
     private var  mView: ChatContract.View
     private var  mChatRepository: ChatRepository
     private var  mUserRepository: UserRepository
@@ -28,14 +21,26 @@ class ChatPresenter : ChatContract.Presenter
         mView = chatView
         mChatRepository = chatRepository
         mUserRepository = userRepository
-        chatRepository.initNewChat(match, userRepository.getCurrentUserId())
-                .doOnComplete{
-                    mView.initChatView(userRepository.getCurrentUserId())
-                    mCurrentChatId = chatRepository.getCurrentChat().uid
-                    chatRepository.loadChatMessages(mCurrentChatId!!)
-                            .subscribe { l:Chat -> mView.loadChatMessages(l.messages.values.toList()) }
-                }
-                .subscribe()
+        mView.initChatView(userRepository.getCurrentUserId())
+
+        mCurrentChatId = mUserRepository.checkIfChatExists(match)
+        if(mCurrentChatId != null)
+        {
+            chatRepository.loadChatMessages(mCurrentChatId!!)
+                    .subscribe { l:Chat -> mView.loadChatMessages(l.messages.values.toList()) }
+        }
+        else
+        {
+            chatRepository.initNewChat(match, userRepository.getCurrentUserId())
+                    .doOnComplete{
+
+                        mCurrentChatId = chatRepository.getCurrentChat().uid
+                        chatRepository.loadChatMessages(mCurrentChatId!!)
+                                .subscribe { l:Chat -> mView.loadChatMessages(l.messages.values.toList()) }
+                    }
+                    .subscribe()
+        }
+
 
 
 
@@ -43,8 +48,12 @@ class ChatPresenter : ChatContract.Presenter
         mView.onTextChange().subscribe { s -> mCurrentText = s.toString() }
     }
 
-    private fun initChat()
-    {
-
+    override fun sendMessage(message: String) {
+        val msg = Message()
+        msg.itext = message
+        msg.userId = mUserRepository.getCurrentUserId()
+        mChatRepository.sendMessage(mCurrentChatId!!, msg).subscribe { id ->
+            msg.uid = id
+            mView.addNewMessage(msg) }
     }
 }

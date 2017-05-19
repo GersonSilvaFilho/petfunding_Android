@@ -43,7 +43,7 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         adapter.addToStart(message, true)
     }
 
-    override fun onSendMessageClick() = input.clicks()
+    override fun onSendMessageClick() = input.button.clicks().doOnComplete { input.inputEditText.setText("")  }
     override fun onTextChange() = input.inputEditText.textChanges()
 }
 
