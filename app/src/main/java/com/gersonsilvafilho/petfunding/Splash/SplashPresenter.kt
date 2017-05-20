@@ -1,8 +1,10 @@
 package com.gersonsilvafilho.petfunding.splash
 
 import android.util.Log
+import com.gersonsilvafilho.petfunding.model.user.UserModule
 import com.gersonsilvafilho.petfunding.model.user.UserRepository
 import io.reactivex.disposables.Disposable
+import javax.inject.Inject
 import javax.inject.Singleton
 
 
@@ -12,17 +14,18 @@ import javax.inject.Singleton
 @Singleton
 class SplashPresenter  : SplashContract.Presenter  {
 
-    var mSplashView: SplashContract.View
-    var mUserRepository: UserRepository
+    @Inject
+    lateinit var mUserRepository: UserRepository
+    lateinit var mSplashView: SplashContract.View
 
     private var firebaseIsConnected:Boolean = false
-    private var  authObserverSubs: Disposable
+    private lateinit var  authObserverSubs: Disposable
 
-    constructor(splashView: SplashContract.View, userRepository: UserRepository)
+    override fun initView(view: SplashContract.View)
     {
-        mSplashView = splashView
-        mUserRepository = userRepository
+        initDagger()
 
+        mSplashView = view
         authObserverSubs = mUserRepository.userStatus().subscribe { logged -> run {
             if(firebaseIsConnected != logged)
             {
@@ -41,6 +44,16 @@ class SplashPresenter  : SplashContract.Presenter  {
             }
             Log.i("Rxfirebase2", "User logged " + logged)
         } }
+    }
+
+    private fun initDagger()
+    {
+        DaggerSplashComponent
+            .builder()
+            .userModule(UserModule())
+            .build()
+            .inject(this)
+
     }
 
     override fun facebookSuccess()

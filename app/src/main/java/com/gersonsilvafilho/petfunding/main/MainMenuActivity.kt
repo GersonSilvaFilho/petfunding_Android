@@ -91,16 +91,18 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
     }
 
     @Inject
-    lateinit var  mActionsListener: MainMenuPresenter
+    lateinit var  mActionsListener: MainMenuContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
 
         DaggerMainMenuComponent.builder()
-                .mainMenuModule(MainMenuModule(this))
-                .build().inject(this)
+                .mainMenuModule(MainMenuModule())
+                .build()
+                .inject(this)
 
+        mActionsListener.initView(this)
         cardStack.setContentResource(R.layout.card_layout)
         cardStack.setStackMargin(20)
 

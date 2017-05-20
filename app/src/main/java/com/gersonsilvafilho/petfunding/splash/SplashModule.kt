@@ -1,6 +1,5 @@
 package com.gersonsilvafilho.petfunding.splash
 
-import com.gersonsilvafilho.petfunding.model.user.UserRepository
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -10,9 +9,8 @@ import javax.inject.Singleton
 class SplashModule{
 
     var mSplashPresenter: SplashPresenter
-
-    constructor(splashView: SplashContract.View, userRepository: UserRepository) {
-        mSplashPresenter = SplashPresenter(splashView, userRepository)
+    constructor() {
+        mSplashPresenter = SplashPresenter()
     }
 
     @Provides

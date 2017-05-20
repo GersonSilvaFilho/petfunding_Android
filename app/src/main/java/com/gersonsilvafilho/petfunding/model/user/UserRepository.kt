@@ -2,11 +2,13 @@ package com.gersonsilvafilho.petfunding.model.user
 
 import io.reactivex.Observable
 import io.reactivex.Single
+import javax.inject.Singleton
 
 
 /**
  * Created by GersonSilva on 5/8/17.
  */
+@Singleton
 interface UserRepository
 {
     fun loginWithFacebook(token: String): Observable<Boolean>

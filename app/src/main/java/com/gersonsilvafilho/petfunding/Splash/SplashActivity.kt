@@ -11,32 +11,40 @@ import com.facebook.FacebookException
 import com.facebook.login.LoginResult
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.main.MainMenuActivity
-import com.gersonsilvafilho.petfunding.model.user.UserFirebaseRepository
 import com.gersonsilvafilho.petfunding.splash.SplashContract.View
 import kotlinx.android.synthetic.main.activity_splash.*
 import org.jetbrains.anko.startActivity
 import javax.inject.Inject
-import javax.inject.Singleton
 
 class SplashActivity : AppCompatActivity() , View{
 
     private var mFacebookCallback: FacebookCallback<LoginResult>? = null
     var callbackManager: CallbackManager? = null
 
-    @Singleton
     @Inject
     lateinit var mActionsListener: SplashPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+        initDagger()
 
+        mActionsListener.initView(this)
+
+        initFacebook()
+    }
+
+    private fun initDagger()
+    {
         DaggerSplashComponent
                 .builder()
-                .splashModule(SplashModule(this, UserFirebaseRepository()))
+                .splashModule(SplashModule())
                 .build()
                 .inject(this)
+    }
 
+    private fun initFacebook()
+    {
         callbackManager = CallbackManager.Factory.create()
         fbLoginButton.setReadPermissions("email", "public_profile")
         mFacebookCallback = object : FacebookCallback<LoginResult> {
