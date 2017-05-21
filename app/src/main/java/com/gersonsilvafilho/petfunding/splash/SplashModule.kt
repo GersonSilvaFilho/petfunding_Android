@@ -8,14 +8,8 @@ import javax.inject.Singleton
 @Module
 class SplashModule{
 
-    var mSplashPresenter: SplashPresenter
-    constructor() {
-        mSplashPresenter = SplashPresenter()
-    }
-
     @Provides
-    @Singleton
     fun provideSplashPresenter(): SplashPresenter{
-        return mSplashPresenter
+        return SplashPresenter()
     }
 }

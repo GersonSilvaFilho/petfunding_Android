@@ -19,5 +19,6 @@ interface ChatContract {
     interface Presenter
     {
         fun sendMessage(message:String)
+        fun initView(chatView: View, match: String)
     }
 }

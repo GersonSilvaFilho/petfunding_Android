@@ -1,7 +1,7 @@
 package com.gersonsilvafilho.petfunding.splash
 
 import android.util.Log
-import com.gersonsilvafilho.petfunding.model.user.UserModule
+import com.gersonsilvafilho.petfunding.dagger.DaggerAppComponent
 import com.gersonsilvafilho.petfunding.model.user.UserRepository
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
@@ -48,9 +48,8 @@ class SplashPresenter  : SplashContract.Presenter  {
 
     private fun initDagger()
     {
-        DaggerSplashComponent
+        DaggerAppComponent
             .builder()
-            .userModule(UserModule())
             .build()
             .inject(this)
 

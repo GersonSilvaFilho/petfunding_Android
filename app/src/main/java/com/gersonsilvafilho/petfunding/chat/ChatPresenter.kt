@@ -4,48 +4,57 @@ import com.gersonsilvafilho.petfunding.model.chat.Chat
 import com.gersonsilvafilho.petfunding.model.chat.ChatRepository
 import com.gersonsilvafilho.petfunding.model.message.Message
 import com.gersonsilvafilho.petfunding.model.user.UserRepository
+import javax.inject.Inject
 
 /**
  * Created by GersonSilva on 5/12/17.
  */
 class ChatPresenter : ChatContract.Presenter
 {
-    private var  mView: ChatContract.View
-    private var  mChatRepository: ChatRepository
-    private var  mUserRepository: UserRepository
+    @Inject
+    lateinit var mChatRepository: ChatRepository
+    @Inject
+    lateinit var mUserRepository: UserRepository
+
+    lateinit private var mView: ChatContract.View
+
     private var  mCurrentChatId:String? = null
     private var  mCurrentText:String? = null
 
-    constructor(chatView: ChatContract.View, chatRepository: ChatRepository, userRepository: UserRepository, match: String)
+
+    override fun initView(chatView: ChatContract.View, match: String)
     {
+        //initDagger()
         mView = chatView
-        mChatRepository = chatRepository
-        mUserRepository = userRepository
-        mView.initChatView(userRepository.getCurrentUserId())
+        mView.initChatView(mUserRepository.getCurrentUserId())
 
         mCurrentChatId = mUserRepository.checkIfChatExists(match)
         if(mCurrentChatId != null)
         {
-            chatRepository.loadChatMessages(mCurrentChatId!!)
+            mChatRepository.loadChatMessages(mCurrentChatId!!)
                     .subscribe { l:Chat -> mView.loadChatMessages(l.messages.values.toList()) }
         }
         else
         {
-            chatRepository.initNewChat(match, userRepository.getCurrentUserId())
+            mChatRepository.initNewChat(match, mUserRepository.getCurrentUserId())
                     .doOnComplete{
 
-                        mCurrentChatId = chatRepository.getCurrentChat().uid
-                        chatRepository.loadChatMessages(mCurrentChatId!!)
+                        mCurrentChatId = mChatRepository.getCurrentChat().uid
+                        mChatRepository.loadChatMessages(mCurrentChatId!!)
                                 .subscribe { l:Chat -> mView.loadChatMessages(l.messages.values.toList()) }
                     }
                     .subscribe()
         }
 
-
-
-
         mView.onSendMessageClick().map { mCurrentText != null }.subscribe { sendMessage(mCurrentText!!) }
         mView.onTextChange().subscribe { s -> mCurrentText = s.toString() }
+    }
+
+    private fun initDagger() {
+        DaggerChatComponent
+                .builder()
+                .build()
+                .inject(this)
     }
 
     override fun sendMessage(message: String) {

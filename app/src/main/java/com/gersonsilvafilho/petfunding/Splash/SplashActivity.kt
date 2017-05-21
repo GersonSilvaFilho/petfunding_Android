@@ -12,6 +12,7 @@ import com.facebook.login.LoginResult
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.main.MainMenuActivity
 import com.gersonsilvafilho.petfunding.splash.SplashContract.View
+import com.gersonsilvafilho.petfunding.util.PetApplication
 import kotlinx.android.synthetic.main.activity_splash.*
 import org.jetbrains.anko.startActivity
 import javax.inject.Inject
@@ -36,11 +37,7 @@ class SplashActivity : AppCompatActivity() , View{
 
     private fun initDagger()
     {
-        DaggerSplashComponent
-                .builder()
-                .splashModule(SplashModule())
-                .build()
-                .inject(this)
+        (application as PetApplication).getAppComponent().inject(this)
     }
 
     private fun initFacebook()
