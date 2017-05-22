@@ -26,6 +26,7 @@ import com.gersonsilvafilho.petfunding.add_pet.AddPetActivity
 import com.gersonsilvafilho.petfunding.chat.ChatActivity
 import com.gersonsilvafilho.petfunding.detail.DetailActivity
 import com.gersonsilvafilho.petfunding.model.pet.Pet
+import com.gersonsilvafilho.petfunding.util.PetApplication
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.content_navigation.*
 import org.jetbrains.anko.startActivity
@@ -39,7 +40,7 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
     }
 
 
-    override fun showItsMatchDialog(pet:Pet, matchId:String) {
+    override fun showItsMatchDialog(pet:Pet) {
         val dialog = Dialog(this,android.R.style.Theme_Black_NoTitleBar_Fullscreen)
         dialog.setContentView(R.layout.match_layout)
         val imageView = dialog.findViewById(R.id.imageMatch) as ImageView
@@ -50,7 +51,7 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         textView.setText(pet.name + " está muito feliz que você deseja adotá-lo!")
 
         val button = dialog.findViewById(R.id.buttonMatchMessage) as Button
-        button.setOnClickListener { startActivity<ChatActivity>("matchId" to matchId) }
+        button.setOnClickListener { startActivity<ChatActivity>("matchId" to pet.uid) }
         dialog.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
     }
@@ -96,13 +97,8 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
+        initDagger()
 
-        DaggerMainMenuComponent.builder()
-                .mainMenuModule(MainMenuModule())
-                .build()
-                .inject(this)
-
-        mActionsListener.initView(this)
         cardStack.setContentResource(R.layout.card_layout)
         cardStack.setStackMargin(20)
 
@@ -128,6 +124,14 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         navigationView.setNavigationItemSelectedListener(this)
 
         mActionsListener.loadPets()
+    }
+
+    private fun initDagger()
+    {
+        (application as PetApplication).get(this)
+                .getUserComponent()!!
+                .plus(MainMenuModule(this))
+                .inject(this)
     }
 
     override fun onBackPressed() {

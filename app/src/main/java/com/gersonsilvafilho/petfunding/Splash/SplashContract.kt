@@ -21,6 +21,5 @@ interface SplashContract {
         fun facebookCancel()
         fun facebookOnError()
         fun firebaseSuccess(token: String)
-        fun initView(view: View)
     }
 }

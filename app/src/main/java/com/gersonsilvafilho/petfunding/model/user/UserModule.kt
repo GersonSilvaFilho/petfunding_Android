@@ -2,22 +2,17 @@ package com.gersonsilvafilho.petfunding.model.user
 
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 /**
  * Created by GersonSilva on 5/19/17.
  */
-@Singleton
 @Module
-class UserModule{
-
-    val userRepository = UserFirebaseRepository()
+class UserModule(val mUserRepository:UserRepository){
 
     @Provides
-    @Singleton
+    @UserScope
     fun module():UserRepository
     {
-        return userRepository
+        return mUserRepository
     }
-
 }

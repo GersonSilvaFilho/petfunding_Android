@@ -22,7 +22,7 @@ class UserFirebaseRepository : UserRepository
 {
     val database = FirebaseDatabase.getInstance()
     var usersRef = database.getReference("users")
-    var mCurrentUser = User()
+    var mCurrentUser : User = User()
 
     private val  mAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
@@ -34,7 +34,9 @@ class UserFirebaseRepository : UserRepository
 
     override fun monitorCurrentUser() {
         val key = usersRef.child(getCurrentUserId())
-        RxFirebaseDatabase.observeValueEvent(key, User::class.java).subscribe { mCurrentUser = it }
+        RxFirebaseDatabase.observeValueEvent(key, User::class.java)
+                .doOnError { e -> Log.d("UserRepo", "User is null - " + e.localizedMessage)}
+                .subscribe { if(it != null) mCurrentUser = it }
     }
 
     override fun loginWithFacebook(token: String): Observable<Boolean> {
@@ -54,19 +56,19 @@ class UserFirebaseRepository : UserRepository
     }
 
     override fun getCurrentUser(): User {
-        return mCurrentUser
+        return mCurrentUser!!
     }
 
     override fun addMatch(petId:String): Single<String> {
         val key = usersRef.child(getCurrentUserId()).child("matchs").child(petId)
         var match = Match()
+        match.petId = petId
         return RxFirebaseDatabase.updateChildren(key, match.toMap()).toSingle { key.key }
 
     }
 
-    override fun checkIfMatchExists(petId:String): Single<Boolean> {
-        val key = usersRef.child(getCurrentUserId()).child("matchs").child(petId)
-        return RxFirebaseDatabase.observeSingleValueEvent(key, Match::class.java).isEmpty
+    override fun checkIfMatchExists(petId:String): Boolean {
+        return getCurrentUser().matchs.containsKey(petId)
     }
 
     override fun getUsernameFromFacebook()
@@ -84,10 +86,10 @@ class UserFirebaseRepository : UserRepository
 
                 Log.d("Facebook Parameters", "Passou =" + name)
                 val key = usersRef.child(getCurrentUserId())
-                mCurrentUser.username = name
-                mCurrentUser.uid = getCurrentUserId()
+                mCurrentUser!!.username = name
+                mCurrentUser!!.uid = getCurrentUserId()
 
-                RxFirebaseDatabase.updateChildren(key,mCurrentUser.toMap()).subscribe()
+                RxFirebaseDatabase.updateChildren(key,mCurrentUser!!.toMap()).subscribe()
 
             } catch (e: JSONException) {
                 Log.d("Facebook Parameters", "Merda")

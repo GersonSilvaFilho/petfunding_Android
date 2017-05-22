@@ -19,7 +19,8 @@ class Message: IMessage {
     }
 
     override fun getUser(): IUser {
-        return user
+        iuser.uid = userId
+        return iuser
     }
 
     override fun getText(): String {
@@ -31,7 +32,7 @@ class Message: IMessage {
     var userId:String = ""
     var date:Date = Date()
     @Exclude
-    var user:User = User()
+    var iuser:User = User()
 
     @Exclude
     fun toMap(): Map<String, Any> {

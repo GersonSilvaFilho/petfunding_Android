@@ -4,35 +4,41 @@ import com.gersonsilvafilho.petfunding.model.chat.Chat
 import com.gersonsilvafilho.petfunding.model.chat.ChatRepository
 import com.gersonsilvafilho.petfunding.model.message.Message
 import com.gersonsilvafilho.petfunding.model.user.UserRepository
-import javax.inject.Inject
 
 /**
  * Created by GersonSilva on 5/12/17.
  */
 class ChatPresenter : ChatContract.Presenter
 {
-    @Inject
-    lateinit var mChatRepository: ChatRepository
-    @Inject
-    lateinit var mUserRepository: UserRepository
+    var mChatRepository: ChatRepository
+    var mUserRepository: UserRepository
 
-    lateinit private var mView: ChatContract.View
+    private var mView: ChatContract.View
 
     private var  mCurrentChatId:String? = null
     private var  mCurrentText:String? = null
 
 
-    override fun initView(chatView: ChatContract.View, match: String)
+    constructor(chatView: ChatContract.View, chatRepository: ChatRepository, userRepository: UserRepository)
     {
         //initDagger()
         mView = chatView
+        mChatRepository = chatRepository
+        mUserRepository = userRepository
+
         mView.initChatView(mUserRepository.getCurrentUserId())
 
+        mView.onSendMessageClick().map { mCurrentText != null }.subscribe { sendMessage(mCurrentText!!) }
+        mView.onTextChange().subscribe { s -> mCurrentText = s.toString() }
+    }
+
+    override fun initChat(match:String)
+    {
         mCurrentChatId = mUserRepository.checkIfChatExists(match)
-        if(mCurrentChatId != null)
+        if(mCurrentChatId != null && mCurrentChatId != "")
         {
             mChatRepository.loadChatMessages(mCurrentChatId!!)
-                    .subscribe { l:Chat -> mView.loadChatMessages(l.messages.values.toList()) }
+                    .subscribe { l:Chat -> mView.loadChatMessages(l.messages.values.toList().sortedByDescending { m -> m.date }) }
         }
         else
         {
@@ -45,24 +51,19 @@ class ChatPresenter : ChatContract.Presenter
                     }
                     .subscribe()
         }
-
-        mView.onSendMessageClick().map { mCurrentText != null }.subscribe { sendMessage(mCurrentText!!) }
-        mView.onTextChange().subscribe { s -> mCurrentText = s.toString() }
     }
 
-    private fun initDagger() {
-        DaggerChatComponent
-                .builder()
-                .build()
-                .inject(this)
-    }
+
 
     override fun sendMessage(message: String) {
         val msg = Message()
         msg.itext = message
         msg.userId = mUserRepository.getCurrentUserId()
-        mChatRepository.sendMessage(mCurrentChatId!!, msg).subscribe { id ->
+        mChatRepository.sendMessage(mCurrentChatId!!, msg)
+                .subscribe { id ->
             msg.uid = id
-            mView.addNewMessage(msg) }
+            mView.addNewMessage(msg)
+            mView.clearMessageBox()
+            }
     }
 }

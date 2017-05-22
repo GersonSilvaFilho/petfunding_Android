@@ -20,7 +20,7 @@ class ChatFirebaseRepository : ChatRepository
 
     override fun loadChatMessages(chatId: String):Observable<Chat>
     {
-        return RxFirebaseDatabase.observeSingleValueEvent(chatRef, Chat::class.java).toObservable()
+        return RxFirebaseDatabase.observeSingleValueEvent(chatRef.child(chatId), Chat::class.java).toObservable()
     }
 
     override fun getCurrentChat(): Chat {

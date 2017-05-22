@@ -14,11 +14,12 @@ interface ChatContract {
         fun onTextChange(): Observable<CharSequence>
         fun loadChatMessages(messages: List<Message>)
         fun initChatView(currentUserId: String)
+        fun clearMessageBox()
     }
 
     interface Presenter
     {
         fun sendMessage(message:String)
-        fun initView(chatView: View, match: String)
+        fun initChat(match: String)
     }
 }

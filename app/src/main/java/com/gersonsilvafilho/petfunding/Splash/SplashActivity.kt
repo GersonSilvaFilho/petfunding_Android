@@ -28,16 +28,19 @@ class SplashActivity : AppCompatActivity() , View{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-        initDagger()
-
-        mActionsListener.initView(this)
+        setupActivityComponent()
 
         initFacebook()
     }
 
-    private fun initDagger()
-    {
-        (application as PetApplication).getAppComponent().inject(this)
+    protected fun setupActivityComponent() {
+        //Uncomment those lines do measure dependencies creation time
+        //Debug.startMethodTracing("SplashTrace");
+        (application as PetApplication).get(this)
+                .createUserComponent()
+                .plus(SplashModule(this))
+                .inject(this)
+        //Debug.stopMethodTracing();
     }
 
     private fun initFacebook()

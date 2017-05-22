@@ -11,7 +11,7 @@ interface MainMenuContract {
     {
         fun updateCardAdapter(pets:List<Pet>)
         fun startDetailActivity(pet:Pet)
-        fun showItsMatchDialog(pet:Pet, matchId:String)
+        fun showItsMatchDialog(pet:Pet)
     }
 
     interface Presenter
@@ -19,6 +19,5 @@ interface MainMenuContract {
         fun loadPets()
         fun userLogout()
         fun userMatchedPet(pet:Pet)
-        fun initView(view: View)
     }
 }

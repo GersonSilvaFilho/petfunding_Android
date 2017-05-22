@@ -17,6 +17,7 @@ import javax.inject.Inject
 
 class ChatActivity : AppCompatActivity(), ChatContract.View {
 
+
     @Inject
     lateinit var mActionsListener: ChatContract.Presenter
 
@@ -28,14 +29,15 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         initDagger()
 
         val match = intent.getStringExtra("matchId")
-
-        mActionsListener.initView(this, match)
+        mActionsListener.initChat(match)
     }
 
     private fun initDagger()
     {
-        (application as PetApplication).getAppComponent().inject(this)
-        (application as PetApplication).getAppComponent().inject(mActionsListener)
+        (application as PetApplication).get(this)
+                .getUserComponent()!!
+                .plus(ChatModule(this))
+                .inject(this)
     }
 
     override fun initChatView(currentUserId: String) {
@@ -53,8 +55,12 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         adapter.addToStart(message, true)
     }
 
-    override fun onSendMessageClick() = input.button.clicks().doOnComplete { input.inputEditText.setText("")  }
+    override fun onSendMessageClick() = input.button.clicks()
     override fun onTextChange() = input.inputEditText.textChanges()
+
+    override fun clearMessageBox() {
+        input.inputEditText.setText("")
+    }
 
     val imageLoader = object : ImageLoader {
         override fun loadImage(imageView: ImageView, url: String) {
