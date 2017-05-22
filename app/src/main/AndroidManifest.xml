@@ -47,7 +47,8 @@
                 android:resource="@xml/file_provider_paths" />
         </provider>
 
-        <activity android:name=".chat.ChatActivity"></activity>
+        <activity android:name=".chat.ChatActivity" />
+        <activity android:name=".likeList.LikeListActivity"></activity>
     </application>
 
 </manifest>

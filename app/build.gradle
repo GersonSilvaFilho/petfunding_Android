@@ -60,21 +60,18 @@ dependencies {
             'aar')
 
     //Togle button
-    
 
     //Rounded Image
-    
+
     //Material Range Bar
-    
+
     //Material Spinner
-    
-    
+
     //Firebase database
-    
+
     //RxPaparazzo for camera / galery loading
-    
-    
-    
+
+
     compile group: 'com.google.code.gson', name: 'gson', version: '2.3.1'
 
     //Chat screen

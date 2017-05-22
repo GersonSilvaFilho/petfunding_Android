@@ -23,6 +23,7 @@ class UserFirebaseRepository : UserRepository
 {
 
 
+
     val database = FirebaseDatabase.getInstance()
     var usersRef = database.getReference("users")
     var mCurrentUser : User = User()
@@ -114,6 +115,10 @@ class UserFirebaseRepository : UserRepository
         val key = usersRef.child(getCurrentUserId())
         mCurrentUser.unmatches.add(petId)
         return RxFirebaseDatabase.updateChildren(key, mCurrentUser.toMap())
+    }
+
+    override fun getAllMatches(): List<Match> {
+        return mCurrentUser.matches.values.toList()
     }
 
 }
