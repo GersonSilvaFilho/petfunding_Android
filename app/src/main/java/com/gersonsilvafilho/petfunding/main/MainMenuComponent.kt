@@ -1,13 +1,14 @@
 package com.gersonsilvafilho.petfunding.main
 
-import dagger.Component
+import com.gersonsilvafilho.petfunding.util.ActivityScope
+import dagger.Subcomponent
 
 
 /**
  * Created by GersonSilva on 4/10/17.
  */
-
-@Component(modules = arrayOf(MainMenuModule::class))
+@ActivityScope
+@Subcomponent(modules = arrayOf(MainMenuModule::class))
 interface MainMenuComponent {
     fun inject(activity: MainMenuActivity)
 }

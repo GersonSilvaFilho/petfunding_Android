@@ -10,19 +10,18 @@ import javax.inject.Singleton
  * Created by GersonSilva on 3/21/17.
  */
 @Singleton
-class SplashPresenter  : SplashContract.Presenter  {
+class SplashPresenter : SplashContract.Presenter  {
 
-    var mSplashView: SplashContract.View
     var mUserRepository: UserRepository
+    var mSplashView: SplashContract.View
 
     private var firebaseIsConnected:Boolean = false
     private var  authObserverSubs: Disposable
 
-    constructor(splashView: SplashContract.View, userRepository: UserRepository)
+    constructor(view: SplashContract.View, userRepository: UserRepository)
     {
-        mSplashView = splashView
         mUserRepository = userRepository
-
+        mSplashView = view
         authObserverSubs = mUserRepository.userStatus().subscribe { logged -> run {
             if(firebaseIsConnected != logged)
             {
@@ -30,6 +29,7 @@ class SplashPresenter  : SplashContract.Presenter  {
                 {
                     mSplashView.showFirebaseSuccess()
                     mSplashView.goToMainMenuActivity()
+                    mUserRepository.monitorCurrentUser()
                 }
                 else
                 {

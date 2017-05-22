@@ -1,16 +1,17 @@
 package com.gersonsilvafilho.petfunding.main
 
-import com.gersonsilvafilho.petfunding.model.pet.PetFirebaseRepository
-import com.gersonsilvafilho.petfunding.model.user.UserFirebaseRepository
+import com.gersonsilvafilho.petfunding.chat.ChatActivity
+import com.gersonsilvafilho.petfunding.model.pet.PetRepository
+import com.gersonsilvafilho.petfunding.model.user.UserRepository
 import dagger.Module
 import dagger.Provides
 
 
 @Module
-class MainMenuModule(val mainMenuView: MainMenuContract.View) {
+class MainMenuModule(val chatActivity: MainMenuContract.View){
 
     @Provides
-    fun provideMainMenuPresenter(): MainMenuPresenter {
-        return  MainMenuPresenter(PetFirebaseRepository(), UserFirebaseRepository(), mainMenuView)
+    fun provideMainMenuPresenter(userRepository: UserRepository, petRepository: PetRepository): MainMenuContract.Presenter {
+        return  MainMenuPresenter(chatActivity, userRepository, petRepository)
     }
 }

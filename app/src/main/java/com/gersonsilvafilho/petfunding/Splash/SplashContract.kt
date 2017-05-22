@@ -1,5 +1,7 @@
 package com.gersonsilvafilho.petfunding.splash
 
+import com.gersonsilvafilho.petfunding.model.user.UserRepository
+
 
 /**
  * Created by GersonSilva on 3/21/17.

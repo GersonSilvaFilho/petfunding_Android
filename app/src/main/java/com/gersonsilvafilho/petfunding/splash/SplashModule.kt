@@ -7,17 +7,9 @@ import javax.inject.Singleton
 
 @Singleton
 @Module
-class SplashModule{
-
-    var mSplashPresenter: SplashPresenter
-
-    constructor(splashView: SplashContract.View, userRepository: UserRepository) {
-        mSplashPresenter = SplashPresenter(splashView, userRepository)
-    }
-
+class SplashModule(val mSplashActivity : SplashActivity){
     @Provides
-    @Singleton
-    fun provideSplashPresenter(): SplashPresenter{
-        return mSplashPresenter
+    fun provideSplashPresenter(userRepository: UserRepository): SplashPresenter{
+        return SplashPresenter(mSplashActivity, userRepository)
     }
 }
