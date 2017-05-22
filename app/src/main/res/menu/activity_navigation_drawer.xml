@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_main"
+            android:title="Início" />
+        <item
+            android:id="@+id/nav_likes"
+            android:title="Minhas Curtidas" />
+        <item
+            android:id="@+id/nav_chat"
+            android:title="Conversas" />
+    </group>
+
+    <item android:title="Parceiro">
+        <menu>
+            <item
+                android:id="@+id/nav_add"
+                android:title="Adicionar Pet" />
+            <item
+                android:id="@+id/nav_edit"
+                android:title="Editar Pet" />
+        </menu>
+    </item>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_logout"
+                android:title="Sair" />
+        </menu>
+    </item>
+
+</menu>

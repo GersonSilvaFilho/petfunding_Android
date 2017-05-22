@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.gersonsilvafilho.petfunding.main.MainMenuActivity"
+    tools:showIn="@layout/app_bar_navigation">
+
+    <com.wenchao.cardstack.CardStack
+        android:id="@+id/cardStack"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:gravity="top|center_horizontal"
+        android:padding="10dp"
+        app:card_enable_loop="true"
+        app:card_enable_rotation="true"
+        app:card_gravity="top"
+        app:card_margin="10dp"
+        app:card_stack_size="4" />
+
+</LinearLayout>

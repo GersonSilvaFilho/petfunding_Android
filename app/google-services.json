@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "605033565822",
+    "firebase_url": "https://petfunding-7ab38.firebaseio.com",
+    "project_id": "petfunding-7ab38",
+    "storage_bucket": "petfunding-7ab38.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605033565822:android:20f53124c271aea4",
+        "android_client_info": {
+          "package_name": "com.gersonsilvafilho.petfunding"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "605033565822-qak3phsd7kb450bsvsbref7f1f3ig54d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxlmS4wL9Qo2HNuM8Otc5Dh09MC0sCs0g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
