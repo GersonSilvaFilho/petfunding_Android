@@ -19,5 +19,6 @@ interface MainMenuContract {
         fun loadPets()
         fun userLogout()
         fun userMatchedPet(pet:Pet)
+        fun userUnmatchedPet(pet:Pet)
     }
 }

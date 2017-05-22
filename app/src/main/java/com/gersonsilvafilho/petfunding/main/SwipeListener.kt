@@ -39,7 +39,16 @@ class SwipeListener (val clickListener:mClickListener): CardStack.CardEventListe
 
     override fun discarded(id: Int, direction: Int) {
         Log.d("TESTE", "Valores:" + id + " " + direction)
-        clickListener.cardWasDiscarted(id - 1)
+        if(direction % 2 == 0)
+        {
+            clickListener.cardDiscartedLeft(id - 1)
+        }
+        else
+        {
+            //Discarted to right
+            clickListener.cardDiscartedRight(id - 1)
+        }
+
         //this callback invoked when dismiss animation is finished.
     }
 
@@ -51,6 +60,7 @@ class SwipeListener (val clickListener:mClickListener): CardStack.CardEventListe
 
     interface mClickListener {
         fun mClick()
-        fun cardWasDiscarted(cardId:Int)
+        fun cardDiscartedRight(cardId:Int)
+        fun cardDiscartedLeft(cardId:Int)
     }
 }

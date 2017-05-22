@@ -35,9 +35,7 @@ import javax.inject.Inject
 
 
 class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , NavigationView.OnNavigationItemSelectedListener, SwipeListener.mClickListener{
-    override fun cardWasDiscarted(cardId: Int) {
-        mActionsListener.userMatchedPet((cardStack.adapter.getItem(cardId) as Pet))
-    }
+
 
 
     override fun showItsMatchDialog(pet:Pet) {
@@ -55,11 +53,6 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         dialog.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
     }
-
-
-
-
-
 
     override fun startDetailActivity(pet: Pet) {
         startActivity<DetailActivity>("pet" to pet)
@@ -180,5 +173,13 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
         drawer.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    override fun cardDiscartedRight(cardId: Int) {
+        mActionsListener.userMatchedPet((cardStack.adapter.getItem(cardId) as Pet))
+    }
+
+    override fun cardDiscartedLeft(cardId: Int) {
+        mActionsListener.userUnmatchedPet((cardStack.adapter.getItem(cardId) as Pet))
     }
 }

@@ -1,5 +1,6 @@
 package com.gersonsilvafilho.petfunding.model.user
 
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Singleton
@@ -16,6 +17,7 @@ interface UserRepository
     fun userLogout()
     fun getCurrentUserId():String
     fun addMatch(petId:String): Single<String>
+    fun addUnmatch(petId:String): Completable
     fun getUsernameFromFacebook()
     fun getCurrentUser():User
     fun checkIfMatchExists(petId: String): Boolean

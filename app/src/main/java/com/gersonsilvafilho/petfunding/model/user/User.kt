@@ -24,14 +24,14 @@ class User: IUser {
 
     var uid:String = ""
     var username:String = ""
-    var matchs: Map<String, Match> = HashMap<String, Match>()
+    var matches: Map<String, Match> = HashMap<String, Match>()
     var unmatches: ArrayList<String> = ArrayList<String>()
 
     @Exclude
     fun toMap(): Map<String, Any> {
         val values = HashMap<String, Any>()
         values.put("name", username)
-        values.put("matches", matchs)
+        values.put("matches", matches)
         values.put("unmatches", unmatches)
         return values
 

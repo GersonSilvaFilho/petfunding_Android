@@ -36,6 +36,11 @@ class MainMenuPresenter: MainMenuContract.Presenter
 
     }
 
+    override fun userUnmatchedPet(pet: Pet)
+    {
+        mUserRepository.addUnmatch(pet.uid).subscribe()
+    }
+
     override fun userLogout() {
         mUserRepository.userLogout()
     }
