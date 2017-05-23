@@ -39,7 +39,7 @@ class ChatFirebaseRepository : ChatRepository
         val key = chatRef.push()
         mChat = Chat()
         mChat.uid = key.key
-        val matchAddRef = usersRef.child(userId).child("matchs").child(matchId)
+        val matchAddRef = usersRef.child(userId).child("matches").child(matchId)
         val values = HashMap<String, Any>()
         values.put("chatId", key.key)
         return RxFirebaseDatabase.updateChildren(key,mChat.toMap())

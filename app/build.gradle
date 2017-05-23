@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.github.kt3k.coveralls'
 
 android {
     compileSdkVersion 25
@@ -20,6 +21,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+       debug {
+            testCoverageEnabled true
         }
     }
     //exclude meta inf that are not used at runtime
@@ -60,21 +64,18 @@ dependencies {
             'aar')
 
     //Togle button
-    
 
     //Rounded Image
-    
+
     //Material Range Bar
-    
+
     //Material Spinner
-    
-    
+
     //Firebase database
-    
+
     //RxPaparazzo for camera / galery loading
-    
-    
-    
+
+
     compile group: 'com.google.code.gson', name: 'gson', version: '2.3.1'
 
     //Chat screen
@@ -106,6 +107,15 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.+'
     kapt 'com.google.dagger:dagger-compiler:2.5'
+}
+
+coveralls {
+    jacocoReportPath = "${buildDir}/reports/coverage/debug/report.xml"
+}
+
+tasks.coveralls {
+    dependsOn 'connectedAndroidTest'
+    onlyIf { System.env.'CI' }
 }
 
 repositories {

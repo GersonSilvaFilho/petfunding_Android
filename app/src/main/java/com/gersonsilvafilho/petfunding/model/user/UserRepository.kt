@@ -23,5 +23,6 @@ interface UserRepository
     fun checkIfMatchExists(petId: String): Boolean
     fun monitorCurrentUser()
     fun checkIfChatExists(petId: String): String?
+    fun getAllMatches():List<Match>
 
 }

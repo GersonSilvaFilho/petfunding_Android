@@ -68,7 +68,8 @@
     "adb shell input keyevent 82 &"
   ],
   "script": [
-    "cd ${TRAVIS_BUILD_DIR} && ./gradlew connectedCheck"
+    "cd ${TRAVIS_BUILD_DIR} && ./gradlew connectedCheck",
+    " ./gradlew connectedAndroidTest coveralls"
   ],
   "after_script": [
     "cat ${TRAVIS_BUILD_DIR}/*/build/outputs/androidTest-results/connected/*",
