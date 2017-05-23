@@ -6,9 +6,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.NavigationView
-import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
@@ -28,7 +26,9 @@ import com.gersonsilvafilho.petfunding.detail.DetailActivity
 import com.gersonsilvafilho.petfunding.likeList.LikeListActivity
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.util.PetApplication
+import com.jakewharton.rxbinding2.view.clicks
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.app_bar_navigation.*
 import kotlinx.android.synthetic.main.content_navigation.*
 import org.jetbrains.anko.startActivity
 import javax.inject.Inject
@@ -102,11 +102,12 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
 
-        val fab = findViewById(R.id.fab) as FloatingActionButton
-        fab.setOnClickListener(View.OnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        })
+        fabLike.clicks().subscribe {
+            cardStack.discardTop(3)
+        }
+        fabdislike.clicks().subscribe {
+            cardStack.discardTop(2)
+        }
 
         val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
         val toggle = ActionBarDrawerToggle(
@@ -119,6 +120,8 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
 
         mActionsListener.loadPets()
     }
+
+
 
     private fun initDagger()
     {
@@ -183,10 +186,10 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
     }
 
     override fun cardDiscartedRight(cardId: Int) {
-        mActionsListener.userMatchedPet((cardStack.adapter.getItem(cardId) as Pet))
+        mActionsListener.userMatchedPet((cardStack.adapter.getItem(cardStack.currIndex - 1) as Pet))
     }
 
     override fun cardDiscartedLeft(cardId: Int) {
-        mActionsListener.userUnmatchedPet((cardStack.adapter.getItem(cardId) as Pet))
+        mActionsListener.userUnmatchedPet((cardStack.adapter.getItem(cardStack.currIndex - 1) as Pet))
     }
 }
