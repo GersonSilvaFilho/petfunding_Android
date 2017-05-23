@@ -5,7 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.gersonsilvafilho.petfunding.R
-import com.gersonsilvafilho.petfunding.model.user.Match
+import com.gersonsilvafilho.petfunding.model.pet.Pet
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.like_item.view.*
 
 
@@ -14,7 +15,7 @@ import kotlinx.android.synthetic.main.like_item.view.*
  */
 
 
-class LikeListAdapter(val items: List<Match>, val listener: (Match) -> Unit) : RecyclerView.Adapter<LikeListAdapter.ViewHolder>() {
+class LikeListAdapter(val items: List<Pet>, val listener: (Pet) -> Unit) : RecyclerView.Adapter<LikeListAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.like_item, parent, false)
         return ViewHolder(view)
@@ -26,10 +27,13 @@ class LikeListAdapter(val items: List<Match>, val listener: (Match) -> Unit) : R
 
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(item: Match, listener: (Match) -> Unit) = with(itemView) {
+        fun bind(item: Pet, listener: (Pet) -> Unit) = with(itemView) {
             setOnClickListener { listener(item) }
-            firstLine.text = item.chatId
-            secondLine.text = item.petId
+            firstLine.text = item.name
+            secondLine.text = item.contactName
+            Picasso.with(this.context)
+                    .load(item.photosUrl[0])
+                    .into(likedListImage)
         }
     }
 }

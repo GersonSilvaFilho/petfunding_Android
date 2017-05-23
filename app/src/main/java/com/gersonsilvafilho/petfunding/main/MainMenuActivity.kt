@@ -37,7 +37,8 @@ import javax.inject.Inject
 
 class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , NavigationView.OnNavigationItemSelectedListener, SwipeListener.mClickListener{
 
-
+    @Inject
+    lateinit var  mActionsListener: MainMenuContract.Presenter
 
     override fun showItsMatchDialog(pet:Pet) {
         val dialog = Dialog(this,android.R.style.Theme_Black_NoTitleBar_Fullscreen)
@@ -85,8 +86,7 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         }
     }
 
-    @Inject
-    lateinit var  mActionsListener: MainMenuContract.Presenter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

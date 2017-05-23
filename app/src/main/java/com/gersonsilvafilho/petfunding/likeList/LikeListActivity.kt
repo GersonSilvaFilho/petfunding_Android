@@ -4,20 +4,21 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.gersonsilvafilho.petfunding.R
-import com.gersonsilvafilho.petfunding.model.user.UserRepository
+import com.gersonsilvafilho.petfunding.detail.DetailActivity
+import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.util.PetApplication
 import kotlinx.android.synthetic.main.activity_like_list.*
-import org.jetbrains.anko.toast
+import kotlinx.android.synthetic.main.content_navigation.*
+import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
 
 class LikeListActivity : AppCompatActivity(), LikeListContract.View {
 
-    private lateinit var  mLayoutManager: LinearLayoutManager
-
     @Inject
-    lateinit var mUserRepository: UserRepository
+    lateinit var  mActionsListener: LikeListContract.Presenter
 
+    private lateinit var  mLayoutManager: LinearLayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,14 +27,6 @@ class LikeListActivity : AppCompatActivity(), LikeListContract.View {
 
         mLayoutManager = LinearLayoutManager(this)
         recyclerLikes.setLayoutManager(mLayoutManager)
-
-        // define an adapter
-        val mAdapter = LikeListAdapter(mUserRepository.getAllMatches())
-        {
-            toast("${it.chatId} Clicked")
-        }
-
-        recyclerLikes.adapter = mAdapter
     }
 
     private fun initDagger()
@@ -42,5 +35,20 @@ class LikeListActivity : AppCompatActivity(), LikeListContract.View {
                 .getUserComponent()!!
                 .plus(LikeListModule(this))
                 .inject(this)
+    }
+
+    override fun setAdapter(likedPets: List<Pet>) {
+        val mAdapter = LikeListAdapter(likedPets, onPetClicked())
+
+        recyclerLikes.adapter = mAdapter
+    }
+
+    override fun onPetClicked(): (Pet) -> Unit  = {
+        mActionsListener.petSelected(it)
+    }
+
+    override fun startDetails(pet:Pet)
+    {
+        startActivity<DetailActivity>("pet" to pet)
     }
 }
