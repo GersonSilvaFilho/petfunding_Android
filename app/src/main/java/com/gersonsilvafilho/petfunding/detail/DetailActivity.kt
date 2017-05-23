@@ -2,7 +2,6 @@ package com.gersonsilvafilho.petfunding.detail
 
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
@@ -10,12 +9,14 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import com.gersonsilvafilho.petfunding.R
+import com.gersonsilvafilho.petfunding.chat.ChatActivity
 import com.gersonsilvafilho.petfunding.detail.fragments.AboutFragment
 import com.gersonsilvafilho.petfunding.detail.fragments.ContactFragment
 import com.gersonsilvafilho.petfunding.detail.fragments.InfoFragment
 import com.gersonsilvafilho.petfunding.detail.fragments.StatusFragment
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import kotlinx.android.synthetic.main.activity_detail.*
+import org.jetbrains.anko.startActivity
 import java.util.*
 
 
@@ -35,9 +36,9 @@ class DetailActivity : AppCompatActivity() {
 
         val fab = findViewById(R.id.fab) as FloatingActionButton
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+            startActivity<ChatActivity>("matchId" to pet.uid)
         }
+
         setupViewPager(viewpager, pet)
         tabs.setupWithViewPager(viewpager)
 
