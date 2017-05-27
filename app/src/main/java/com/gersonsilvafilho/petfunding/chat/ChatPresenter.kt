@@ -63,6 +63,7 @@ class ChatPresenter : ChatContract.Presenter
                 .subscribe { id ->
             msg.uid = id
             mView.addNewMessage(msg)
-            mView.clearMessageBox() }
+            mView.clearMessageBox()
+                }
     }
 }

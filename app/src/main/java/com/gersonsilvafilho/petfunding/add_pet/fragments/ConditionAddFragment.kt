@@ -26,6 +26,7 @@ class ConditionAddFragment(private val presenter: AddPetContract.Presenter)  : F
     override fun onResume() {
         super.onResume()
         presenter.initCondition(this)
+
     }
 
     override fun stateChanges(): Observable<List<String>> = group_choices_state.OnCheckedStateChangeListener()

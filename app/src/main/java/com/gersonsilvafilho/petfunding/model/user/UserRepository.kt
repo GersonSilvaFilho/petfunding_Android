@@ -25,4 +25,5 @@ interface UserRepository
     fun checkIfChatExists(petId: String): String?
     fun getAllMatches():List<Match>
 
+    fun currentUserChanged(): Observable<User>
 }

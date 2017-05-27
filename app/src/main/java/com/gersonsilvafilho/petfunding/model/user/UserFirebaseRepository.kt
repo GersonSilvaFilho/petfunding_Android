@@ -39,8 +39,16 @@ class UserFirebaseRepository : UserRepository
     override fun monitorCurrentUser() {
         val key = usersRef.child(getCurrentUserId())
         RxFirebaseDatabase.observeValueEvent(key, User::class.java)
-                .doOnError { e -> Log.d("UserRepo", "User is null - " + e.localizedMessage)}
+                .doOnError { e -> Log.d("UserRepo", "User is null - " + e.localizedMessage)
+                     Exception("TADA !")}
                 .subscribe { if(it != null) mCurrentUser = it }
+    }
+
+    override fun currentUserChanged(): Observable<User> {
+        val key = usersRef.child(getCurrentUserId())
+        return RxFirebaseDatabase.observeValueEvent(key, User::class.java)
+                .doOnError { e -> Log.d("UserRepo", "User is null - " + e.localizedMessage)
+                     Exception("TADA !")}.toObservable()
     }
 
     override fun loginWithFacebook(token: String): Observable<Boolean> {
@@ -87,13 +95,18 @@ class UserFirebaseRepository : UserRepository
                 val email = `object`.getString("email")
                 val gender = `object`.getString("gender")
                 val name = `object`.getString("name")
+                val id = `object`.getString("id")
+
 
                 Log.d("Facebook Parameters", "Passou =" + name)
                 val key = usersRef.child(getCurrentUserId())
-                mCurrentUser!!.username = name
-                mCurrentUser!!.uid = getCurrentUserId()
+                mCurrentUser.username = name
+                mCurrentUser.uid = getCurrentUserId()
+                mCurrentUser.email = email
+                mCurrentUser.gender = gender
+                mCurrentUser.imageUrl = "https://graph.facebook.com/"+id+"/picture?type=large"
 
-                RxFirebaseDatabase.updateChildren(key,mCurrentUser!!.toMap()).subscribe()
+                RxFirebaseDatabase.updateChildren(key,mCurrentUser.toMap()).subscribe()
 
             } catch (e: JSONException) {
                 Log.d("Facebook Parameters", "Merda")

@@ -1,6 +1,7 @@
 package com.gersonsilvafilho.petfunding.main
 
 import com.gersonsilvafilho.petfunding.model.pet.Pet
+import com.gersonsilvafilho.petfunding.model.user.User
 
 
 /**
@@ -12,6 +13,7 @@ interface MainMenuContract {
         fun updateCardAdapter(pets:List<Pet>)
         fun startDetailActivity(pet:Pet)
         fun showItsMatchDialog(pet:Pet)
+        fun setDrawerUserInformation(user: User)
     }
 
     interface Presenter
@@ -20,5 +22,6 @@ interface MainMenuContract {
         fun userLogout()
         fun userMatchedPet(pet:Pet)
         fun userUnmatchedPet(pet:Pet)
+        fun setUserProfile()
     }
 }

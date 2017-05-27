@@ -20,10 +20,10 @@ class AddPetPresenter : AddPetContract.Presenter {
     private var mPetRepository: PetRepository
 
     var mView : AddPetContract.View
-    var mAboutView : AddPetContract.ViewAbout? = null
-    var mInfoView : AddPetContract.ViewInfo? = null
-    var mConditionView : AddPetContract.ViewCondition? = null
-    var mContactView : AddPetContract.ViewContact? = null
+    lateinit var mAboutView : AddPetContract.ViewAbout
+    lateinit var mInfoView : AddPetContract.ViewInfo
+    lateinit var mConditionView : AddPetContract.ViewCondition
+    lateinit var mContactView : AddPetContract.ViewContact
 
 
 
@@ -39,52 +39,59 @@ class AddPetPresenter : AddPetContract.Presenter {
 
     override fun initAbout(aboutAddFragment: AddPetContract.ViewAbout) {
         mAboutView = aboutAddFragment
-        mAboutView!!.nameChanges().subscribe { a -> mCurrentPet.name = a.toString() }
-        mAboutView!!.descriptionChanges().subscribe { a -> mCurrentPet.description = a.toString() }
+        mAboutView.nameChanges().subscribe { a -> mCurrentPet.name = a.toString() }
+        mAboutView.descriptionChanges().subscribe { a -> mCurrentPet.description = a.toString() }
     }
 
     override fun initInfo(infoAddFragment: AddPetContract.ViewInfo) {
         mInfoView = infoAddFragment
-        mInfoView!!.typeChanges().subscribe { a -> mCurrentPet.type = a.toString() }
-        mInfoView!!.sexChanges().subscribe { a -> mCurrentPet.sex = a.toString() }
+        mInfoView.typeChanges().subscribe { a -> mCurrentPet.type = a.toString() }
+        mInfoView.sexChanges().subscribe { a -> mCurrentPet.sex = a.toString() }
         //mInfoView!!.ageChanges().subscribe { a -> mCurrentPet.birthDate = a.toString() }
-        mInfoView!!.sizeChanges().subscribe { a -> mCurrentPet.size = a.toString() }
-        mInfoView!!.furSizeChanges().subscribe { a -> mCurrentPet.furSize = a.toString() }
-        mInfoView!!.furColorChanges().subscribe { a -> mCurrentPet.furColors = ArrayList<String>(a)  }
+        mInfoView.sizeChanges().subscribe { a -> mCurrentPet.size = a.toString() }
+        mInfoView.furSizeChanges().subscribe { a -> mCurrentPet.furSize = a.toString() }
+        mInfoView.furColorChanges().subscribe { a -> mCurrentPet.furColors = ArrayList<String>(a)  }
     }
 
     override fun initCondition(conditionView: AddPetContract.ViewCondition)
     {
         mConditionView = conditionView
-        mConditionView!!.stateChanges().subscribe { a -> mCurrentPet.isCastrated = a.contains("Castrado")
-                                                         mCurrentPet.isVaccinated = a.contains("Vacinado")
-                                                         mCurrentPet.isDewormed = a.contains("Desverminado")}
+        mConditionView.stateChanges().subscribe { a -> mCurrentPet.isCastrated = a.contains("Castrado")
+                                                       mCurrentPet.isVaccinated = a.contains("Vacinado")
+                                                       mCurrentPet.isDewormed = a.contains("Desverminado")}
 
-        mConditionView!!.likeChanges().subscribe { a -> mCurrentPet.likeAnimals = a.contains("Crianças")
-                                                         mCurrentPet.likeChildren = a.contains("Outros Animais")
-                                                         mCurrentPet.likeElders = a.contains("Idosos")}
+        mConditionView.likeChanges().subscribe { a -> mCurrentPet.likeAnimals = a.contains("Crianças")
+                                                       mCurrentPet.likeChildren = a.contains("Outros Animais")
+                                                       mCurrentPet.likeElders = a.contains("Idosos")}
 
-        mConditionView!!.specialNeedsChanges().subscribe { a -> mCurrentPet.hasLocomotionProblems = a.contains("Problema Físico")
-                                                         mCurrentPet.isBlind = a.contains("Cego")
-                                                         mCurrentPet.hasBadBehaviour = a.contains("Comportamento")}
+        mConditionView.specialNeedsChanges().subscribe { a -> mCurrentPet.hasLocomotionProblems = a.contains("Problema Físico")
+                                                       mCurrentPet.isBlind = a.contains("Cego")
+                                                       mCurrentPet.hasBadBehaviour = a.contains("Comportamento")}
 
-        mConditionView!!.personalityChanges().subscribe { a -> mCurrentPet.behaviour = ArrayList<String>(a) }
+        mConditionView.personalityChanges().subscribe { a -> mCurrentPet.behaviour = ArrayList<String>(a) }
     }
 
     override fun initContact(contactView: AddPetContract.ViewContact) {
         mContactView = contactView
 
-        mContactView!!.ufChanges().subscribe { a -> mCurrentPet.state = a.toString() }
-        mContactView!!.cityChanges().subscribe { a -> mCurrentPet.city = a.toString() }
-        mContactView!!.contactNameChanges().subscribe { a -> mCurrentPet.contactName = a.toString() }
-        mContactView!!.contactPhoneChanges().subscribe { a -> mCurrentPet.contactPhone = a.toString() }
-        mContactView!!.ongChanges().subscribe { a -> mCurrentPet.ongName = a.toString() }
-
+        mContactView.ufChanges().subscribe { a -> mCurrentPet.state = a.toString() }
+        mContactView.cityChanges().subscribe { a -> mCurrentPet.city = a.toString() }
+        mContactView.contactNameChanges().subscribe { a -> mCurrentPet.contactName = a.toString() }
+        mContactView.contactPhoneChanges().subscribe { a -> mCurrentPet.contactPhone = a.toString() }
+        mContactView.ongChanges().subscribe { a -> mCurrentPet.ongName = a.toString() }
     }
 
     private fun validatePet(pet: Pet)
     {
         Log.d("RXAndroid", "Valido!")
+
+        if(pet.name.length < 2)
+        {
+            mView.showTab(0)
+            mAboutView.showInvalidName()
+            return
+        }
+
         pet.createdBy = mUserRepository.getCurrentUserId()
         mPetRepository.addPet(pet).doOnComplete {
             mView.showSuccessMessage()

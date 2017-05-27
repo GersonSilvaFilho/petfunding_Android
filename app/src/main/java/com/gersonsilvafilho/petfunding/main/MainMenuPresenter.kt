@@ -2,6 +2,7 @@ package com.gersonsilvafilho.petfunding.main
 
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.model.pet.PetRepository
+import com.gersonsilvafilho.petfunding.model.user.User
 import com.gersonsilvafilho.petfunding.model.user.UserRepository
 
 
@@ -20,6 +21,8 @@ class MainMenuPresenter: MainMenuContract.Presenter
         mMainMenuView = view
         mUserRepository = userRepository
         mPetRepository = petRepository
+
+        mUserRepository.currentUserChanged().subscribe { user: User -> setUserProfile() }
     }
 
 
@@ -47,6 +50,11 @@ class MainMenuPresenter: MainMenuContract.Presenter
 
     override fun loadPets() {
         mPetRepository.getPets().subscribe { p ->  mMainMenuView.updateCardAdapter(p)}
+    }
+
+    override fun setUserProfile()
+    {
+        mMainMenuView.setDrawerUserInformation(mUserRepository.getCurrentUser())
     }
 
 }

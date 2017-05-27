@@ -9,11 +9,12 @@ import java.util.*
  */
 class User: IUser {
 
-
+    @Exclude
     override fun getAvatar(): String {
-        return ""
+        return imageUrl
     }
 
+    @Exclude
     override fun getName(): String {
         return username
     }
@@ -26,13 +27,21 @@ class User: IUser {
     var username:String = ""
     var matches: Map<String, Match> = HashMap<String, Match>()
     var unmatches: ArrayList<String> = ArrayList<String>()
+    var email:String = ""
+    var gender:String = ""
+    var imageUrl:String = ""
+    var fbId:String = ""
 
     @Exclude
     fun toMap(): Map<String, Any> {
         val values = HashMap<String, Any>()
-        values.put("name", username)
+        values.put("username", username)
         values.put("matches", matches)
         values.put("unmatches", unmatches)
+        values.put("email", email)
+        values.put("gender", gender)
+        values.put("imageUrl", imageUrl)
+        values.put("fbId", fbId)
         return values
 
     }

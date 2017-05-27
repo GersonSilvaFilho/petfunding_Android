@@ -14,6 +14,8 @@ interface AddPetContract {
     {
         fun nameChanges(): Observable<CharSequence>
         fun descriptionChanges(): Observable<CharSequence>
+
+        fun showInvalidName()
     }
 
 
@@ -49,6 +51,7 @@ interface AddPetContract {
         fun saveButtonClick(): Observable<Unit>
         fun finishActivity()
         fun showSuccessMessage()
+        fun showTab(tabId:Int)
     }
 
     interface Presenter

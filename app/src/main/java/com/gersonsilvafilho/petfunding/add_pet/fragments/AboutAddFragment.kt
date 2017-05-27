@@ -22,6 +22,7 @@ import org.jetbrains.anko.onClick
 
 class AboutAddFragment(private val presenter: AddPetContract.Presenter) : Fragment(), AddPetContract.ViewAbout {
 
+
     override fun nameChanges(): Observable<CharSequence> = addEditTextName.textChanges()
     override fun descriptionChanges(): Observable<CharSequence> = addEditTextDescription.textChanges()
 
@@ -67,10 +68,11 @@ class AboutAddFragment(private val presenter: AddPetContract.Presenter) : Fragme
     override fun onResume() {
         super.onResume()
         presenter.initAbout(this)
-
-
     }
 
+    override fun showInvalidName() {
+        addEditTextName.setError("Nome inválido")
+    }
 
 
 }

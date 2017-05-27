@@ -2,7 +2,6 @@ package com.gersonsilvafilho.petfunding.chat
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.ImageView
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.model.message.Message
 import com.gersonsilvafilho.petfunding.util.PetApplication
@@ -62,10 +61,6 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         input.inputEditText.setText("")
     }
 
-    val imageLoader = object : ImageLoader {
-        override fun loadImage(imageView: ImageView, url: String) {
-            Picasso.with(imageView.context).load(url).into(imageView)
-        }
-    }
+    val imageLoader = ImageLoader { imageView, url -> Picasso.with(imageView.context).load(url).into(imageView) }
 }
 

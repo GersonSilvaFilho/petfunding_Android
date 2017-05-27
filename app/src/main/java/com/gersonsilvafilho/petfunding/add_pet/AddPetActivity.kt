@@ -25,6 +25,7 @@ import java.util.*
 class AddPetActivity : AppCompatActivity(), AddPetContract.View {
 
 
+
     override fun saveButtonClick(): Observable<Unit> = addPetButtonSave.clicks()
 
     lateinit var mActionsListener: AddPetContract.Presenter
@@ -84,5 +85,9 @@ class AddPetActivity : AppCompatActivity(), AddPetContract.View {
         override fun getPageTitle(position: Int): CharSequence {
             return mFragmentTitleList.get(position)
         }
+    }
+
+    override fun showTab(tabId: Int) {
+        tabs.getTabAt(tabId)!!.select()
     }
 }
