@@ -16,6 +16,8 @@ interface AddPetContract {
         fun descriptionChanges(): Observable<CharSequence>
 
         fun showInvalidName()
+        fun showInvalidDescription()
+        fun showInvalidPhotosMessage()
     }
 
 

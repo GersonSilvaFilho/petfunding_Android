@@ -9,9 +9,6 @@ import java.util.*
  * Created by GersonSilva on 5/6/17.
  */
 class Pet : Serializable {
-    constructor()
-    {
-    }
 
     var uid: String = ""
 
@@ -23,7 +20,8 @@ class Pet : Serializable {
 
     var sex: String = ""
 
-    //var birthDate:Date? = null
+    var birthDate:Date = Date()
+
     var size: String = ""
 
     var furSize: String = ""
@@ -81,6 +79,7 @@ class Pet : Serializable {
         values.put("description", description)
         values.put("type", type)
         values.put("sex", sex)
+        values.put("birthDate", birthDate)
         values.put("size", size)
         values.put("furSize", furSize)
         values.put("furColors", furColors)
@@ -94,7 +93,6 @@ class Pet : Serializable {
         values.put("isBlind", isBlind)
         values.put("hasBadBehaviour", hasBadBehaviour)
         values.put("behaviour", behaviour)
-
         values.put("photosUrl", photosUrl)
         return values
 

@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.add_pet.AddPetContract
+import com.jakewharton.rxbinding2.widget.textChanges
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.info_add_fragment.*
 import java.util.*
@@ -25,7 +26,7 @@ class InfoAddFragment(private val presenter: AddPetContract.Presenter) : Fragmen
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        spinnerMonth.setItems("1 Mês", "2 Meses", "3 Meses","4 Meses", "5 Meses", "6 Meses", "7 Meses", "8 Meses", "9 Meses", "10 Meses", "11 Meses")
+        spinnerMonth.setItems("0 Meses", "1 Mês", "2 Meses", "3 Meses","4 Meses", "5 Meses", "6 Meses", "7 Meses", "8 Meses", "9 Meses", "10 Meses", "11 Meses")
         spinnerYear.setItems("0 Anos", "1 Ano", "2 anos", "3 anos","4 anos", "5 anos", "6 anos", "7 anos", "8 anos", "9 anos", "10 anos", "11 anos", "12 anos")
 
     }
@@ -34,9 +35,16 @@ class InfoAddFragment(private val presenter: AddPetContract.Presenter) : Fragmen
 
     override fun sexChanges(): Observable<CharSequence> = group_choices_sex.OnCheckedChangeListener()
 
-    override fun ageChanges(): Observable<Date> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun ageChanges(): Observable<Date>  = spinnerYear.textChanges()
+            .mergeWith { spinnerMonth.textChanges() }
+            .map {
+                val d = Date()
+                val c = Calendar.getInstance()
+                c.time = d
+                c.add(Calendar.MONTH, spinnerMonth.selectedIndex*-1)
+                c.add(Calendar.YEAR, spinnerYear.selectedIndex*-1)
+                c.time
+            }
 
     override fun sizeChanges(): Observable<CharSequence> = group_choices_size.OnCheckedChangeListener()
 

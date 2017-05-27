@@ -47,7 +47,7 @@ class AddPetPresenter : AddPetContract.Presenter {
         mInfoView = infoAddFragment
         mInfoView.typeChanges().subscribe { a -> mCurrentPet.type = a.toString() }
         mInfoView.sexChanges().subscribe { a -> mCurrentPet.sex = a.toString() }
-        //mInfoView!!.ageChanges().subscribe { a -> mCurrentPet.birthDate = a.toString() }
+        mInfoView.ageChanges().subscribe { a -> mCurrentPet.birthDate = a }
         mInfoView.sizeChanges().subscribe { a -> mCurrentPet.size = a.toString() }
         mInfoView.furSizeChanges().subscribe { a -> mCurrentPet.furSize = a.toString() }
         mInfoView.furColorChanges().subscribe { a -> mCurrentPet.furColors = ArrayList<String>(a)  }
@@ -85,10 +85,22 @@ class AddPetPresenter : AddPetContract.Presenter {
     {
         Log.d("RXAndroid", "Valido!")
 
-        if(pet.name.length < 2)
+        if (pet.photosUrl.count() == 0)
+        {
+            mView.showTab(0)
+            mAboutView.showInvalidPhotosMessage()
+            return
+        }
+        else if(pet.name.length < 2)
         {
             mView.showTab(0)
             mAboutView.showInvalidName()
+            return
+        }
+        else if (pet.description.length < 2)
+        {
+            mView.showTab(0)
+            mAboutView.showInvalidDescription()
             return
         }
 
