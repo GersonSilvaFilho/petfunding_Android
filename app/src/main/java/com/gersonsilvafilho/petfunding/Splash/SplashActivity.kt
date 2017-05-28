@@ -87,15 +87,15 @@ class SplashActivity : AppCompatActivity() , View{
 
 
     override fun showFacebookError() {
-        Toast.makeText(this, "Facebook Error", Toast.LENGTH_LONG).show()
+        //Toast.makeText(this, "Facebook Error", Toast.LENGTH_LONG).show()
     }
 
     override fun facebookSuccess() {
-        Toast.makeText(this, "Facebook Success", Toast.LENGTH_LONG).show()
+        //Toast.makeText(this, "Facebook Success", Toast.LENGTH_LONG).show()
     }
 
     override fun showFirebaseSuccess() {
-        Toast.makeText(this, "Firebase Success", Toast.LENGTH_LONG).show()
+        //Toast.makeText(this, "Firebase Success", Toast.LENGTH_LONG).show()
     }
 
     private fun handleFacebookAccessToken(token: AccessToken) {

@@ -53,4 +53,12 @@ class ContactAddFragment(private val presenter: AddPetContract.Presenter) : Frag
 
     override fun ongChanges(): Observable<CharSequence> = spinnerOng.textChanges()
 
-}// Required empty public constructor
+    override fun setContactNameError() {
+        Snackbar.make(this.view!!, "Insira o nome do contato", Snackbar.LENGTH_LONG).show()
+    }
+
+    override fun setContactPhoneError() {
+        Snackbar.make(this.view!!, "Insira o telefone do contato", Snackbar.LENGTH_LONG).show()
+    }
+
+}

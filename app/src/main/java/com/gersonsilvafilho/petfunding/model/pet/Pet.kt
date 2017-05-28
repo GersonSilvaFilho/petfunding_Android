@@ -16,7 +16,7 @@ class Pet : Serializable {
 
     var description: String = ""
 
-    var type: String = "unknown"
+    var type: String = ""
 
     var sex: String = ""
 

@@ -4,6 +4,7 @@ import android.util.Log
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.model.pet.PetRepository
 import com.gersonsilvafilho.petfunding.model.user.UserRepository
+import khronos.day
 import java.io.File
 import java.util.*
 
@@ -12,7 +13,6 @@ import java.util.*
  * Created by GersonSilva on 5/6/17.
  */
 class AddPetPresenter : AddPetContract.Presenter {
-
 
     private var mCurrentPet: Pet = Pet()
 
@@ -24,9 +24,6 @@ class AddPetPresenter : AddPetContract.Presenter {
     lateinit var mInfoView : AddPetContract.ViewInfo
     lateinit var mConditionView : AddPetContract.ViewCondition
     lateinit var mContactView : AddPetContract.ViewContact
-
-
-
 
     constructor(addPetView: AddPetContract.View, petRepository: PetRepository, userRepository: UserRepository)
     {
@@ -103,6 +100,43 @@ class AddPetPresenter : AddPetContract.Presenter {
             mAboutView.showInvalidDescription()
             return
         }
+        else if(pet.type.isNullOrEmpty())
+        {
+            mView.showTab(1)
+            mInfoView.setTypeError()
+            return
+        }
+        else if(pet.sex.isNullOrEmpty())
+        {
+            mView.showTab(1)
+            mInfoView.setSexError()
+            return
+        }
+        else if(pet.birthDate > 1.day.ago)
+        {
+            mView.showTab(1)
+            mInfoView.setAgeError()
+            return
+        }
+        else if(pet.size.isNullOrEmpty())
+        {
+            mView.showTab(1)
+            mInfoView.setSizeError()
+            return
+        }
+        else if(pet.furSize.isEmpty())
+        {
+            mView.showTab(1)
+            mInfoView.setFurSizeError()
+            return
+        }
+        else if(pet.furColors.isEmpty())
+        {
+            mView.showTab(1)
+            mInfoView.setFurColorError()
+            return
+        }
+
 
         pet.createdBy = mUserRepository.getCurrentUserId()
         mPetRepository.addPet(pet).doOnComplete {

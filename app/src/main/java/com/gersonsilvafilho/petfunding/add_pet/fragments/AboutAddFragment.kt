@@ -58,11 +58,15 @@ class AboutAddFragment(private val presenter: AddPetContract.Presenter) : Fragme
                 .subscribe({ response ->
                     Log.i("RXPAPARAZZO", response.resultCode().toString())
                     // See response.resultCode() doc
-                    if (response.resultCode() !== RESULT_OK) {
-                        Picasso.with(this.activity)
-                                .load(response.data().file)
-                                .into(view)
-                        presenter.imageReady(num, response.data().file)
+                    if (response.resultCode() == RESULT_OK) {
+                        if(response.data()?.file != null)
+                        {
+                            Picasso.with(this.activity)
+                                    .load(response.data().file)
+                                    .into(view)
+                            presenter.imageReady(num, response.data().file)
+                        }
+
                     }
                 })
     }

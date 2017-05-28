@@ -1,6 +1,7 @@
 package com.gersonsilvafilho.petfunding.add_pet.fragments
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -26,8 +27,8 @@ class InfoAddFragment(private val presenter: AddPetContract.Presenter) : Fragmen
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        spinnerMonth.setItems("0 Meses", "1 Mês", "2 Meses", "3 Meses","4 Meses", "5 Meses", "6 Meses", "7 Meses", "8 Meses", "9 Meses", "10 Meses", "11 Meses")
-        spinnerYear.setItems("0 Anos", "1 Ano", "2 anos", "3 anos","4 anos", "5 anos", "6 anos", "7 anos", "8 anos", "9 anos", "10 anos", "11 anos", "12 anos")
+        spinnerMonth.setItems("Meses", "1 Mês", "2 Meses", "3 Meses","4 Meses", "5 Meses", "6 Meses", "7 Meses", "8 Meses", "9 Meses", "10 Meses", "11 Meses")
+        spinnerYear.setItems("Anos", "1 Ano", "2 anos", "3 anos","4 anos", "5 anos", "6 anos", "7 anos", "8 anos", "9 anos", "10 anos", "11 anos", "12 anos")
 
     }
 
@@ -52,10 +53,49 @@ class InfoAddFragment(private val presenter: AddPetContract.Presenter) : Fragmen
 
     override fun furColorChanges(): Observable<List<String>> = group_choices_fur_color.OnCheckedStateChangeListener()
 
+    override fun setTypeError()
+    {
+        Snackbar.make(this.view!!, "Selecione o tipo do Pet", Snackbar.LENGTH_LONG).show()
+    }
+
+    override fun setSexError()
+    {
+        Snackbar.make(this.view!!, "Selecione o sexo do Pet", Snackbar.LENGTH_LONG).show()
+    }
+
+    override fun setAgeError()
+    {
+        Snackbar.make(this.view!!, "Selecione a idade aproximada do Pet", Snackbar.LENGTH_LONG).show()
+    }
+
+    override fun setSizeError() {
+        Snackbar.make(this.view!!, "Selecione o tamanho do Pet", Snackbar.LENGTH_LONG).show()
+    }
+
+    override fun setFurSizeError()
+    {
+        Snackbar.make(this.view!!, "Selecione o pêlo do Pet", Snackbar.LENGTH_LONG).show()
+    }
+
+    override fun setFurColorError() {
+        Snackbar.make(this.view!!, "Selecione pelo menos uma cor de pêlo do Pet", Snackbar.LENGTH_LONG).show()
+    }
+
     override fun onResume() {
         super.onResume()
         presenter.initInfo(this)
     }
 
+
+//    fun android.support.v7.widget.CardView.SetOnError()  {
+//        val normalBackgroundColor = this.cardBackgroundColor
+//        this.setCardBackgroundColor(0xFF0000)
+//        this.setOnFocusChangeListener { v, hasFocus ->
+//            if(this.isFocused)
+//            {
+//                this.cardBackgroundColor = normalBackgroundColor
+//            }
+//        }
+//    }
 }
 

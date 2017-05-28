@@ -19,6 +19,7 @@
         android:layout_marginRight="10dp"
         android:layout_margin="5dp"
         android:gravity="center"
+        android:id="@+id/typeCard"
         card_view:cardCornerRadius="5dp">
 
         <LinearLayout
@@ -43,8 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:padding="10dp"
-                card_view:tbgChildSpacing="5dp"
-                app:tbgCheckedButton="@+id/choice_a">
+                card_view:tbgChildSpacing="5dp">
 
                 <com.nex3z.togglebuttongroup.button.LabelToggle
                     android:id="@+id/choice_dog"
