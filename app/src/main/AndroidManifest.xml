@@ -35,6 +35,7 @@
         <activity
             android:name=".add_pet.AddPetActivity"
             android:label="Adicionar Pet"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <provider

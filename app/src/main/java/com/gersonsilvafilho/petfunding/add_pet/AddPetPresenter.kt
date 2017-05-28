@@ -76,6 +76,12 @@ class AddPetPresenter : AddPetContract.Presenter {
         mContactView.contactNameChanges().subscribe { a -> mCurrentPet.contactName = a.toString() }
         mContactView.contactPhoneChanges().subscribe { a -> mCurrentPet.contactPhone = a.toString() }
         mContactView.ongChanges().subscribe { a -> mCurrentPet.ongName = a.toString() }
+
+        //Set default values for user
+        mCurrentPet.contactName = mUserRepository.getCurrentUser().name
+        //mCurrentPet.contactPhone =
+
+        mContactView.setUsernameInitialValue(mUserRepository.getCurrentUser().name)
     }
 
     private fun validatePet(pet: Pet)
@@ -134,6 +140,18 @@ class AddPetPresenter : AddPetContract.Presenter {
         {
             mView.showTab(1)
             mInfoView.setFurColorError()
+            return
+        }
+        else if(pet.contactName.isNullOrEmpty())
+        {
+            mView.showTab(3)
+            mContactView.setContactNameError()
+            return
+        }
+        else if(pet.contactPhone.isNullOrEmpty())
+        {
+            mView.showTab(3)
+            mContactView.setContactPhoneError()
             return
         }
 

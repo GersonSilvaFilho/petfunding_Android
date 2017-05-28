@@ -54,6 +54,8 @@ interface AddPetContract {
         fun ongChanges(): Observable<CharSequence>
         fun setContactNameError()
         fun setContactPhoneError()
+        fun setUsernameInitialValue(username: String)
+        fun setUserContactInitialValue(phone: String)
     }
 
     interface View

@@ -61,4 +61,13 @@ class ContactAddFragment(private val presenter: AddPetContract.Presenter) : Frag
         Snackbar.make(this.view!!, "Insira o telefone do contato", Snackbar.LENGTH_LONG).show()
     }
 
+    override fun setUsernameInitialValue(username:String)
+    {
+        editTextContactName.setText(username)
+    }
+
+    override fun setUserContactInitialValue(phone:String)
+    {
+        editTextContactPhone.setText(phone)
+    }
 }

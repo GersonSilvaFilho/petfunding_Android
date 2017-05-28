@@ -13,38 +13,47 @@ import com.gersonsilvafilho.petfunding.add_pet.fragments.AboutAddFragment
 import com.gersonsilvafilho.petfunding.add_pet.fragments.ConditionAddFragment
 import com.gersonsilvafilho.petfunding.add_pet.fragments.ContactAddFragment
 import com.gersonsilvafilho.petfunding.add_pet.fragments.InfoAddFragment
-import com.gersonsilvafilho.petfunding.model.pet.PetFirebaseRepository
-import com.gersonsilvafilho.petfunding.model.user.UserFirebaseRepository
+import com.gersonsilvafilho.petfunding.chat.AddPetModule
+import com.gersonsilvafilho.petfunding.util.PetApplication
 import com.jakewharton.rxbinding2.view.clicks
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_add_pet.*
 import org.jetbrains.anko.contentView
 import java.util.*
+import javax.inject.Inject
 
 
 class AddPetActivity : AppCompatActivity(), AddPetContract.View {
 
-
-
     override fun saveButtonClick(): Observable<Unit> = addPetButtonSave.clicks()
 
+    @Inject
     lateinit var mActionsListener: AddPetContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_pet)
-
-        val toolbar = findViewById(R.id.toolbar) as Toolbar
-
-        toolbar.setTitle("Adicionar PET")
-        setSupportActionBar(toolbar)
-        getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
-
-        mActionsListener = AddPetPresenter(this, PetFirebaseRepository(), UserFirebaseRepository())
-
+        initDagger()
+        setupToolbar()
         setupViewPager(viewpager)
         tabs.setupWithViewPager(viewpager)
 
+    }
+
+    private fun initDagger()
+    {
+        (application as PetApplication).get(this)
+                .getUserComponent()!!
+                .plus(AddPetModule(this))
+                .inject(this)
+    }
+
+    private fun setupToolbar()
+    {
+        val toolbar = findViewById(R.id.toolbar) as Toolbar
+        toolbar.setTitle("Adicionar PET")
+        setSupportActionBar(toolbar)
+        getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun setupViewPager(viewPager: ViewPager) {
