@@ -93,7 +93,16 @@ class Pet : Serializable {
         values.put("isBlind", isBlind)
         values.put("hasBadBehaviour", hasBadBehaviour)
         values.put("behaviour", behaviour)
+        values.put("city", city)
+        values.put("contactName", contactName)
+        values.put("contactPhone", contactPhone)
+        values.put("ongName", ongName)
         values.put("photosUrl", photosUrl)
+        values.put("createdBy", createdBy)
+        values.put("createdAt", createdAt)
+        if(adoptedAt != null) values.put("adoptedAt", adoptedAt!!)
+        values.put("updatedAt", updatedAt)
+        if(adoptedBy != null) values.put("adoptedBy", adoptedBy!!)
         return values
 
     }

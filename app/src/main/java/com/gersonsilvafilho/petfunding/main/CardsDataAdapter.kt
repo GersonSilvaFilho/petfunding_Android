@@ -10,6 +10,7 @@ import android.widget.TextView
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.squareup.picasso.Picasso
+import java.util.*
 
 class CardsDataAdapter(context:Context, @LayoutRes resource: Int) : ArrayAdapter<Pet>(context, resource) {
 
@@ -25,8 +26,41 @@ class CardsDataAdapter(context:Context, @LayoutRes resource: Int) : ArrayAdapter
 
 
         val nameTextView = contentView.findViewById(R.id.textViewCardName) as TextView
-        nameTextView.text = getItem(position).name
+
+        var ageString = ""
+        val today = Date()
+        val monthsTotal = getMonthDiff(getItem(position).birthDate, today)
+        val years = monthsTotal / 12
+        if(years > 0)
+        {
+            ageString = (years.toString() + " Ano")
+            ageString +=  (if(years > 1) "s" else "")
+        }
+        val months = monthsTotal % 12
+        if(months > 0)
+        {
+            if(ageString.isNotEmpty())
+            {
+                ageString += (years.toString() + ", ")
+            }
+
+            ageString = (months.toString() + " Mes")
+            ageString +=  (if(months > 1) "es," else "")
+        }
+
+        nameTextView.text = getItem(position).name + ", " + ageString
         return contentView
+    }
+
+    private fun getMonthDiff(startDate:Date, endDate:Date):Int
+    {
+        val startCalendar = GregorianCalendar()
+        startCalendar.time = startDate
+        val endCalendar = GregorianCalendar()
+        endCalendar.time = endDate
+
+        val diffYear = endCalendar.get(Calendar.YEAR) - startCalendar.get(Calendar.YEAR)
+        return diffYear * 12 + endCalendar.get(Calendar.MONTH) - startCalendar.get(Calendar.MONTH)
     }
 
 }

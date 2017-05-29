@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.view.MenuItem
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.add_pet.fragments.AboutAddFragment
 import com.gersonsilvafilho.petfunding.add_pet.fragments.ConditionAddFragment
@@ -98,5 +99,14 @@ class AddPetActivity : AppCompatActivity(), AddPetContract.View {
 
     override fun showTab(tabId: Int) {
         tabs.getTabAt(tabId)!!.select()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.getItemId() === android.R.id.home)
+        {
+            finish()
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 }

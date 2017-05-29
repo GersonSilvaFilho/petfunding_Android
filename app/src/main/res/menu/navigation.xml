@@ -2,8 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:id="@+id/action_filter"
+        android:icon="@drawable/filter_icon"
+        android:title="Text to be seen by user"
+        app:showAsAction="always"
+        android:orderInCategory="0"/>
 </menu>

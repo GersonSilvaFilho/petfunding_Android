@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.view.MenuItem
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.chat.ChatActivity
 import com.gersonsilvafilho.petfunding.detail.fragments.AboutFragment
@@ -75,5 +76,14 @@ class DetailActivity : AppCompatActivity() {
         override fun getPageTitle(position: Int): CharSequence {
             return mFragmentTitleList.get(position)
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.getItemId() === android.R.id.home)
+        {
+            finish()
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 }

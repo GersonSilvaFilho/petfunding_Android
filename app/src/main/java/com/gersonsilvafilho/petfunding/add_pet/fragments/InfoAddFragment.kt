@@ -36,8 +36,9 @@ class InfoAddFragment(private val presenter: AddPetContract.Presenter) : Fragmen
 
     override fun sexChanges(): Observable<CharSequence> = group_choices_sex.OnCheckedChangeListener()
 
-    override fun ageChanges(): Observable<Date>  = spinnerYear.textChanges()
-            .mergeWith { spinnerMonth.textChanges() }
+    override fun ageChanges(): Observable<Date>  = Observable.merge (
+            spinnerYear.textChanges(),
+            spinnerMonth.textChanges() )
             .map {
                 val d = Date()
                 val c = Calendar.getInstance()
