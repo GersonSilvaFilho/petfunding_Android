@@ -23,9 +23,9 @@ class StatusFragment (val mPet: Pet): Fragment() {
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        textViewStatusCastrated.text = (if(mPet.isCastrated) "Sim" else "Não")
-        textViewStatusVaccinated.text = (if(mPet.isVaccinated) "Sim" else "Não")
-        textViewStatusDewormed.text = (if(mPet.isDewormed) "Sim" else "Não")
+        textViewStatusCastrated.text = (if(mPet.castrated) "Sim" else "Não")
+        textViewStatusVaccinated.text = (if(mPet.vaccinated) "Sim" else "Não")
+        textViewStatusDewormed.text = (if(mPet.dewormed) "Sim" else "Não")
 
 
     }

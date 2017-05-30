@@ -53,16 +53,16 @@ class AddPetPresenter : AddPetContract.Presenter {
     override fun initCondition(conditionView: AddPetContract.ViewCondition)
     {
         mConditionView = conditionView
-        mConditionView.stateChanges().subscribe { a -> mCurrentPet.isCastrated = a.contains("Castrado")
-                                                       mCurrentPet.isVaccinated = a.contains("Vacinado")
-                                                       mCurrentPet.isDewormed = a.contains("Desverminado")}
+        mConditionView.stateChanges().subscribe { a -> mCurrentPet.castrated = a.contains("Castrado")
+                                                       mCurrentPet.vaccinated = a.contains("Vacinado")
+                                                       mCurrentPet.dewormed = a.contains("Desverminado")}
 
         mConditionView.likeChanges().subscribe { a -> mCurrentPet.likeAnimals = a.contains("Crianças")
                                                        mCurrentPet.likeChildren = a.contains("Outros Animais")
                                                        mCurrentPet.likeElders = a.contains("Idosos")}
 
         mConditionView.specialNeedsChanges().subscribe { a -> mCurrentPet.hasLocomotionProblems = a.contains("Problema Físico")
-                                                       mCurrentPet.isBlind = a.contains("Cego")
+                                                       mCurrentPet.blind = a.contains("Cego")
                                                        mCurrentPet.hasBadBehaviour = a.contains("Comportamento")}
 
         mConditionView.personalityChanges().subscribe { a -> mCurrentPet.behaviour = ArrayList<String>(a) }
