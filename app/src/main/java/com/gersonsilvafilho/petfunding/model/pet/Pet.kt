@@ -9,9 +9,6 @@ import java.util.*
  * Created by GersonSilva on 5/6/17.
  */
 class Pet : Serializable {
-    constructor()
-    {
-    }
 
     var uid: String = ""
 
@@ -19,22 +16,23 @@ class Pet : Serializable {
 
     var description: String = ""
 
-    var type: String = "unknown"
+    var type: String = ""
 
     var sex: String = ""
 
-    //var birthDate:Date? = null
+    var birthDate:Date = Date()
+
     var size: String = ""
 
     var furSize: String = ""
 
     var furColors: ArrayList<String> = ArrayList<String>()
 
-    var isVaccinated: Boolean = false
+    var vaccinated: Boolean = false
 
-    var isDewormed: Boolean = false
+    var dewormed: Boolean = false
 
-    var isCastrated: Boolean = false
+    var castrated: Boolean = false
 
     var likeChildren: Boolean = false
 
@@ -44,7 +42,7 @@ class Pet : Serializable {
 
     var hasLocomotionProblems: Boolean = false
 
-    var isBlind: Boolean = false
+    var blind: Boolean = false
 
     var hasBadBehaviour: Boolean = false
 
@@ -81,21 +79,30 @@ class Pet : Serializable {
         values.put("description", description)
         values.put("type", type)
         values.put("sex", sex)
+        values.put("birthDate", birthDate)
         values.put("size", size)
         values.put("furSize", furSize)
         values.put("furColors", furColors)
-        values.put("isVaccinated", isVaccinated)
-        values.put("isDewormed", isDewormed)
-        values.put("isCastrated", isCastrated)
+        values.put("vaccinated", vaccinated)
+        values.put("dewormed", dewormed)
+        values.put("castrated", castrated)
         values.put("likeChildren", likeChildren)
         values.put("likeAnimals", likeAnimals)
         values.put("likeElders", likeElders)
         values.put("hasLocomotionProblems", hasLocomotionProblems)
-        values.put("isBlind", isBlind)
+        values.put("blind", blind)
         values.put("hasBadBehaviour", hasBadBehaviour)
         values.put("behaviour", behaviour)
-
+        values.put("city", city)
+        values.put("contactName", contactName)
+        values.put("contactPhone", contactPhone)
+        values.put("ongName", ongName)
         values.put("photosUrl", photosUrl)
+        values.put("createdBy", createdBy)
+        values.put("createdAt", createdAt)
+        if(adoptedAt != null) values.put("adoptedAt", adoptedAt!!)
+        values.put("updatedAt", updatedAt)
+        if(adoptedBy != null) values.put("adoptedBy", adoptedBy!!)
         return values
 
     }

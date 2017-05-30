@@ -117,14 +117,14 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
     }
 
     override fun updateCardAdapter(pets: List<Pet>) {
-        var mCardAdapter = CardsDataAdapter(this, applicationContext, 0)
+        var mCardAdapter = CardsDataAdapter(applicationContext, 0)
         mCardAdapter.addAll(pets)
         cardStack.setAdapter(mCardAdapter)
     }
 
     override fun mClick() {
         ///launch(this, card_full)
-        startActivity<DetailActivity>("pet" to cardStack.adapter.getItem(cardStack.currIndex))
+        startActivity<DetailActivity>("pet" to getCurrentPet())
     }
 
     private fun initDagger()
@@ -152,7 +152,7 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
 
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_filter) {
             return true
         }
 
@@ -185,13 +185,22 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
     }
 
     override fun cardDiscartedRight(cardId: Int) {
-        mActionsListener.userMatchedPet((cardStack.adapter.getItem(cardStack.currIndex - 1) as Pet))
+        mActionsListener.userMatchedPet(getLastPet())
     }
 
     override fun cardDiscartedLeft(cardId: Int) {
-        mActionsListener.userUnmatchedPet((cardStack.adapter.getItem(cardStack.currIndex - 1) as Pet))
+        mActionsListener.userUnmatchedPet(getLastPet())
     }
 
+    private fun getCurrentPet():Pet
+    {
+        return cardStack.adapter.getItem(cardStack.currIndex%cardStack.adapter.count) as Pet
+    }
+
+    private fun getLastPet():Pet
+    {
+        return cardStack.adapter.getItem((cardStack.currIndex-1)%cardStack.adapter.count) as Pet
+    }
     // Methods inside this block are static
     companion object {
         fun launch(activity: Activity, sharedView: View) {

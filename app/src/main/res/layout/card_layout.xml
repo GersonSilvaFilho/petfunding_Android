@@ -16,25 +16,60 @@
         android:layout_height="400dp"
         android:cropToPadding="false"
         android:scaleType="centerCrop"
-        android:layout_margin="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:src="@drawable/nino" />
 
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="80dp"
         android:orientation="horizontal"
+        android:weightSum="10"
         android:background="@android:color/white">
+
         <TextView
             android:id="@+id/textViewCardName"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="6"
             android:layout_height="match_parent"
             android:text="Nino, 6 meses"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"/>
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"/>
+
+        <ImageView
+            android:id="@+id/genderImageView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:tint="@color/warm_grey"
+            android:scaleType="fitCenter"
+            card_view:srcCompat="@drawable/male_icon" />
+
+        <ImageView
+            android:id="@+id/vacinnatedImageView"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:scaleType="fitCenter"
+            android:tint="@color/warm_grey"
+            android:layout_height="match_parent"
+            card_view:srcCompat="@drawable/vaccine_icon"
+            android:padding="5dp"/>
+        <ImageView
+            android:id="@+id/castratesImageView"
+            android:layout_weight="1.5"
+            android:layout_width="0dp"
+            android:scaleType="fitCenter"
+            android:tint="@color/warm_grey"
+            android:layout_height="match_parent"
+            card_view:srcCompat="@drawable/castrated_icon"
+            android:padding="5dp"/>
         </LinearLayout>
+
 
 
 

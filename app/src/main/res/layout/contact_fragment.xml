@@ -5,13 +5,160 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:weightSum="3">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="test"
-        android:textSize="40dp"
-        android:textStyle="bold"
-        android:layout_centerInParent="true"/>
+        <LinearLayout
+            android:layout_weight="1.4"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_height="100dp"
+            android:orientation="vertical">
 
+
+            <TextView
+                android:id="@+id/textViewDetailName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Gerson Silva Filho"
+                style="@android:style/TextAppearance.DeviceDefault.Medium"
+                android:textStyle="bold"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Contato"
+                style="@android:style/TextAppearance.DeviceDefault.Small"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="0.3"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_height="100dp"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:padding="5dp"
+                android:background="@android:color/darker_gray"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1.4"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_height="100dp"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/textViewDetailPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="(41) 3266-9045"
+                style="@android:style/TextAppearance.DeviceDefault.Medium"
+                android:textStyle="bold"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Telefone (Whatsapp)"
+                style="@android:style/TextAppearance.DeviceDefault.Small"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:weightSum="3">
+
+        <LinearLayout
+            android:layout_weight="1.4"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_height="100dp"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/textViewDetailCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Curitiba/PR"
+                style="@android:style/TextAppearance.DeviceDefault.Medium"
+                android:textStyle="bold"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cidade"
+                style="@android:style/TextAppearance.DeviceDefault.Small"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="0.3"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_height="100dp"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:padding="5dp"
+                android:background="@android:color/darker_gray"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1.4"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_height="100dp"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/textViewDetailOng"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Animália"
+                style="@android:style/TextAppearance.DeviceDefault.Medium"
+                android:textStyle="bold"
+                android:gravity="center"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ong Responsável"
+                style="@android:style/TextAppearance.DeviceDefault.Small"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+</LinearLayout>
 </android.support.v4.widget.NestedScrollView>

@@ -1,5 +1,7 @@
 package com.gersonsilvafilho.petfunding.model.user
 
+import com.gersonsilvafilho.petfunding.chat.AddPetComponent
+import com.gersonsilvafilho.petfunding.chat.AddPetModule
 import com.gersonsilvafilho.petfunding.chat.ChatComponent
 import com.gersonsilvafilho.petfunding.chat.ChatModule
 import com.gersonsilvafilho.petfunding.likeList.LikeListComponent
@@ -21,4 +23,5 @@ interface UserComponent
     fun plus(chatModule: ChatModule):ChatComponent
     fun plus(splashActivityModule: SplashModule): SplashComponent
     fun plus(likeListModule: LikeListModule):LikeListComponent
+    fun plus(addPetModule: AddPetModule):AddPetComponent
 }

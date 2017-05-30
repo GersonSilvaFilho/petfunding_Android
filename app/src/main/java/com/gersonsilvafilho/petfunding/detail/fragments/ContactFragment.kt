@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.model.pet.Pet
+import kotlinx.android.synthetic.main.contact_fragment.*
 
 
 class ContactFragment (val mPet: Pet): Fragment() {
@@ -21,4 +22,11 @@ class ContactFragment (val mPet: Pet): Fragment() {
         return inflater!!.inflate(R.layout.contact_fragment, container, false)
     }
 
-}// Required empty public constructor
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        textViewDetailName.setText(mPet.contactName)
+        textViewDetailPhone.setText(mPet.contactPhone)
+        textViewDetailCity.setText(mPet.city)
+        textViewDetailOng.setText(mPet.ongName)
+    }
+
+}

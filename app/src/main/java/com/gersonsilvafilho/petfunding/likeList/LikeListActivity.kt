@@ -3,12 +3,12 @@ package com.gersonsilvafilho.petfunding.likeList
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.view.MenuItem
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.detail.DetailActivity
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.util.PetApplication
 import kotlinx.android.synthetic.main.activity_like_list.*
-import kotlinx.android.synthetic.main.content_navigation.*
 import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
@@ -45,6 +45,15 @@ class LikeListActivity : AppCompatActivity(), LikeListContract.View {
 
     override fun onPetClicked(): (Pet) -> Unit  = {
         mActionsListener.petSelected(it)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.getItemId() === android.R.id.home)
+        {
+            finish()
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     override fun startDetails(pet:Pet)

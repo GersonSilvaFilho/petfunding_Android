@@ -16,6 +16,8 @@ interface AddPetContract {
         fun descriptionChanges(): Observable<CharSequence>
 
         fun showInvalidName()
+        fun showInvalidDescription()
+        fun showInvalidPhotosMessage()
     }
 
 
@@ -27,6 +29,12 @@ interface AddPetContract {
         fun sizeChanges(): Observable<CharSequence>
         fun furSizeChanges(): Observable<CharSequence>
         fun furColorChanges(): Observable<List<String>>
+        fun setTypeError()
+        fun setFurColorError()
+        fun setSizeError()
+        fun setFurSizeError()
+        fun setAgeError()
+        fun setSexError()
     }
 
     interface ViewCondition
@@ -44,6 +52,10 @@ interface AddPetContract {
         fun contactNameChanges(): Observable<CharSequence>
         fun contactPhoneChanges(): Observable<CharSequence>
         fun ongChanges(): Observable<CharSequence>
+        fun setContactNameError()
+        fun setContactPhoneError()
+        fun setUsernameInitialValue(username: String)
+        fun setUserContactInitialValue(phone: String)
     }
 
     interface View

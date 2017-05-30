@@ -2,6 +2,7 @@ package com.gersonsilvafilho.petfunding.chat
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.model.message.Message
 import com.gersonsilvafilho.petfunding.util.PetApplication
@@ -59,6 +60,15 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
 
     override fun clearMessageBox() {
         input.inputEditText.setText("")
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.getItemId() === android.R.id.home)
+        {
+            finish()
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     val imageLoader = ImageLoader { imageView, url -> Picasso.with(imageView.context).load(url).into(imageView) }
