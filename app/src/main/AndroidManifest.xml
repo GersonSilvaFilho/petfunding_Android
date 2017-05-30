@@ -50,7 +50,10 @@
         </provider>
 
         <activity android:name=".chat.ChatActivity" />
-        <activity android:name=".likeList.LikeListActivity"></activity>
+        <activity android:name=".likeList.LikeListActivity"
+            android:label="Minhas Curtidas"></activity>
+        <activity android:name=".myPets.MyPetsActivity"
+            android:label="Meus Pets"></activity>
     </application>
 
 </manifest>

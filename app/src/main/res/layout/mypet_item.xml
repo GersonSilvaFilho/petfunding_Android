@@ -1,0 +1,87 @@
+
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="105dp">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardMypets"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:padding="10dp">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:padding="10dp">
+
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/likedListImage"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/add_image_bg"
+                android:scaleType="centerCrop"
+                android:src="@drawable/nino"
+                app:riv_mutate_background="true"
+                app:riv_oval="true" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/likedListImage"
+                android:layout_toRightOf="@+id/likedListImage"
+                android:orientation="vertical"
+                android:paddingLeft="10dp">
+
+                <TextView
+                    android:id="@+id/firstLine"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignWithParentIfMissing="true"
+                    android:gravity="center_vertical"
+                    android:text="Nino"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
+
+                <TextView
+                    android:id="@+id/secondLine"
+                    android:layout_width="fill_parent"
+                    android:layout_height="26dip"
+                    android:ellipsize="marquee"
+                    android:maxLines="1"
+                    android:text="Para Adoção"
+                    android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textViewOptions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:text="&#8942;"
+                android:gravity="center"
+                android:textColor="@android:color/darker_gray"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:layout_alignParentBottom="true" />
+
+
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+</android.support.design.widget.CoordinatorLayout>

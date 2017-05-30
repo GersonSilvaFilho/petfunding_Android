@@ -84,5 +84,4 @@ class CardsDataAdapter(context:Context, @LayoutRes resource: Int) : ArrayAdapter
         val diffYear = endCalendar.get(Calendar.YEAR) - startCalendar.get(Calendar.YEAR)
         return diffYear * 12 + endCalendar.get(Calendar.MONTH) - startCalendar.get(Calendar.MONTH)
     }
-
 }

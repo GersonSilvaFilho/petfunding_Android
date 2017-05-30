@@ -14,7 +14,7 @@ import java.util.*
  */
 class AddPetPresenter : AddPetContract.Presenter {
 
-    private var mCurrentPet: Pet = Pet()
+    private var mCurrentPet: Pet
 
     private var  mUserRepository: UserRepository
     private var mPetRepository: PetRepository
@@ -25,13 +25,15 @@ class AddPetPresenter : AddPetContract.Presenter {
     lateinit var mConditionView : AddPetContract.ViewCondition
     lateinit var mContactView : AddPetContract.ViewContact
 
-    constructor(addPetView: AddPetContract.View, petRepository: PetRepository, userRepository: UserRepository)
+    constructor(addPetView: AddPetContract.View, petRepository: PetRepository, userRepository: UserRepository, currentPet: Pet? = Pet())
     {
+        mCurrentPet = currentPet!!
         mView = addPetView
         mView.saveButtonClick().subscribe { validatePet(mCurrentPet) }
 
         mPetRepository = petRepository
         mUserRepository = userRepository
+
     }
 
     override fun initAbout(aboutAddFragment: AddPetContract.ViewAbout) {
@@ -156,13 +158,27 @@ class AddPetPresenter : AddPetContract.Presenter {
         }
 
 
-        pet.createdBy = mUserRepository.getCurrentUserId()
-        mPetRepository.addPet(pet).doOnComplete {
-            mView.showSuccessMessage()
-            mView.finishActivity()
-        }.doOnError {
-            //Error
-        }.subscribe()
+
+        if(pet.uid.isNullOrBlank())
+        {
+            pet.createdBy = mUserRepository.getCurrentUserId()
+            mPetRepository.addPet(pet).doOnComplete {
+                mView.showSuccessMessage()
+                mView.finishActivity()
+            }.doOnError {
+                //Error
+            }.subscribe()
+
+        }
+        else
+        {
+            mPetRepository.updatePet(pet).doOnComplete {
+                mView.showSuccessMessage()
+                mView.finishActivity()
+            }.doOnError {
+                //Error
+            }.subscribe()
+        }
     }
 
     override fun imageReady(num: Int, file: File) {

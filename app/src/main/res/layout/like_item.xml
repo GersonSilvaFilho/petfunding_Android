@@ -1,17 +1,32 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="120dp"
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="10dp">
+    android:layout_width="fill_parent"
+    android:layout_height="105dp">
+<android.support.v7.widget.CardView
+    android:id="@+id/cardLikeList"
+    android:layout_height="100dp"
+    android:layout_width="fill_parent"
+    android:padding="10dp"
+    android:focusable="true"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground">
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="100dp"
+    android:padding="10dp"
+    >
 
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/likedListImage"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:scaleType="centerCrop"
         android:src="@drawable/nino"
         app:riv_oval="true"
+        android:layout_marginLeft="10dp"
         android:background="@drawable/add_image_bg"
         app:riv_mutate_background="true"
         android:layout_centerVertical="true"
@@ -48,5 +63,5 @@
 
 
     </LinearLayout>
-
-</RelativeLayout>
+</RelativeLayout></android.support.v7.widget.CardView>
+    </RelativeLayout>

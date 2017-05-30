@@ -8,6 +8,8 @@ import com.gersonsilvafilho.petfunding.likeList.LikeListComponent
 import com.gersonsilvafilho.petfunding.likeList.LikeListModule
 import com.gersonsilvafilho.petfunding.main.MainMenuComponent
 import com.gersonsilvafilho.petfunding.main.MainMenuModule
+import com.gersonsilvafilho.petfunding.myPets.MyPetsComponent
+import com.gersonsilvafilho.petfunding.myPets.MyPetsModule
 import com.gersonsilvafilho.petfunding.splash.SplashComponent
 import com.gersonsilvafilho.petfunding.splash.SplashModule
 import dagger.Subcomponent
@@ -24,4 +26,5 @@ interface UserComponent
     fun plus(splashActivityModule: SplashModule): SplashComponent
     fun plus(likeListModule: LikeListModule):LikeListComponent
     fun plus(addPetModule: AddPetModule):AddPetComponent
+    fun plus(myPetsModule: MyPetsModule):MyPetsComponent
 }
