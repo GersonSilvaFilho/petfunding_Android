@@ -5,9 +5,12 @@ import android.util.Log
 import com.facebook.AccessToken
 import com.facebook.GraphRequest
 import com.facebook.login.LoginManager
+import com.gersonsilvafilho.petfunding.model.chat.Chat
+import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import durdinapps.rxfirebase2.DataSnapshotMapper
 import durdinapps.rxfirebase2.RxFirebaseAuth
 import durdinapps.rxfirebase2.RxFirebaseDatabase
 import io.reactivex.Completable
@@ -21,9 +24,6 @@ import org.json.JSONException
  */
 class UserFirebaseRepository : UserRepository
 {
-
-
-
     val database = FirebaseDatabase.getInstance()
     var usersRef = database.getReference("users")
     var mCurrentUser : User = User()
@@ -134,4 +134,8 @@ class UserFirebaseRepository : UserRepository
         return mCurrentUser.matches.values.toList()
     }
 
+    fun getChatFromMyPets()
+    {
+        usersRef.
+    }
 }

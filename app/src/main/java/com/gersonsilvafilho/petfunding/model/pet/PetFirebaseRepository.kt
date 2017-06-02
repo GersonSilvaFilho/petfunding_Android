@@ -34,6 +34,11 @@ class PetFirebaseRepository : PetRepository {
         return RxFirebaseDatabase.observeSingleValueEvent(petsRef, DataSnapshotMapper.listOf(Pet::class.java)).toObservable()
     }
 
+    override fun getPetsFromUserId(userId:String): Observable<List<Pet>> {
+        val key = petsRef.orderByChild("createdBy").equalTo(userId)
+        return RxFirebaseDatabase.observeSingleValueEvent(key, DataSnapshotMapper.listOf(Pet::class.java)).toObservable()
+    }
+
     override fun addPet(pet:Pet): Completable{
         val key = petsRef.push()
         pet.uid = key.key

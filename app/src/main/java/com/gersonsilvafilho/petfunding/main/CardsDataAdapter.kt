@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.model.pet.Pet
+import com.gersonsilvafilho.petfunding.util.monthsSinceNow
 import com.squareup.picasso.Picasso
 import java.util.*
 
@@ -33,7 +34,7 @@ class CardsDataAdapter(context:Context, @LayoutRes resource: Int) : ArrayAdapter
 
         var ageString = ""
         val today = Date()
-        val monthsTotal = getMonthDiff(pet.birthDate, today)
+        val monthsTotal = pet.birthDate.monthsSinceNow()
         val years = monthsTotal / 12
         if(years > 0)
         {

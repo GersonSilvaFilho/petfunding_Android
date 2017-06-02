@@ -7,11 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.add_pet.AddPetContract
+import com.gersonsilvafilho.petfunding.model.pet.Pet
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.condition_add_fragment.*
 
 
-class ConditionAddFragment(private val presenter: AddPetContract.Presenter)  : Fragment(), AddPetContract.ViewCondition {
+class ConditionAddFragment(private val presenter: AddPetContract.Presenter,val pet: Pet?)  : Fragment(), AddPetContract.ViewCondition {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -27,6 +28,33 @@ class ConditionAddFragment(private val presenter: AddPetContract.Presenter)  : F
         super.onResume()
         presenter.initCondition(this)
 
+    }
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        if(pet != null)
+        {
+            var stateList = ArrayList<String>()
+            if (pet.vaccinated) stateList.add("Vacinado")
+            if (pet.castrated) stateList.add("Castrado")
+            if (pet.dewormed) stateList.add("Desverminado")
+            group_choices_state.SetObjectsWithNames(stateList)
+
+            var likeList = ArrayList<String>()
+            if (pet.likeChildren) likeList.add("Crianças")
+            if (pet.likeAnimals) likeList.add("Outros Animais")
+            if (pet.likeElders) likeList.add("Idosos")
+            group_choices_like.SetObjectsWithNames(likeList)
+
+            var specialList = ArrayList<String>()
+            if (pet.hasLocomotionProblems) specialList.add("Problema Físico")
+            if (pet.blind) specialList.add("Cego")
+            if (pet.hasBadBehaviour) specialList.add("Comportamento")
+            group_choices_like.SetObjectsWithNames(specialList)
+
+            group_choices_person.SetObjectsWithNames(pet.behaviour)
+        }
     }
 
     override fun stateChanges(): Observable<List<String>> = group_choices_state.OnCheckedStateChangeListener()

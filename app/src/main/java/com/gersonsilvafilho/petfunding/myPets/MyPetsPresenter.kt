@@ -25,9 +25,8 @@ class MyPetsPresenter : MyPetsContract.Presenter {
 
 
     override fun loadLikes() {
-        mPetRepository.getPets().subscribe{l ->
-            mView.setAdapter(l.filter {
-                p -> mUserRepository.getAllMatches().map { m-> m.petId }.contains(p.uid)})
+        mPetRepository.getPetsFromUserId(mUserRepository.getCurrentUserId()).subscribe{l ->
+            mView.setAdapter(l)
         }
     }
 

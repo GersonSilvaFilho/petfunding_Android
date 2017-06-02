@@ -70,8 +70,20 @@ class AddPetPresenter : AddPetContract.Presenter {
         mConditionView.personalityChanges().subscribe { a -> mCurrentPet.behaviour = ArrayList<String>(a) }
     }
 
-    override fun initContact(contactView: AddPetContract.ViewContact) {
+    override fun initContact(contactView: AddPetContract.ViewContact, pet:Pet?) {
         mContactView = contactView
+        //If pet already exists
+        if(pet != null) {
+            mCurrentPet.contactName = pet.contactName
+            mCurrentPet.contactPhone = pet.contactPhone
+        }
+        else {//If is creating a new pet
+            mCurrentPet.contactName = mUserRepository.getCurrentUser().name
+        }
+
+        mContactView.setUsernameInitialValue(mCurrentPet.contactName)
+        mContactView.setUserContactInitialValue(mCurrentPet.contactPhone)
+
 
         mContactView.ufChanges().subscribe { a -> mCurrentPet.state = a.toString() }
         mContactView.cityChanges().subscribe { a -> mCurrentPet.city = a.toString() }
@@ -79,11 +91,8 @@ class AddPetPresenter : AddPetContract.Presenter {
         mContactView.contactPhoneChanges().subscribe { a -> mCurrentPet.contactPhone = a.toString() }
         mContactView.ongChanges().subscribe { a -> mCurrentPet.ongName = a.toString() }
 
-        //Set default values for user
-        mCurrentPet.contactName = mUserRepository.getCurrentUser().name
-        //mCurrentPet.contactPhone =
 
-        mContactView.setUsernameInitialValue(mUserRepository.getCurrentUser().name)
+
     }
 
     private fun validatePet(pet: Pet)

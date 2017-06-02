@@ -64,9 +64,9 @@ class AddPetActivity : AppCompatActivity(), AddPetContract.View {
     private fun setupViewPager(viewPager: ViewPager, pet:Pet?) {
         val adapter = ViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(AboutAddFragment(mActionsListener, pet), "Info")
-        adapter.addFragment(InfoAddFragment(mActionsListener), "Dados")
-        adapter.addFragment(ConditionAddFragment(mActionsListener), "Condição")
-        adapter.addFragment(ContactAddFragment(mActionsListener), "Contato")
+        adapter.addFragment(InfoAddFragment(mActionsListener, pet), "Dados")
+        adapter.addFragment(ConditionAddFragment(mActionsListener, pet), "Condição")
+        adapter.addFragment(ContactAddFragment(mActionsListener, pet), "Contato")
         viewPager.adapter = adapter
     }
 

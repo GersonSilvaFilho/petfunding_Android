@@ -8,12 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.add_pet.AddPetContract
+import com.gersonsilvafilho.petfunding.model.pet.Pet
+import com.gersonsilvafilho.petfunding.util.monthsSinceNow
 import com.jakewharton.rxbinding2.widget.textChanges
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.info_add_fragment.*
 import java.util.*
 
-class InfoAddFragment(private val presenter: AddPetContract.Presenter) : Fragment(), AddPetContract.ViewInfo {
+class InfoAddFragment(private val presenter: AddPetContract.Presenter,val pet: Pet?) : Fragment(), AddPetContract.ViewInfo {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +32,17 @@ class InfoAddFragment(private val presenter: AddPetContract.Presenter) : Fragmen
         spinnerMonth.setItems("Meses", "1 Mês", "2 Meses", "3 Meses","4 Meses", "5 Meses", "6 Meses", "7 Meses", "8 Meses", "9 Meses", "10 Meses", "11 Meses")
         spinnerYear.setItems("Anos", "1 Ano", "2 anos", "3 anos","4 anos", "5 anos", "6 anos", "7 anos", "8 anos", "9 anos", "10 anos", "11 anos", "12 anos")
 
+        if (pet != null)
+        {
+            group_choices_type.SetObjectWithName(pet.type)
+            group_choices_sex.SetObjectWithName(pet.sex)
+            group_choices_size.SetObjectWithName(pet.size)
+            group_choices_fur.SetObjectWithName(pet.furSize)
+            group_choices_fur_color.SetObjectsWithNames(pet.furColors)
+
+            spinnerYear.selectedIndex = pet.birthDate.monthsSinceNow() / 12
+            spinnerMonth.selectedIndex = pet.birthDate.monthsSinceNow() % 12
+        }
     }
 
     override fun typeChanges(): Observable<CharSequence> = group_choices_type.OnCheckedChangeListener()

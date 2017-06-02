@@ -27,7 +27,6 @@ class ChatFirebaseRepository : ChatRepository
         return mChat
     }
 
-
     override fun sendMessage(chatId: String, message: Message): Single<String>
     {
         val key = chatRef.child(chatId).child("messages").push()
