@@ -26,6 +26,7 @@ import com.gersonsilvafilho.petfunding.detail.DetailActivity
 import com.gersonsilvafilho.petfunding.likeList.LikeListActivity
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.model.user.User
+import com.gersonsilvafilho.petfunding.myPets.MyPetsActivity
 import com.gersonsilvafilho.petfunding.util.PetApplication
 import com.jakewharton.rxbinding2.view.clicks
 import com.squareup.picasso.Picasso
@@ -175,7 +176,13 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
             startActivity<AddPetActivity>()
             //Add new pet activity
 
-        } else if (id == R.id.nav_logout) {
+        }
+        else if (id == R.id.nav_my_pets) {
+            startActivity<MyPetsActivity>()
+            //Add new pet activity
+
+        }
+        else if (id == R.id.nav_logout) {
             mActionsListener.userLogout()
         }
 

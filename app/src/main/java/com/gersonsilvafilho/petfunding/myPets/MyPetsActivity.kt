@@ -1,12 +1,11 @@
-package com.gersonsilvafilho.petfunding.likeList
+package com.gersonsilvafilho.petfunding.myPets
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView.HORIZONTAL
 import android.view.MenuItem
 import com.gersonsilvafilho.petfunding.R
+import com.gersonsilvafilho.petfunding.add_pet.AddPetActivity
 import com.gersonsilvafilho.petfunding.detail.DetailActivity
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.util.PetApplication
@@ -15,10 +14,10 @@ import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
 
-class LikeListActivity : AppCompatActivity(), LikeListContract.View {
+class MyPetsActivity : AppCompatActivity(), MyPetsContract.View {
 
     @Inject
-    lateinit var  mActionsListener: LikeListContract.Presenter
+    lateinit var  mActionsListener: MyPetsContract.Presenter
 
     private lateinit var  mLayoutManager: LinearLayoutManager
 
@@ -27,6 +26,7 @@ class LikeListActivity : AppCompatActivity(), LikeListContract.View {
         setContentView(R.layout.activity_like_list)
         initDagger()
         setupToolbar()
+
         mLayoutManager = LinearLayoutManager(this)
         recyclerLikes.setLayoutManager(mLayoutManager)
     }
@@ -35,7 +35,7 @@ class LikeListActivity : AppCompatActivity(), LikeListContract.View {
     {
         (application as PetApplication).get(this)
                 .getUserComponent()!!
-                .plus(LikeListModule(this))
+                .plus(MyPetsModule(this))
                 .inject(this)
     }
 
@@ -46,17 +46,17 @@ class LikeListActivity : AppCompatActivity(), LikeListContract.View {
     }
 
     override fun setAdapter(likedPets: List<Pet>) {
-        val mAdapter = LikeListAdapter(likedPets, onPetClicked())
+        val mAdapter = MyPetsAdapter(likedPets, onPetClicked(), onPetEdit())
 
         recyclerLikes.adapter = mAdapter
-
-        val dividerItemDecoration = DividerItemDecoration(this,
-                HORIZONTAL)
-        recyclerLikes.addItemDecoration(dividerItemDecoration)
     }
 
     override fun onPetClicked(): (Pet) -> Unit  = {
         mActionsListener.petSelected(it)
+    }
+
+    override fun onPetEdit(): (Pet) -> Unit  = {
+        mActionsListener.petEdit(it)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -71,5 +71,10 @@ class LikeListActivity : AppCompatActivity(), LikeListContract.View {
     override fun startDetails(pet:Pet)
     {
         startActivity<DetailActivity>("pet" to pet)
+    }
+
+    override fun startEditPet(pet:Pet)
+    {
+        startActivity<AddPetActivity>("pet" to pet)
     }
 }

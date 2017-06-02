@@ -16,6 +16,7 @@ import java.util.*
  */
 class PetFirebaseRepository : PetRepository {
 
+
     val database = FirebaseDatabase.getInstance()
     var petsRef = database.getReference("pets")
 
@@ -33,9 +34,19 @@ class PetFirebaseRepository : PetRepository {
         return RxFirebaseDatabase.observeSingleValueEvent(petsRef, DataSnapshotMapper.listOf(Pet::class.java)).toObservable()
     }
 
+    override fun getPetsFromUserId(userId:String): Observable<List<Pet>> {
+        val key = petsRef.orderByChild("createdBy").equalTo(userId)
+        return RxFirebaseDatabase.observeSingleValueEvent(key, DataSnapshotMapper.listOf(Pet::class.java)).toObservable()
+    }
+
     override fun addPet(pet:Pet): Completable{
         val key = petsRef.push()
         pet.uid = key.key
+        return RxFirebaseDatabase.updateChildren(key, pet.toMap())
+    }
+
+    override fun updatePet(pet: Pet): Completable {
+        val key = petsRef.child(pet.uid)
         return RxFirebaseDatabase.updateChildren(key, pet.toMap())
     }
 
@@ -46,6 +57,5 @@ class PetFirebaseRepository : PetRepository {
                 .map { a -> a.downloadUrl.toString() }
                 .toObservable()
     }
-
 
 }

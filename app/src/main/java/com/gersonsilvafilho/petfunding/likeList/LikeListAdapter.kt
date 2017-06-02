@@ -27,8 +27,9 @@ class LikeListAdapter(val items: List<Pet>, val listener: (Pet) -> Unit) : Recyc
 
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
         fun bind(item: Pet, listener: (Pet) -> Unit) = with(itemView) {
-            setOnClickListener { listener(item) }
+            itemView.findViewById(R.id.cardLikeList).setOnClickListener { listener(item) }
             firstLine.text = item.name
             secondLine.text = item.contactName
             Picasso.with(this.context)

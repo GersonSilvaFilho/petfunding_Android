@@ -8,13 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.add_pet.AddPetContract
+import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.jaredrummler.materialspinner.MaterialSpinner
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.contact_add_fragment.*
 
 
-class ContactAddFragment(private val presenter: AddPetContract.Presenter) : Fragment(), AddPetContract.ViewContact {
+class ContactAddFragment(private val presenter: AddPetContract.Presenter,val pet: Pet?) : Fragment(), AddPetContract.ViewContact {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +28,7 @@ class ContactAddFragment(private val presenter: AddPetContract.Presenter) : Frag
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         spinnerState.setItems("PR","SP")
         spinnerState.setOnItemSelectedListener(MaterialSpinner.OnItemSelectedListener<String> { view, position, id, item -> Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show() })
 
@@ -36,11 +38,13 @@ class ContactAddFragment(private val presenter: AddPetContract.Presenter) : Frag
         spinnerOng.setItems("Animalia", "AmigoBicho", "Amigo Animal", "SPA", "Cãopanheiro")
         spinnerOng.setOnItemSelectedListener(MaterialSpinner.OnItemSelectedListener<String> { view, position, id, item -> Snackbar.make(view, "Clicked " + item, Snackbar.LENGTH_LONG).show() })
 
+        presenter.initContact(this, pet)
+
     }
 
     override fun onResume() {
         super.onResume()
-        presenter.initContact(this)
+
     }
 
     override fun ufChanges(): Observable<CharSequence> = spinnerState.textChanges()

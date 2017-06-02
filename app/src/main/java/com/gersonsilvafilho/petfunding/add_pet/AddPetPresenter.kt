@@ -14,7 +14,7 @@ import java.util.*
  */
 class AddPetPresenter : AddPetContract.Presenter {
 
-    private var mCurrentPet: Pet = Pet()
+    private var mCurrentPet: Pet
 
     private var  mUserRepository: UserRepository
     private var mPetRepository: PetRepository
@@ -25,13 +25,15 @@ class AddPetPresenter : AddPetContract.Presenter {
     lateinit var mConditionView : AddPetContract.ViewCondition
     lateinit var mContactView : AddPetContract.ViewContact
 
-    constructor(addPetView: AddPetContract.View, petRepository: PetRepository, userRepository: UserRepository)
+    constructor(addPetView: AddPetContract.View, petRepository: PetRepository, userRepository: UserRepository, currentPet: Pet? = Pet())
     {
+        mCurrentPet = currentPet!!
         mView = addPetView
         mView.saveButtonClick().subscribe { validatePet(mCurrentPet) }
 
         mPetRepository = petRepository
         mUserRepository = userRepository
+
     }
 
     override fun initAbout(aboutAddFragment: AddPetContract.ViewAbout) {
@@ -68,8 +70,20 @@ class AddPetPresenter : AddPetContract.Presenter {
         mConditionView.personalityChanges().subscribe { a -> mCurrentPet.behaviour = ArrayList<String>(a) }
     }
 
-    override fun initContact(contactView: AddPetContract.ViewContact) {
+    override fun initContact(contactView: AddPetContract.ViewContact, pet:Pet?) {
         mContactView = contactView
+        //If pet already exists
+        if(pet != null) {
+            mCurrentPet.contactName = pet.contactName
+            mCurrentPet.contactPhone = pet.contactPhone
+        }
+        else {//If is creating a new pet
+            mCurrentPet.contactName = mUserRepository.getCurrentUser().name
+        }
+
+        mContactView.setUsernameInitialValue(mCurrentPet.contactName)
+        mContactView.setUserContactInitialValue(mCurrentPet.contactPhone)
+
 
         mContactView.ufChanges().subscribe { a -> mCurrentPet.state = a.toString() }
         mContactView.cityChanges().subscribe { a -> mCurrentPet.city = a.toString() }
@@ -77,11 +91,8 @@ class AddPetPresenter : AddPetContract.Presenter {
         mContactView.contactPhoneChanges().subscribe { a -> mCurrentPet.contactPhone = a.toString() }
         mContactView.ongChanges().subscribe { a -> mCurrentPet.ongName = a.toString() }
 
-        //Set default values for user
-        mCurrentPet.contactName = mUserRepository.getCurrentUser().name
-        //mCurrentPet.contactPhone =
 
-        mContactView.setUsernameInitialValue(mUserRepository.getCurrentUser().name)
+
     }
 
     private fun validatePet(pet: Pet)
@@ -156,13 +167,27 @@ class AddPetPresenter : AddPetContract.Presenter {
         }
 
 
-        pet.createdBy = mUserRepository.getCurrentUserId()
-        mPetRepository.addPet(pet).doOnComplete {
-            mView.showSuccessMessage()
-            mView.finishActivity()
-        }.doOnError {
-            //Error
-        }.subscribe()
+
+        if(pet.uid.isNullOrBlank())
+        {
+            pet.createdBy = mUserRepository.getCurrentUserId()
+            mPetRepository.addPet(pet).doOnComplete {
+                mView.showSuccessMessage()
+                mView.finishActivity()
+            }.doOnError {
+                //Error
+            }.subscribe()
+
+        }
+        else
+        {
+            mPetRepository.updatePet(pet).doOnComplete {
+                mView.showSuccessMessage()
+                mView.finishActivity()
+            }.doOnError {
+                //Error
+            }.subscribe()
+        }
     }
 
     override fun imageReady(num: Int, file: File) {

@@ -21,9 +21,6 @@ import org.json.JSONException
  */
 class UserFirebaseRepository : UserRepository
 {
-
-
-
     val database = FirebaseDatabase.getInstance()
     var usersRef = database.getReference("users")
     var mCurrentUser : User = User()
@@ -134,4 +131,18 @@ class UserFirebaseRepository : UserRepository
         return mCurrentUser.matches.values.toList()
     }
 
+    fun getChatListFromMyPets(petId:String)
+    {
+        val ref = usersRef.child("matches").orderByChild("petId").equalTo(petId)
+    }
+
+    fun getUserFromMatch(matchId:String)
+    {
+        
+    }
+
+    fun getAllMyChatIds()
+    {
+
+    }
 }

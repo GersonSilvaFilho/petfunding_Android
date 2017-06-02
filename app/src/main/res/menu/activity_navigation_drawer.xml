@@ -19,16 +19,13 @@
                 android:id="@+id/nav_add"
                 android:title="Adicionar Pet" />
             <item
-                android:id="@+id/nav_edit"
-                android:title="Editar Pet" />
+                android:id="@+id/nav_my_pets"
+                android:title="Meus Pets" />
         </menu>
     </item>
 
     <item android:title="Communicate">
         <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:title="Share" />
             <item
                 android:id="@+id/nav_logout"
                 android:title="Sair" />

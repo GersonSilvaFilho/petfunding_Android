@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.add_pet.AddPetContract
+import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.jakewharton.rxbinding2.view.selected
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.miguelbcr.ui.rx_paparazzo2.RxPaparazzo
@@ -22,16 +23,16 @@ import kotlinx.android.synthetic.main.about_add_fragment.*
 import org.jetbrains.anko.onClick
 
 
-class AboutAddFragment(private val presenter: AddPetContract.Presenter) : Fragment(), AddPetContract.ViewAbout {
+class AboutAddFragment(private val presenter: AddPetContract.Presenter,val pet:Pet?) : Fragment(), AddPetContract.ViewAbout {
 
-
+    var imageViews:ArrayList<ImageView> = ArrayList<ImageView>()
 
     override fun nameChanges(): Observable<CharSequence> = addEditTextName.textChanges()
     override fun descriptionChanges(): Observable<CharSequence> = addEditTextDescription.textChanges()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -42,13 +43,31 @@ class AboutAddFragment(private val presenter: AddPetContract.Presenter) : Fragme
 
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        image1.onClick { v(1, image1) }
-        image2.onClick { v(2, image2) }
-        image3.onClick { v(3, image3) }
-        image4.onClick { v(4, image4) }
+        imageViews.add(image1)
+        imageViews.add(image2)
+        imageViews.add(image3)
+        imageViews.add(image4)
+
+        for ((index, value) in imageViews.withIndex())
+        {
+            value.onClick { v(index) }
+        }
+
+        if(pet != null)
+        {
+            addEditTextName.setText(pet.name)
+            addEditTextDescription.setText(pet.description)
+
+            for ((index, image) in pet.photosUrl.take(4).withIndex())
+            {
+                Picasso.with(this.activity)
+                        .load(image)
+                        .into(imageViews[index])
+            }
+        }
     }
 
-    var v = {num:Int, view: ImageView ->
+    var v = {num:Int ->
         Log.i("RXPAPARAZZO", "Click")
         RxPaparazzo.single(this)
                 .crop()
@@ -63,7 +82,7 @@ class AboutAddFragment(private val presenter: AddPetContract.Presenter) : Fragme
                         {
                             Picasso.with(this.activity)
                                     .load(response.data().file)
-                                    .into(view)
+                                    .into(imageViews[num])
                             presenter.imageReady(num, response.data().file)
                         }
 

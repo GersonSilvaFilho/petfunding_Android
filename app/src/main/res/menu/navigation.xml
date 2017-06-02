@@ -4,7 +4,6 @@
     <item
         android:id="@+id/action_filter"
         android:icon="@drawable/filter_icon"
-        android:title="Text to be seen by user"
         app:showAsAction="always"
         android:orderInCategory="0"/>
 </menu>
