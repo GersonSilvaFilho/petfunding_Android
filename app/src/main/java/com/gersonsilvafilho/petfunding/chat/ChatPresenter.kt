@@ -37,16 +37,15 @@ class ChatPresenter : ChatContract.Presenter
         mCurrentChatId = mUserRepository.checkIfChatExists(match)
         if(mCurrentChatId != null && mCurrentChatId != "")
         {
-            mChatRepository.loadChatMessages(mCurrentChatId!!)
+            mChatRepository.getChatFromId(mCurrentChatId!!)
                     .subscribe { l:Chat -> mView.loadChatMessages(l.messages.values.toList().sortedByDescending { m -> m.date }) }
         }
         else
         {
             mChatRepository.initNewChat(match, mUserRepository.getCurrentUserId())
-                    .doOnComplete{
-
-                        mCurrentChatId = mChatRepository.getCurrentChat().uid
-                        mChatRepository.loadChatMessages(mCurrentChatId!!)
+                    .doAfterSuccess{
+                        mCurrentChatId = it
+                        mChatRepository.getChatFromId(mCurrentChatId!!)
                                 .subscribe { l:Chat -> mView.loadChatMessages(l.messages.values.toList()) }
                     }
                     .subscribe()

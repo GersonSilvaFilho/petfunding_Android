@@ -58,5 +58,4 @@ class PetFirebaseRepository : PetRepository {
                 .toObservable()
     }
 
-
 }

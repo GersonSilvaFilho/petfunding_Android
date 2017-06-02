@@ -3,7 +3,6 @@ package com.gersonsilvafilho.petfunding.model.chat
 import com.gersonsilvafilho.petfunding.model.message.Message
 import com.google.firebase.database.FirebaseDatabase
 import durdinapps.rxfirebase2.RxFirebaseDatabase
-import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import java.util.*
@@ -16,16 +15,13 @@ class ChatFirebaseRepository : ChatRepository
     val database = FirebaseDatabase.getInstance()
     var chatRef = database.getReference("chat")
     var usersRef = database.getReference("users")
-    lateinit var mChat : Chat
 
-    override fun loadChatMessages(chatId: String):Observable<Chat>
+    override fun getChatFromId(chatId: String):Observable<Chat>
     {
         return RxFirebaseDatabase.observeSingleValueEvent(chatRef.child(chatId), Chat::class.java).toObservable()
     }
 
-    override fun getCurrentChat(): Chat {
-        return mChat
-    }
+
 
     override fun sendMessage(chatId: String, message: Message): Single<String>
     {
@@ -34,14 +30,14 @@ class ChatFirebaseRepository : ChatRepository
         return RxFirebaseDatabase.updateChildren(key,message.toMap()).toSingle { key.key }
     }
 
-    override fun initNewChat(matchId: String, userId: String): Completable {
+    override fun initNewChat(matchId: String, userId: String): Single<String> {
         val key = chatRef.push()
-        mChat = Chat()
+        val mChat = Chat()
         mChat.uid = key.key
         val matchAddRef = usersRef.child(userId).child("matches").child(matchId)
         val values = HashMap<String, Any>()
         values.put("chatId", key.key)
-        return RxFirebaseDatabase.updateChildren(key,mChat.toMap())
-                .doOnComplete { RxFirebaseDatabase.updateChildren(matchAddRef, values).subscribe() }
+        return RxFirebaseDatabase.updateChildren(key,mChat.toMap()).toSingle { mChat.uid }
+                .doAfterSuccess { RxFirebaseDatabase.updateChildren(matchAddRef, values).subscribe() }
     }
 }

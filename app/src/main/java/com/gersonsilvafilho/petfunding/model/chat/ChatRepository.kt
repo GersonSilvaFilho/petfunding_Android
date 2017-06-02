@@ -1,7 +1,6 @@
 package com.gersonsilvafilho.petfunding.model.chat
 
 import com.gersonsilvafilho.petfunding.model.message.Message
-import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 
@@ -10,8 +9,7 @@ import io.reactivex.Single
  */
 interface ChatRepository
 {
-    fun loadChatMessages(chatId:String): Observable<Chat>
+    fun getChatFromId(chatId:String): Observable<Chat>
     fun sendMessage(chatId:String, message:Message): Single<String>
-    fun getCurrentChat():Chat
-    fun initNewChat(matchId: String, userId: String): Completable
+    fun initNewChat(matchId: String, userId: String): Single<String>
 }

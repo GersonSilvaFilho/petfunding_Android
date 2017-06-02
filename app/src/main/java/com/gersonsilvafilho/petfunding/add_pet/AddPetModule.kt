@@ -16,6 +16,9 @@ import dagger.Provides
 class AddPetModule(val addPetActivity: AddPetActivity, val pet: Pet?) {
     @Provides
     fun provideMainChatPresenter(userRepository: UserRepository, petRepository: PetRepository): AddPetContract.Presenter{
-        return AddPetPresenter(addPetActivity, petRepository, userRepository, pet)
+        if(pet != null)
+            return AddPetPresenter(addPetActivity, petRepository, userRepository, pet)
+        else
+            return AddPetPresenter(addPetActivity, petRepository, userRepository)
     }
 }
