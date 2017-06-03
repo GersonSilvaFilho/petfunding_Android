@@ -1,34 +1,51 @@
 package com.gersonsilvafilho.petfunding.myPets
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
 import android.view.MenuItem
+import android.view.ViewGroup
+import com.ericliu.asyncexpandablelist.CollectionView
+import com.ericliu.asyncexpandablelist.async.AsyncExpandableListView
+import com.ericliu.asyncexpandablelist.async.AsyncExpandableListViewCallbacks
+import com.ericliu.asyncexpandablelist.async.AsyncHeaderViewHolder
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.add_pet.AddPetActivity
 import com.gersonsilvafilho.petfunding.detail.DetailActivity
 import com.gersonsilvafilho.petfunding.model.pet.Pet
+import com.gersonsilvafilho.petfunding.model.user.User
+import com.gersonsilvafilho.petfunding.myPets.expandable.MyPetsParentViewHolder
+import com.gersonsilvafilho.petfunding.myPets.expandable.MyPetsUserChildViewHolder
 import com.gersonsilvafilho.petfunding.util.PetApplication
-import kotlinx.android.synthetic.main.activity_like_list.*
 import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
 
-class MyPetsActivity : AppCompatActivity(), MyPetsContract.View {
+class MyPetsActivity : AppCompatActivity(), MyPetsContract.View, AsyncExpandableListViewCallbacks<Pet, User> {
+
 
     @Inject
     lateinit var  mActionsListener: MyPetsContract.Presenter
 
     private lateinit var  mLayoutManager: LinearLayoutManager
 
+    private lateinit var  mAsyncExpandableListView: AsyncExpandableListView<Pet, User>
+
+    var inventory: CollectionView.Inventory<Pet, User>? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_like_list)
+        setContentView(R.layout.activity_my_pets)
         initDagger()
         setupToolbar()
 
+        mAsyncExpandableListView = findViewById(R.id.asyncExpandableCollectionView) as AsyncExpandableListView<Pet, User>
+        mAsyncExpandableListView.setCallbacks(this)
+
         mLayoutManager = LinearLayoutManager(this)
-        recyclerLikes.setLayoutManager(mLayoutManager)
     }
 
     private fun initDagger()
@@ -46,13 +63,20 @@ class MyPetsActivity : AppCompatActivity(), MyPetsContract.View {
     }
 
     override fun setAdapter(likedPets: List<Pet>) {
-        val mAdapter = MyPetsAdapter(likedPets, onPetClicked(), onPetEdit())
+        inventory = CollectionView.Inventory<Pet, User>()
 
-        recyclerLikes.adapter = mAdapter
+        for ((index, value) in likedPets.withIndex())
+        {
+            val group1 = inventory!!.newGroup(index) // groupOrdinal is the smallest, displayed first
+            group1.headerItem = value
+        }
+
+        mAsyncExpandableListView.updateInventory(inventory)
     }
 
     override fun onPetClicked(): (Pet) -> Unit  = {
-        mActionsListener.petSelected(it)
+        //mActionsListener.petSelected(it)
+
     }
 
     override fun onPetEdit(): (Pet) -> Unit  = {
@@ -76,5 +100,38 @@ class MyPetsActivity : AppCompatActivity(), MyPetsContract.View {
     override fun startEditPet(pet:Pet)
     {
         startActivity<AddPetActivity>("pet" to pet)
+    }
+
+    override fun newCollectionItemView(context: Context?, groupOrdinal: Int, parent: ViewGroup?): RecyclerView.ViewHolder {
+        val v = LayoutInflater.from(context)
+                .inflate(R.layout.user_chat_item, parent, false)
+
+        return MyPetsUserChildViewHolder(v)
+    }
+
+    override fun onStartLoadingGroup(groupOrdinal: Int) {
+        mActionsListener.getUsersFromPet(groupOrdinal, mAsyncExpandableListView.getHeader(groupOrdinal).uid)
+    }
+
+    override fun setUser(loadGroup:Int, user:List<User>)
+    {
+        mAsyncExpandableListView.onFinishLoadingGroup(loadGroup, user)
+    }
+
+    override fun bindCollectionHeaderView(context: Context?, holder: AsyncHeaderViewHolder?, groupOrdinal: Int, headerItem: Pet) {
+        val myHeaderViewHolder = holder as MyPetsParentViewHolder
+        myHeaderViewHolder.setPet(headerItem, onPetClicked(), onPetEdit(), groupOrdinal)
+    }
+
+    override fun newCollectionHeaderView(context: Context?, groupOrdinal: Int, parent: ViewGroup?): AsyncHeaderViewHolder {
+        val v = LayoutInflater.from(context)
+                .inflate(R.layout.mypet_item, parent, false)
+
+        return MyPetsParentViewHolder(v, groupOrdinal, mAsyncExpandableListView)
+    }
+
+    override fun bindCollectionItemView(context: Context?, holder: RecyclerView.ViewHolder?, groupOrdinal: Int, item: User) {
+        val myHeaderViewHolder = holder as MyPetsUserChildViewHolder
+        myHeaderViewHolder.setUser(item)
     }
 }

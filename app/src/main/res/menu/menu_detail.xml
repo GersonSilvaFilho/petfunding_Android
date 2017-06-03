@@ -12,4 +12,9 @@
         android:orderInCategory="100"
         android:title="Editar"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_chat"
+        android:orderInCategory="100"
+        android:title="Conversas"
+        app:showAsAction="never" />
 </menu>

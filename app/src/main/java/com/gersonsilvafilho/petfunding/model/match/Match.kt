@@ -11,6 +11,7 @@ class Match {
     var petId:String = ""
     var date:Date = Date()
     var chatId:String = ""
+    var userId:String = ""
 
     @Exclude
     fun toMap(): Map<String, Any> {
@@ -18,6 +19,7 @@ class Match {
         values.put("petId", petId)
         values.put("date", date)
         values.put("chatId", chatId)
+        values.put("userId", userId)
         return values
 
     }

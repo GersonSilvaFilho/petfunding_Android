@@ -8,6 +8,7 @@ import com.facebook.login.LoginManager
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import durdinapps.rxfirebase2.DataSnapshotMapper
 import durdinapps.rxfirebase2.RxFirebaseAuth
 import durdinapps.rxfirebase2.RxFirebaseDatabase
 import io.reactivex.Completable
@@ -136,9 +137,11 @@ class UserFirebaseRepository : UserRepository
         val ref = usersRef.child("matches").orderByChild("petId").equalTo(petId)
     }
 
-    fun getUserFromMatch(matchId:String)
+    override fun getUserFromMatch(matchId:String):Observable<List<User>>
     {
-        
+        val ref = usersRef.orderByChild("matches")
+        return RxFirebaseDatabase.observeSingleValueEvent(ref, DataSnapshotMapper.listOf(User::class.java))
+                .toObservable()
     }
 
     fun getAllMyChatIds()

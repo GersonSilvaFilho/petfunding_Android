@@ -37,4 +37,11 @@ class MyPetsPresenter : MyPetsContract.Presenter {
     override fun petEdit(it: Pet) {
         mView.startEditPet(it)
     }
+
+    override fun getUsersFromPet(groupOrdinal:Int, petId:String)
+    {
+        mUserRepository.getUserFromMatch(petId).subscribe{l ->
+            mView.setUser(groupOrdinal, l)
+        }
+    }
 }

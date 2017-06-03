@@ -26,4 +26,5 @@ interface UserRepository
     fun getAllMatches():List<Match>
 
     fun currentUserChanged(): Observable<User>
+    fun getUserFromMatch(matchId: String): Observable<List<User>>
 }
