@@ -37,8 +37,9 @@ class ChatPresenter : ChatContract.Presenter
 
     override fun initChat(petId:String)
     {
-        mMatchRepository.getMatch(petId, mUserRepository.getCurrentUserId())
-                .doOnSuccess {  match ->
+        mMatchRepository.getAllMatches(mUserRepository.getCurrentUserId())
+                .subscribe { matches ->
+                    val match = matches.filter { m -> m.petId == petId }.first()
                     mCurrentChatId = match.chatId
                     if(mCurrentChatId != null && mCurrentChatId != "")
                     {
@@ -50,10 +51,11 @@ class ChatPresenter : ChatContract.Presenter
                         mChatRepository.initNewChat(match.uid, mUserRepository.getCurrentUserId())
                                 .doAfterSuccess{
                                     mCurrentChatId = it
+                                    mMatchRepository.addChatToMatch(match, it)
                                     mChatRepository.getChatFromId(mCurrentChatId!!)
                                             .subscribe { l:Chat -> mView.loadChatMessages(l.messages.values.toList()) }
                                 }
-                                .subscribe()
+                                .subscribe { a -> a}
                     }
                 }
     }

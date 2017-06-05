@@ -13,7 +13,6 @@ import durdinapps.rxfirebase2.RxFirebaseAuth
 import durdinapps.rxfirebase2.RxFirebaseDatabase
 import io.reactivex.Completable
 import io.reactivex.Observable
-import io.reactivex.Single
 import org.json.JSONException
 
 
@@ -119,7 +118,7 @@ class UserFirebaseRepository : UserRepository
 
     override fun getUserFromMatch(matchId:String):Observable<List<User>>
     {
-        val ref = usersRef.orderByChild("matches")
+        val ref = usersRef
         return RxFirebaseDatabase.observeSingleValueEvent(ref, DataSnapshotMapper.listOf(User::class.java))
                 .toObservable()
     }

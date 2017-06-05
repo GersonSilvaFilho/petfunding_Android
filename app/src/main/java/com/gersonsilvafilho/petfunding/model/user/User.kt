@@ -35,6 +35,7 @@ class User: IUser {
     @Exclude
     fun toMap(): Map<String, Any> {
         val values = HashMap<String, Any>()
+        values.put("uid", uid)
         values.put("username", username)
         values.put("matches", matches)
         values.put("unmatches", unmatches)

@@ -11,4 +11,6 @@ interface MatchReposity {
     fun checkIfMatchExists(petId: String, userId: String): Single<Boolean>
     fun getAllMatches(userId: String): Single<List<Match>>
     fun getMatch(petId: String, userId: String): Single<Match>
+    fun getAllMatchesFromPet(petId: String): Single<List<Match>>
+    fun addChatToMatch(match: Match, chatId: String)
 }

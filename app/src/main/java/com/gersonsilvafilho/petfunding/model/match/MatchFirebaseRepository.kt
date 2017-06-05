@@ -38,7 +38,19 @@ class MatchFirebaseRepository : MatchReposity{
     override fun getMatch(petId: String, userId: String): Single<Match> {
         val ref = matchesRef.orderByChild("userId").equalTo(userId)
         return RxFirebaseDatabase.observeSingleValueEvent(ref, DataSnapshotMapper.listOf(Match::class.java))
-                .map { t -> t.filter { match -> match.petId == petId }.first() }.toSingle()
+                .map { t -> t.first() }
+                .toSingle()
     }
 
+    override fun getAllMatchesFromPet(petId:String): Single<List<Match>> {
+        val ref = matchesRef.orderByChild("petId").equalTo(petId)
+        return RxFirebaseDatabase.observeSingleValueEvent(ref, DataSnapshotMapper.listOf(Match::class.java)).toSingle()
+    }
+
+    override fun addChatToMatch(match:Match, chatId:String)
+    {
+        val key = matchesRef.child(match.uid)
+        match.chatId = chatId
+        RxFirebaseDatabase.updateChildren(key, match.toMap()).subscribe { }
+    }
 }
