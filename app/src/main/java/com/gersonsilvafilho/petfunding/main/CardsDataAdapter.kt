@@ -42,14 +42,14 @@ class CardsDataAdapter(context:Context, @LayoutRes resource: Int) : ArrayAdapter
             ageString +=  (if(years > 1) "s" else "")
         }
         val months = monthsTotal % 12
-        if(months > 0)
+        if(months > 0 && years < 2)
         {
             if(ageString.isNotEmpty())
             {
-                ageString += (years.toString() + ", ")
+                ageString += " e "
             }
 
-            ageString = (months.toString() + " Mes")
+            ageString += (months.toString() + " Mes")
             ageString +=  (if(months > 1) "es" else "")
         }
 

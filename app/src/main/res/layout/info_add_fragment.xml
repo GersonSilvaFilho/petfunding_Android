@@ -104,8 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:padding="10dp"
-                card_view:tbgChildSpacing="10dp"
-                app:tbgCheckedButton="@+id/choice_a">
+                card_view:tbgChildSpacing="10dp">
 
                 <com.nex3z.togglebuttongroup.button.LabelToggle
                     android:id="@+id/choice_a"

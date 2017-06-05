@@ -8,16 +8,20 @@ import java.util.*
  */
 class Match {
 
+    var uid:String = ""
     var petId:String = ""
     var date:Date = Date()
     var chatId:String = ""
+    var userId:String = ""
 
     @Exclude
     fun toMap(): Map<String, Any> {
         val values = HashMap<String, Any>()
+        values.put("uid", uid)
         values.put("petId", petId)
         values.put("date", date)
         values.put("chatId", chatId)
+        values.put("userId", userId)
         return values
 
     }

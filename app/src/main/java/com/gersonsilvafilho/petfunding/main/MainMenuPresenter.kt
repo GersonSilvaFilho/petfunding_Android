@@ -1,5 +1,6 @@
 package com.gersonsilvafilho.petfunding.main
 
+import com.gersonsilvafilho.petfunding.model.match.MatchReposity
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.model.pet.PetRepository
 import com.gersonsilvafilho.petfunding.model.user.User
@@ -16,27 +17,34 @@ class MainMenuPresenter: MainMenuContract.Presenter
     var mUserRepository: UserRepository
 
     var mPetRepository: PetRepository
+    var mMatchRepository: MatchReposity
 
-    constructor(view: MainMenuContract.View, userRepository: UserRepository, petRepository: PetRepository) {
+    constructor(view: MainMenuContract.View, userRepository: UserRepository, petRepository: PetRepository, matchReposity: MatchReposity) {
         mMainMenuView = view
         mUserRepository = userRepository
         mPetRepository = petRepository
-
+        mMatchRepository = matchReposity
         mUserRepository.currentUserChanged().subscribe { user: User -> setUserProfile() }
     }
 
 
     override fun userMatchedPet(pet: Pet) {
-        if(mUserRepository.checkIfMatchExists(pet.uid))
-        {
-            mMainMenuView.showItsMatchDialog(pet)
 
-        }
-        else
-        {
-            mUserRepository.addMatch(pet.uid).toObservable().subscribe {a -> mMainMenuView.showItsMatchDialog(pet)}
-        }
+        mMatchRepository.checkIfMatchExists(pet.uid, mUserRepository.getCurrentUserId()).subscribe { exists, t2 ->
+            if(exists)
+            {
+                mMainMenuView.showItsMatchDialog(pet)
+            }
+            else
+            {
+                mMatchRepository.addMatch(pet.uid, mUserRepository.getCurrentUserId())
+                        .toObservable().subscribe {
+                            a -> mMainMenuView.showItsMatchDialog(pet)
+                            mUserRepository.addMatchToUser(a).subscribe()
 
+                }
+            }
+        }
     }
 
     override fun userUnmatchedPet(pet: Pet)

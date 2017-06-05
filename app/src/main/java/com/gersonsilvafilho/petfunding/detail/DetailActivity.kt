@@ -37,7 +37,7 @@ class DetailActivity : AppCompatActivity() {
 
         val fab = findViewById(R.id.fab) as FloatingActionButton
         fab.setOnClickListener { view ->
-            startActivity<ChatActivity>("matchId" to pet.uid)
+            startActivity<ChatActivity>("pet" to pet)
         }
 
         setupViewPager(viewpager, pet)

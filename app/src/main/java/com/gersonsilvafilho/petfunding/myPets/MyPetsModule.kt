@@ -1,5 +1,6 @@
 package com.gersonsilvafilho.petfunding.myPets
 
+import com.gersonsilvafilho.petfunding.model.match.MatchReposity
 import com.gersonsilvafilho.petfunding.model.pet.PetRepository
 import com.gersonsilvafilho.petfunding.model.user.UserRepository
 import dagger.Module
@@ -11,7 +12,7 @@ import dagger.Provides
 @Module
 class MyPetsModule (val likeListContract: MyPetsContract.View){
     @Provides
-    fun provideMyPetsPresenter(userRepository: UserRepository, petRepository: PetRepository): MyPetsContract.Presenter{
-        return MyPetsPresenter(likeListContract,userRepository, petRepository)
+    fun provideMyPetsPresenter(userRepository: UserRepository, petRepository: PetRepository, matchReposity: MatchReposity): MyPetsContract.Presenter{
+        return MyPetsPresenter(likeListContract,userRepository, petRepository, matchReposity)
     }
 }

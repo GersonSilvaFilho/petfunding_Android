@@ -25,7 +25,7 @@ class User: IUser {
 
     var uid:String = ""
     var username:String = ""
-    var matches: Map<String, Match> = HashMap<String, Match>()
+    var matches: ArrayList<String> = ArrayList<String>()
     var unmatches: ArrayList<String> = ArrayList<String>()
     var email:String = ""
     var gender:String = ""
@@ -35,6 +35,7 @@ class User: IUser {
     @Exclude
     fun toMap(): Map<String, Any> {
         val values = HashMap<String, Any>()
+        values.put("uid", uid)
         values.put("username", username)
         values.put("matches", matches)
         values.put("unmatches", unmatches)

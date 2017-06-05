@@ -1,6 +1,8 @@
 package com.gersonsilvafilho.petfunding.chat
 
 import com.gersonsilvafilho.petfunding.model.chat.ChatRepository
+import com.gersonsilvafilho.petfunding.model.match.MatchReposity
+import com.gersonsilvafilho.petfunding.model.pet.PetRepository
 import com.gersonsilvafilho.petfunding.model.user.UserRepository
 import dagger.Module
 import dagger.Provides
@@ -11,7 +13,7 @@ import dagger.Provides
 @Module
 class ChatModule(val chatActivity: ChatActivity) {
     @Provides
-    fun provideMainChatPresenter(chatRepository: ChatRepository, userRepository: UserRepository): ChatContract.Presenter{
-        return ChatPresenter(chatActivity, chatRepository, userRepository)
+    fun provideMainChatPresenter(chatRepository: ChatRepository, userRepository: UserRepository, matchReposity: MatchReposity, petRepository: PetRepository): ChatContract.Presenter{
+        return ChatPresenter(chatActivity, chatRepository, userRepository, matchReposity, petRepository)
     }
 }

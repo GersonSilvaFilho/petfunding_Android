@@ -8,11 +8,11 @@ import com.facebook.login.LoginManager
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import durdinapps.rxfirebase2.DataSnapshotMapper
 import durdinapps.rxfirebase2.RxFirebaseAuth
 import durdinapps.rxfirebase2.RxFirebaseDatabase
 import io.reactivex.Completable
 import io.reactivex.Observable
-import io.reactivex.Single
 import org.json.JSONException
 
 
@@ -21,6 +21,7 @@ import org.json.JSONException
  */
 class UserFirebaseRepository : UserRepository
 {
+
     val database = FirebaseDatabase.getInstance()
     var usersRef = database.getReference("users")
     var mCurrentUser : User = User()
@@ -45,7 +46,8 @@ class UserFirebaseRepository : UserRepository
         val key = usersRef.child(getCurrentUserId())
         return RxFirebaseDatabase.observeValueEvent(key, User::class.java)
                 .doOnError { e -> Log.d("UserRepo", "User is null - " + e.localizedMessage)
-                     Exception("TADA !")}.toObservable()
+                     Exception("TADA !")
+                }.toObservable()
     }
 
     override fun loginWithFacebook(token: String): Observable<Boolean> {
@@ -66,18 +68,6 @@ class UserFirebaseRepository : UserRepository
 
     override fun getCurrentUser(): User {
         return mCurrentUser!!
-    }
-
-    override fun addMatch(petId:String): Single<String> {
-        val key = usersRef.child(getCurrentUserId()).child("matches").child(petId)
-        var match = Match()
-        match.petId = petId
-        return RxFirebaseDatabase.updateChildren(key, match.toMap()).toSingle { key.key }
-
-    }
-
-    override fun checkIfMatchExists(petId:String): Boolean {
-        return getCurrentUser().matches.containsKey(petId)
     }
 
     override fun getUsernameFromFacebook()
@@ -116,19 +106,10 @@ class UserFirebaseRepository : UserRepository
         request.executeAsync()
     }
 
-    override fun checkIfChatExists(petId: String): String?
-    {
-        return getCurrentUser().matches[petId]?.chatId
-    }
-
     override fun addUnmatch(petId: String): Completable {
         val key = usersRef.child(getCurrentUserId())
         mCurrentUser.unmatches.add(petId)
         return RxFirebaseDatabase.updateChildren(key, mCurrentUser.toMap())
-    }
-
-    override fun getAllMatches(): List<Match> {
-        return mCurrentUser.matches.values.toList()
     }
 
     fun getChatListFromMyPets(petId:String)
@@ -136,13 +117,22 @@ class UserFirebaseRepository : UserRepository
         val ref = usersRef.child("matches").orderByChild("petId").equalTo(petId)
     }
 
-    fun getUserFromMatch(matchId:String)
+    override fun getUserFromMatch(matchId:String):Observable<List<User>>
     {
-        
+        val ref = usersRef
+        return RxFirebaseDatabase.observeSingleValueEvent(ref, DataSnapshotMapper.listOf(User::class.java))
+                .toObservable()
     }
 
     fun getAllMyChatIds()
     {
 
     }
+
+    override fun addMatchToUser(matchId: String): Completable {
+        val key = usersRef.child(getCurrentUserId())
+        mCurrentUser.matches.add(matchId)
+        return RxFirebaseDatabase.updateChildren(key, mCurrentUser.toMap())
+    }
+
 }
