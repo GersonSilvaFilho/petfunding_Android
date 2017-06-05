@@ -1,7 +1,9 @@
 package com.gersonsilvafilho.petfunding.model.chat
 
+import android.util.Log
 import com.gersonsilvafilho.petfunding.model.message.Message
 import com.google.firebase.database.FirebaseDatabase
+import durdinapps.rxfirebase2.RxFirebaseChildEvent
 import durdinapps.rxfirebase2.RxFirebaseDatabase
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -18,13 +20,18 @@ class ChatFirebaseRepository : ChatRepository
 
     override fun getChatFromId(chatId: String):Observable<Chat>
     {
-        return RxFirebaseDatabase.observeSingleValueEvent(chatRef.child(chatId), Chat::class.java).toObservable()
+        return RxFirebaseDatabase.observeSingleValueEvent(chatRef.child(chatId), Chat::class.java)
+                .filter { m -> m != null }
+                .doOnError { t -> Log.i("ChatFirebaseRepository", t.message) }
+                .toObservable()
     }
 
-    override fun listenMessages(chatId: String):Observable<Message>
+    override fun listenMessages(chatId: String): Observable<RxFirebaseChildEvent<Message>>
     {
         val ref = chatRef.child(chatId).child("messages")
-        return RxFirebaseDatabase.observeValueEvent(ref, Message::class.java).toObservable()
+        return RxFirebaseDatabase.observeChildEvent(ref, Message::class.java)
+                .filter { m -> m != null }
+                .toObservable()
     }
 
 

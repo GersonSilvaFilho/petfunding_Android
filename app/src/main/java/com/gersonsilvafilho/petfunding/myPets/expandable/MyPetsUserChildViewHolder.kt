@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.gersonsilvafilho.petfunding.R
+import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.model.user.User
 import com.squareup.picasso.Picasso
 
@@ -17,7 +18,7 @@ class MyPetsUserChildViewHolder : RecyclerView.ViewHolder{
 
     constructor(itemView: View):super(itemView)
 
-    fun setUser(user: User, startChatUser: Unit)
+    fun setUser(user: User,pet: Pet, startChatUser: (pet: Pet, userId:String) -> Unit)
     {
         val userChildNameText = this.itemView.findViewById(R.id.userChildNameTextView) as TextView
         userChildNameText.setText(user.name)
@@ -30,7 +31,7 @@ class MyPetsUserChildViewHolder : RecyclerView.ViewHolder{
                 .into(userChildImage)
 
         itemView.findViewById(R.id.cardLikeList)?.setOnClickListener {
-            startChatUser
+            startChatUser(pet, user.uid)
         }
     }
 }

@@ -76,7 +76,7 @@ class MyPetsActivity : AppCompatActivity(), MyPetsContract.View, AsyncExpandable
     }
 
     override fun onPetClicked(): (Pet) -> Unit  = {
-        //mActionsListener.petSelected(it)
+        mActionsListener.petSelected(it)
 
     }
 
@@ -103,8 +103,7 @@ class MyPetsActivity : AppCompatActivity(), MyPetsContract.View, AsyncExpandable
         startActivity<AddPetActivity>("pet" to pet)
     }
 
-    fun startChatUser(pet:Pet, userId:String)
-    {
+    var startChatUser = {pet:Pet, userId:String ->
         startActivity<ChatActivity>("pet" to pet, "userId" to userId)
     }
 
@@ -138,6 +137,6 @@ class MyPetsActivity : AppCompatActivity(), MyPetsContract.View, AsyncExpandable
 
     override fun bindCollectionItemView(context: Context?, holder: RecyclerView.ViewHolder?, groupOrdinal: Int, item: User) {
         val myHeaderViewHolder = holder as MyPetsUserChildViewHolder
-        myHeaderViewHolder.setUser(item, startChatUser(mAsyncExpandableListView.getHeader(groupOrdinal),item.uid))
+        myHeaderViewHolder.setUser(item,mAsyncExpandableListView.getHeader(groupOrdinal), startChatUser)
     }
 }
