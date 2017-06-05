@@ -10,6 +10,7 @@
     android:layout_width="fill_parent"
     android:focusable="true"
     android:clickable="true"
+    app:cardBackgroundColor="@color/cardview_shadow_start_color"
     android:foreground="?android:attr/selectableItemBackground">
 
     <RelativeLayout

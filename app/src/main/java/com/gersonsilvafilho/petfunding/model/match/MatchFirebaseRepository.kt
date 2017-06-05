@@ -38,7 +38,7 @@ class MatchFirebaseRepository : MatchReposity{
     override fun getMatch(petId: String, userId: String): Single<Match> {
         val ref = matchesRef.orderByChild("userId").equalTo(userId)
         return RxFirebaseDatabase.observeSingleValueEvent(ref, DataSnapshotMapper.listOf(Match::class.java))
-                .map { t -> t.first() }
+                .map { t -> t.filter { match -> match.petId ==  petId}.first() }
                 .toSingle()
     }
 

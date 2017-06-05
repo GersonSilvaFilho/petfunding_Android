@@ -46,7 +46,8 @@ class UserFirebaseRepository : UserRepository
         val key = usersRef.child(getCurrentUserId())
         return RxFirebaseDatabase.observeValueEvent(key, User::class.java)
                 .doOnError { e -> Log.d("UserRepo", "User is null - " + e.localizedMessage)
-                     Exception("TADA !")}.toObservable()
+                     Exception("TADA !")
+                }.toObservable()
     }
 
     override fun loginWithFacebook(token: String): Observable<Boolean> {

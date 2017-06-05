@@ -14,6 +14,7 @@ import com.ericliu.asyncexpandablelist.async.AsyncExpandableListViewCallbacks
 import com.ericliu.asyncexpandablelist.async.AsyncHeaderViewHolder
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.add_pet.AddPetActivity
+import com.gersonsilvafilho.petfunding.chat.ChatActivity
 import com.gersonsilvafilho.petfunding.detail.DetailActivity
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.model.user.User
@@ -102,6 +103,11 @@ class MyPetsActivity : AppCompatActivity(), MyPetsContract.View, AsyncExpandable
         startActivity<AddPetActivity>("pet" to pet)
     }
 
+    fun startChatUser(pet:Pet, userId:String)
+    {
+        startActivity<ChatActivity>("pet" to pet, "userId" to userId)
+    }
+
     override fun newCollectionItemView(context: Context?, groupOrdinal: Int, parent: ViewGroup?): RecyclerView.ViewHolder {
         val v = LayoutInflater.from(context)
                 .inflate(R.layout.user_chat_item, parent, false)
@@ -132,6 +138,6 @@ class MyPetsActivity : AppCompatActivity(), MyPetsContract.View, AsyncExpandable
 
     override fun bindCollectionItemView(context: Context?, holder: RecyclerView.ViewHolder?, groupOrdinal: Int, item: User) {
         val myHeaderViewHolder = holder as MyPetsUserChildViewHolder
-        myHeaderViewHolder.setUser(item)
+        myHeaderViewHolder.setUser(item, startChatUser(mAsyncExpandableListView.getHeader(groupOrdinal),item.uid))
     }
 }

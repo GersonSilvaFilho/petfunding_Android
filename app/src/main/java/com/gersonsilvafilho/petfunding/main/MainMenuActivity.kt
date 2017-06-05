@@ -88,7 +88,7 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         textView.setText(pet.name + " está muito feliz que você deseja adotá-lo!")
 
         val button = dialog.findViewById(R.id.buttonMatchMessage) as Button
-        button.setOnClickListener { startActivity<ChatActivity>("petId" to pet.uid) }
+        button.setOnClickListener { startActivity<ChatActivity>("pet" to pet) }
         dialog.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
     }

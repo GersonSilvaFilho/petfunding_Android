@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.model.message.Message
+import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.util.PetApplication
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
@@ -28,8 +29,9 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         setContentView(R.layout.activity_chat)
         initDagger()
 
-        val petId = intent.getStringExtra("petId")
-        mActionsListener.initChat(petId)
+        val pet = intent.getSerializableExtra("pet") as Pet
+        val userId = intent.getStringExtra("userId")
+        mActionsListener.initChat(pet, userId)
     }
 
     private fun initDagger()

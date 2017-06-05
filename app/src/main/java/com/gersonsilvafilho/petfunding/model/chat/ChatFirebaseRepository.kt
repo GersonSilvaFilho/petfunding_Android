@@ -21,6 +21,11 @@ class ChatFirebaseRepository : ChatRepository
         return RxFirebaseDatabase.observeSingleValueEvent(chatRef.child(chatId), Chat::class.java).toObservable()
     }
 
+    override fun listenMessages(chatId: String):Observable<Message>
+    {
+        val ref = chatRef.child(chatId).child("messages")
+        return RxFirebaseDatabase.observeValueEvent(ref, Message::class.java).toObservable()
+    }
 
 
     override fun sendMessage(chatId: String, message: Message): Single<String>

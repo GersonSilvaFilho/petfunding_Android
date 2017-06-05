@@ -17,7 +17,7 @@ class MyPetsUserChildViewHolder : RecyclerView.ViewHolder{
 
     constructor(itemView: View):super(itemView)
 
-    fun setUser(user:User)
+    fun setUser(user: User, startChatUser: Unit)
     {
         val userChildNameText = this.itemView.findViewById(R.id.userChildNameTextView) as TextView
         userChildNameText.setText(user.name)
@@ -28,5 +28,9 @@ class MyPetsUserChildViewHolder : RecyclerView.ViewHolder{
         Picasso.with(this.itemView.context)
                 .load(user.imageUrl)
                 .into(userChildImage)
+
+        itemView.findViewById(R.id.cardLikeList)?.setOnClickListener {
+            startChatUser
+        }
     }
 }

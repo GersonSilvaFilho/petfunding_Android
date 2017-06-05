@@ -1,6 +1,7 @@
 package com.gersonsilvafilho.petfunding.chat
 
 import com.gersonsilvafilho.petfunding.model.message.Message
+import com.gersonsilvafilho.petfunding.model.pet.Pet
 import io.reactivex.Observable
 
 /**
@@ -20,6 +21,6 @@ interface ChatContract {
     interface Presenter
     {
         fun sendMessage(message:String)
-        fun initChat(match: String)
+        fun initChat(pet: Pet, userId: String?)
     }
 }
