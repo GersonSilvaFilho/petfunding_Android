@@ -2,6 +2,7 @@ package com.gersonsilvafilho.petfunding.chat
 
 import com.gersonsilvafilho.petfunding.model.chat.Chat
 import com.gersonsilvafilho.petfunding.model.chat.ChatRepository
+import com.gersonsilvafilho.petfunding.model.match.MatchReposity
 import com.gersonsilvafilho.petfunding.model.message.Message
 import com.gersonsilvafilho.petfunding.model.user.UserRepository
 
@@ -12,6 +13,7 @@ class ChatPresenter : ChatContract.Presenter
 {
     var mChatRepository: ChatRepository
     var mUserRepository: UserRepository
+    var mMatchRepository: MatchReposity
 
     private var mView: ChatContract.View
 
@@ -19,12 +21,13 @@ class ChatPresenter : ChatContract.Presenter
     private var  mCurrentText:String? = null
 
 
-    constructor(chatView: ChatContract.View, chatRepository: ChatRepository, userRepository: UserRepository)
+    constructor(chatView: ChatContract.View, chatRepository: ChatRepository, userRepository: UserRepository, matchReposity: MatchReposity)
     {
         //initDagger()
         mView = chatView
         mChatRepository = chatRepository
         mUserRepository = userRepository
+        mMatchRepository = matchReposity
 
         mView.initChatView(mUserRepository.getCurrentUserId())
 
@@ -32,24 +35,27 @@ class ChatPresenter : ChatContract.Presenter
         mView.onTextChange().subscribe { s -> mCurrentText = s.toString() }
     }
 
-    override fun initChat(match:String)
+    override fun initChat(petId:String)
     {
-        mCurrentChatId = mUserRepository.checkIfChatExists(match)
-        if(mCurrentChatId != null && mCurrentChatId != "")
-        {
-            mChatRepository.getChatFromId(mCurrentChatId!!)
-                    .subscribe { l:Chat -> mView.loadChatMessages(l.messages.values.toList().sortedByDescending { m -> m.date }) }
-        }
-        else
-        {
-            mChatRepository.initNewChat(match, mUserRepository.getCurrentUserId())
-                    .doAfterSuccess{
-                        mCurrentChatId = it
+        mMatchRepository.getMatch(petId, mUserRepository.getCurrentUserId())
+                .doOnSuccess {  match ->
+                    mCurrentChatId = match.chatId
+                    if(mCurrentChatId != null && mCurrentChatId != "")
+                    {
                         mChatRepository.getChatFromId(mCurrentChatId!!)
-                                .subscribe { l:Chat -> mView.loadChatMessages(l.messages.values.toList()) }
+                                .subscribe { l:Chat -> mView.loadChatMessages(l.messages.values.toList().sortedByDescending { m -> m.date }) }
                     }
-                    .subscribe()
-        }
+                    else
+                    {
+                        mChatRepository.initNewChat(match.uid, mUserRepository.getCurrentUserId())
+                                .doAfterSuccess{
+                                    mCurrentChatId = it
+                                    mChatRepository.getChatFromId(mCurrentChatId!!)
+                                            .subscribe { l:Chat -> mView.loadChatMessages(l.messages.values.toList()) }
+                                }
+                                .subscribe()
+                    }
+                }
     }
 
 

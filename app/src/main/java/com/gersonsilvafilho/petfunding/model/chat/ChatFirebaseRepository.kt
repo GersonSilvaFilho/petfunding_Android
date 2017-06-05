@@ -14,7 +14,7 @@ class ChatFirebaseRepository : ChatRepository
 {
     val database = FirebaseDatabase.getInstance()
     var chatRef = database.getReference("chat")
-    var usersRef = database.getReference("users")
+    var matchesRef = database.getReference("matches")
 
     override fun getChatFromId(chatId: String):Observable<Chat>
     {
@@ -34,10 +34,9 @@ class ChatFirebaseRepository : ChatRepository
         val key = chatRef.push()
         val mChat = Chat()
         mChat.uid = key.key
-        val matchAddRef = usersRef.child(userId).child("matches").child(matchId)
+        val matchAddRef = matchesRef.orderByChild("userId").equalTo(userId)
         val values = HashMap<String, Any>()
         values.put("chatId", key.key)
         return RxFirebaseDatabase.updateChildren(key,mChat.toMap()).toSingle { mChat.uid }
-                .doAfterSuccess { RxFirebaseDatabase.updateChildren(matchAddRef, values).subscribe() }
     }
 }

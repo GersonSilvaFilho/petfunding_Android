@@ -28,8 +28,8 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         setContentView(R.layout.activity_chat)
         initDagger()
 
-        val match = intent.getStringExtra("matchId")
-        mActionsListener.initChat(match)
+        val petId = intent.getStringExtra("petId")
+        mActionsListener.initChat(petId)
     }
 
     private fun initDagger()
