@@ -14,6 +14,8 @@ interface MainMenuContract {
         fun startDetailActivity(pet:Pet)
         fun showItsMatchDialog(pet:Pet)
         fun setDrawerUserInformation(user: User)
+        fun hideRippleWaiting()
+        fun showRippleWaiting()
     }
 
     interface Presenter

@@ -5,6 +5,8 @@ import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.model.pet.PetRepository
 import com.gersonsilvafilho.petfunding.model.user.User
 import com.gersonsilvafilho.petfunding.model.user.UserRepository
+import io.reactivex.android.schedulers.AndroidSchedulers
+import java.util.concurrent.TimeUnit
 
 
 /**
@@ -57,7 +59,13 @@ class MainMenuPresenter: MainMenuContract.Presenter
     }
 
     override fun loadPets() {
-        mPetRepository.getPets().subscribe { p ->  mMainMenuView.updateCardAdapter(p)}
+        mMainMenuView.showRippleWaiting()
+        mPetRepository.getPets().delay(2, TimeUnit.SECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { p ->
+            mMainMenuView.updateCardAdapter(p)
+            mMainMenuView.hideRippleWaiting()
+        }
     }
 
     override fun setUserProfile()

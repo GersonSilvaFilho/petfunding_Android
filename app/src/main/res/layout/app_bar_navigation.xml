@@ -19,10 +19,13 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_navigation" />
+    <include
+        android:id="@+id/contentCards"
+        layout="@layout/content_navigation" />
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
+        android:id="@+id/contentButtons"
         android:layout_height="match_parent">
 
         <android.support.design.widget.FloatingActionButton
@@ -59,5 +62,28 @@
             android:padding="10dp"
             app:layout_constraintRight_toRightOf="parent" />
     </android.support.constraint.ConstraintLayout>
+
+
+    <com.skyfishjy.library.RippleBackground
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/ripple"
+        app:rb_color="@color/colorPrimaryLight"
+        app:rb_radius="32dp"
+        app:rb_rippleAmount="3"
+        app:rb_duration="2000"
+        app:rb_scale="6">
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            app:srcCompat="@drawable/like_icon"
+            app:fabSize="normal"
+            android:layout_centerInParent="true"
+            android:background="@color/colorPrimary"
+            app:backgroundTint="@color/colorPrimary" />
+    </com.skyfishjy.library.RippleBackground>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -75,6 +75,8 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
 
         mActionsListener.loadPets()
         mActionsListener.setUserProfile()
+
+
     }
 
     override fun showItsMatchDialog(pet:Pet) {
@@ -216,5 +218,21 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, sharedView, transitionName)
             activity.startActivity(launcher, options.toBundle())
         }
+    }
+
+    override fun showRippleWaiting()
+    {
+        contentButtons.visibility = View.GONE
+        contentCards.visibility = View.GONE
+        ripple.visibility = View.VISIBLE
+        ripple.startRippleAnimation()
+    }
+
+    override fun hideRippleWaiting()
+    {
+        contentButtons.visibility = View.VISIBLE
+        contentCards.visibility = View.VISIBLE
+        ripple.visibility = View.GONE
+        ripple.stopRippleAnimation()
     }
 }
