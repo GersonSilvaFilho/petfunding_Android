@@ -36,6 +36,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="54dp"
             android:layout_marginRight="80dp"
+            android:elevation="3dp"
             android:background="@android:color/holo_green_light"
             app:backgroundTint="@android:color/holo_green_light"
             app:layout_constraintRight_toRightOf="parent" />
@@ -60,6 +61,7 @@
             android:layout_marginBottom="54dp"
             android:layout_marginRight="230dp"
             android:padding="10dp"
+            android:elevation="3dp"
             app:layout_constraintRight_toRightOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
@@ -76,14 +78,24 @@
         app:rb_duration="2000"
         app:rb_scale="6">
 
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
         <android.support.design.widget.FloatingActionButton
             android:layout_width="70dp"
             android:layout_height="70dp"
             app:srcCompat="@drawable/like_icon"
             app:fabSize="normal"
-            android:layout_centerInParent="true"
+
             android:background="@color/colorPrimary"
             app:backgroundTint="@color/colorPrimary" />
+        </FrameLayout>
     </com.skyfishjy.library.RippleBackground>
+
+    <include
+        android:id="@+id/filter"
+        layout="@layout/content_filter"
+        />
 
 </android.support.design.widget.CoordinatorLayout>

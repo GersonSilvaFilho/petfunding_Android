@@ -27,6 +27,7 @@ import com.gersonsilvafilho.petfunding.likeList.LikeListActivity
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.model.user.User
 import com.gersonsilvafilho.petfunding.myPets.MyPetsActivity
+import com.gersonsilvafilho.petfunding.util.DropDownAnim
 import com.gersonsilvafilho.petfunding.util.PetApplication
 import com.jakewharton.rxbinding2.view.clicks
 import com.squareup.picasso.Picasso
@@ -42,6 +43,7 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
     @Inject
     lateinit var  mActionsListener: MainMenuContract.Presenter
 
+    private var filterStatus:Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,7 +77,6 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
 
         mActionsListener.loadPets()
         mActionsListener.setUserProfile()
-
 
     }
 
@@ -156,10 +157,26 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         val id = item.itemId
 
         if (id == R.id.action_filter) {
+            toggleFilter()
             return true
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    fun toggleFilter() {
+        var viewSize = this.window.decorView.height - getActionBarSize() - getStatusBarHeight()
+        if (!filterStatus) {
+            val animation = DropDownAnim(filter, viewSize, true)
+            animation.duration = 700
+            filter.startAnimation(animation)
+            filterStatus = true
+        } else {
+            val animation = DropDownAnim(filter, viewSize, false)
+            animation.duration = 700
+            filter.startAnimation(animation)
+            filterStatus = false
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -218,6 +235,24 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, sharedView, transitionName)
             activity.startActivity(launcher, options.toBundle())
         }
+    }
+
+    private fun getActionBarSize():Int {
+        val styledAttributes = theme.obtainStyledAttributes( arrayOf(android.R.attr.actionBarSize).toIntArray())
+        val actionBarSize = styledAttributes.getDimension(0,0f).toInt()
+        styledAttributes.recycle()
+        return actionBarSize
+    }
+
+     private fun getStatusBarHeight() :Int{
+        var height = 0
+        val idStatusBarHeight = resources.getIdentifier("status_bar_height", "dimen", "android")
+        if (idStatusBarHeight > 0) {
+            height = getResources().getDimensionPixelSize(idStatusBarHeight)
+        }else{
+            height = 0
+        }
+        return height;
     }
 
     override fun showRippleWaiting()

@@ -26,7 +26,7 @@ class MainMenuPresenter: MainMenuContract.Presenter
         mUserRepository = userRepository
         mPetRepository = petRepository
         mMatchRepository = matchReposity
-        mUserRepository.currentUserChanged().subscribe { user: User -> setUserProfile() }
+        mUserRepository.currentUserChanged().subscribe ({ user: User -> setUserProfile() }, {})
     }
 
 
