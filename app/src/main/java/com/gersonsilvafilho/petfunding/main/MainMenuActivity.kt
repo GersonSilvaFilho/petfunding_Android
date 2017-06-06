@@ -21,6 +21,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.add_pet.AddPetActivity
+import com.gersonsilvafilho.petfunding.add_pet.fragments.OnCheckedStateChangeListener
 import com.gersonsilvafilho.petfunding.chat.ChatActivity
 import com.gersonsilvafilho.petfunding.detail.DetailActivity
 import com.gersonsilvafilho.petfunding.likeList.LikeListActivity
@@ -32,6 +33,7 @@ import com.gersonsilvafilho.petfunding.util.PetApplication
 import com.jakewharton.rxbinding2.view.clicks
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.app_bar_navigation.*
+import kotlinx.android.synthetic.main.content_filter.*
 import kotlinx.android.synthetic.main.content_navigation.*
 import org.jetbrains.anko.startActivity
 import javax.inject.Inject
@@ -124,6 +126,7 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         var mCardAdapter = CardsDataAdapter(applicationContext, 0)
         mCardAdapter.addAll(pets)
         cardStack.setAdapter(mCardAdapter)
+        cardStack.reset(true)
     }
 
     override fun mClick() {
@@ -179,6 +182,15 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         }
     }
 
+    override fun hideFilterView()
+    {
+        var viewSize = this.window.decorView.height - getActionBarSize() - getStatusBarHeight()
+        val animation = DropDownAnim(filter, viewSize, false)
+        animation.duration = 700
+        filter.startAnimation(animation)
+        filterStatus = false
+    }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         val id = item.itemId
@@ -209,6 +221,8 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         drawer.closeDrawer(GravityCompat.START)
         return true
     }
+
+
 
     override fun cardDiscartedRight(cardId: Int) {
         mActionsListener.userMatchedPet(getLastPet())
@@ -270,4 +284,13 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         ripple.visibility = View.GONE
         ripple.stopRippleAnimation()
     }
+
+    override fun filterTypeChanges() = group_choices_type.OnCheckedStateChangeListener()
+    override fun filterSexChanges() = group_choices_sex.OnCheckedStateChangeListener()
+    override fun filterSizeChanges() = group_choices_size.OnCheckedStateChangeListener()
+    override fun filterConditionChanges() = group_choices_condition.OnCheckedStateChangeListener()
+    override fun filterLikeChanges() = group_choices_like.OnCheckedStateChangeListener()
+    override fun filterAgeChanges() = group_choices_age.OnCheckedStateChangeListener()
+
+    override fun applyButtonClicked() = applyFilterButton.clicks()
 }
