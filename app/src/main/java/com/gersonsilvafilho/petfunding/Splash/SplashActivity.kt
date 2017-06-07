@@ -23,7 +23,7 @@ class SplashActivity : AppCompatActivity() , View{
     var callbackManager: CallbackManager? = null
 
     @Inject
-    lateinit var mActionsListener: SplashPresenter
+    lateinit var mActionsListener: SplashContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,13 +34,10 @@ class SplashActivity : AppCompatActivity() , View{
     }
 
     protected fun setupActivityComponent() {
-        //Uncomment those lines do measure dependencies creation time
-        //Debug.startMethodTracing("SplashTrace");
         (application as PetApplication).get(this)
                 .createUserComponent()
                 .plus(SplashModule(this))
                 .inject(this)
-        //Debug.stopMethodTracing();
     }
 
     private fun initFacebook()
@@ -98,7 +95,7 @@ class SplashActivity : AppCompatActivity() , View{
         //Toast.makeText(this, "Firebase Success", Toast.LENGTH_LONG).show()
     }
 
-    private fun handleFacebookAccessToken(token: AccessToken) {
+    override fun handleFacebookAccessToken(token: AccessToken) {
         mActionsListener.firebaseSuccess(token.token)
     }
 
