@@ -34,17 +34,28 @@ class MainMenuPresenter: MainMenuContract.Presenter
         mUserRepository = userRepository
         mPetRepository = petRepository
         mMatchRepository = matchReposity
+
+        setupUserRepositoryObservers()
+        setupViewObservers()
+    }
+
+    private fun setupUserRepositoryObservers()
+    {
         mUserRepository.currentUserChanged().subscribe ({ user: User -> setUserProfile() }, {})
+    }
+
+    private fun setupViewObservers()
+    {
         mMainMenuView.filterTypeChanges().subscribe { list -> filteredTypes = list }
         mMainMenuView.filterSexChanges().subscribe { list -> filteredSex = list }
         mMainMenuView.filterSizeChanges().subscribe { list -> filteredSize = list }
         mMainMenuView.filterConditionChanges().subscribe { list -> filteredCondition = list }
         mMainMenuView.filterLikeChanges().subscribe { list -> filteredLike = list }
         mMainMenuView.filterAgeChanges().subscribe { list -> filteredAge = list }
-        mMainMenuView.applyButtonClicked().subscribe {
+        mMainMenuView.applyButtonClicked().subscribe ({
             loadPets()
             mMainMenuView.hideFilterView()
-        }
+        }, {})
     }
 
 
@@ -78,7 +89,7 @@ class MainMenuPresenter: MainMenuContract.Presenter
 
     override fun loadPets() {
         mMainMenuView.showRippleWaiting()
-        mPetRepository.getPets().delay(2, TimeUnit.SECONDS)
+        mPetRepository.getPets().delay(1, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { petsList ->
                     val filteredPets = petsList
