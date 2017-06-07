@@ -21,16 +21,19 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.add_pet.AddPetActivity
+import com.gersonsilvafilho.petfunding.add_pet.fragments.OnCheckedStateChangeListener
 import com.gersonsilvafilho.petfunding.chat.ChatActivity
 import com.gersonsilvafilho.petfunding.detail.DetailActivity
 import com.gersonsilvafilho.petfunding.likeList.LikeListActivity
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.model.user.User
 import com.gersonsilvafilho.petfunding.myPets.MyPetsActivity
+import com.gersonsilvafilho.petfunding.util.DropDownAnim
 import com.gersonsilvafilho.petfunding.util.PetApplication
 import com.jakewharton.rxbinding2.view.clicks
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.app_bar_navigation.*
+import kotlinx.android.synthetic.main.content_filter.*
 import kotlinx.android.synthetic.main.content_navigation.*
 import org.jetbrains.anko.startActivity
 import javax.inject.Inject
@@ -42,6 +45,7 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
     @Inject
     lateinit var  mActionsListener: MainMenuContract.Presenter
 
+    private var filterStatus:Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +79,7 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
 
         mActionsListener.loadPets()
         mActionsListener.setUserProfile()
+
     }
 
     override fun showItsMatchDialog(pet:Pet) {
@@ -121,6 +126,7 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         var mCardAdapter = CardsDataAdapter(applicationContext, 0)
         mCardAdapter.addAll(pets)
         cardStack.setAdapter(mCardAdapter)
+        cardStack.reset(true)
     }
 
     override fun mClick() {
@@ -154,10 +160,35 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         val id = item.itemId
 
         if (id == R.id.action_filter) {
+            toggleFilter()
             return true
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    fun toggleFilter() {
+        var viewSize = this.window.decorView.height - getActionBarSize() - getStatusBarHeight()
+        if (!filterStatus) {
+            val animation = DropDownAnim(filter, viewSize, true)
+            animation.duration = 700
+            filter.startAnimation(animation)
+            filterStatus = true
+        } else {
+            val animation = DropDownAnim(filter, viewSize, false)
+            animation.duration = 700
+            filter.startAnimation(animation)
+            filterStatus = false
+        }
+    }
+
+    override fun hideFilterView()
+    {
+        var viewSize = this.window.decorView.height - getActionBarSize() - getStatusBarHeight()
+        val animation = DropDownAnim(filter, viewSize, false)
+        animation.duration = 700
+        filter.startAnimation(animation)
+        filterStatus = false
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -191,6 +222,8 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         return true
     }
 
+
+
     override fun cardDiscartedRight(cardId: Int) {
         mActionsListener.userMatchedPet(getLastPet())
     }
@@ -217,4 +250,47 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
             activity.startActivity(launcher, options.toBundle())
         }
     }
+
+    private fun getActionBarSize():Int {
+        val styledAttributes = theme.obtainStyledAttributes( arrayOf(android.R.attr.actionBarSize).toIntArray())
+        val actionBarSize = styledAttributes.getDimension(0,0f).toInt()
+        styledAttributes.recycle()
+        return actionBarSize
+    }
+
+     private fun getStatusBarHeight() :Int{
+        var height = 0
+        val idStatusBarHeight = resources.getIdentifier("status_bar_height", "dimen", "android")
+        if (idStatusBarHeight > 0) {
+            height = getResources().getDimensionPixelSize(idStatusBarHeight)
+        }else{
+            height = 0
+        }
+        return height;
+    }
+
+    override fun showRippleWaiting()
+    {
+        contentButtons.visibility = View.GONE
+        contentCards.visibility = View.GONE
+        ripple.visibility = View.VISIBLE
+        ripple.startRippleAnimation()
+    }
+
+    override fun hideRippleWaiting()
+    {
+        contentButtons.visibility = View.VISIBLE
+        contentCards.visibility = View.VISIBLE
+        ripple.visibility = View.GONE
+        ripple.stopRippleAnimation()
+    }
+
+    override fun filterTypeChanges() = group_choices_type.OnCheckedStateChangeListener()
+    override fun filterSexChanges() = group_choices_sex.OnCheckedStateChangeListener()
+    override fun filterSizeChanges() = group_choices_size.OnCheckedStateChangeListener()
+    override fun filterConditionChanges() = group_choices_condition.OnCheckedStateChangeListener()
+    override fun filterLikeChanges() = group_choices_like.OnCheckedStateChangeListener()
+    override fun filterAgeChanges() = group_choices_age.OnCheckedStateChangeListener()
+
+    override fun applyButtonClicked() = applyFilterButton.clicks()
 }

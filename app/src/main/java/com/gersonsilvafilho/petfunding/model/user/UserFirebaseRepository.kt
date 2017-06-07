@@ -39,7 +39,7 @@ class UserFirebaseRepository : UserRepository
         RxFirebaseDatabase.observeValueEvent(key, User::class.java)
                 .doOnError { e -> Log.d("UserRepo", "User is null - " + e.localizedMessage)
                      Exception("TADA !")}
-                .subscribe { if(it != null) mCurrentUser = it }
+                .subscribe ({ if(it != null) mCurrentUser = it }, {})
     }
 
     override fun currentUserChanged(): Observable<User> {

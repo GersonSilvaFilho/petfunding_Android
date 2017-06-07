@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,6 +7,8 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.gersonsilvafilho.petfunding.main.MainMenuActivity"
     tools:showIn="@layout/app_bar_navigation">
+
+
 
     <com.wenchao.cardstack.CardStack
         android:id="@+id/cardStack"
@@ -22,4 +24,4 @@
         app:card_margin="10dp"
         app:card_stack_size="4" />
 
-</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

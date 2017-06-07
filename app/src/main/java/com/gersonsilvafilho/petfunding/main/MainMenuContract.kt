@@ -2,6 +2,7 @@ package com.gersonsilvafilho.petfunding.main
 
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.model.user.User
+import io.reactivex.Observable
 
 
 /**
@@ -14,6 +15,16 @@ interface MainMenuContract {
         fun startDetailActivity(pet:Pet)
         fun showItsMatchDialog(pet:Pet)
         fun setDrawerUserInformation(user: User)
+        fun hideRippleWaiting()
+        fun showRippleWaiting()
+        fun filterTypeChanges(): Observable<List<String>>
+        fun applyButtonClicked(): Observable<Unit>
+        fun hideFilterView()
+        fun filterSexChanges(): Observable<List<String>>
+        fun filterSizeChanges(): Observable<List<String>>
+        fun filterConditionChanges(): Observable<List<String>>
+        fun filterLikeChanges(): Observable<List<String>>
+        fun filterAgeChanges(): Observable<List<String>>
     }
 
     interface Presenter

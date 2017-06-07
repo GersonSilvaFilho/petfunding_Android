@@ -114,6 +114,8 @@ dependencies {
     compile 'com.bignerdranch.android:expandablerecyclerview:1.0.3'
 
     compile 'com.ericliu.asyncexpandablelist:asyncexpandablelist:1.1.0'
+
+    compile 'com.skyfishjy.ripplebackground:library:1.0.1'
 }
 
 coveralls {
