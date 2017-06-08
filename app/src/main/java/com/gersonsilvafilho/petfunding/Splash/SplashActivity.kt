@@ -14,7 +14,9 @@ import com.gersonsilvafilho.petfunding.main.MainMenuActivity
 import com.gersonsilvafilho.petfunding.splash.SplashContract.View
 import com.gersonsilvafilho.petfunding.util.PetApplication
 import kotlinx.android.synthetic.main.activity_splash.*
-import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.clearTop
+import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.newTask
 import javax.inject.Inject
 
 class SplashActivity : AppCompatActivity() , View{
@@ -100,11 +102,6 @@ class SplashActivity : AppCompatActivity() , View{
     }
 
     override fun goToMainMenuActivity() {
-        startActivity<MainMenuActivity>()
+        startActivity(intentFor<MainMenuActivity>().clearTop().newTask())
     }
-
-    override fun startSelfActivity() {
-        startActivity<SplashActivity>()
-    }
-
 }

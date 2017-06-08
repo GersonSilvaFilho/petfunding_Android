@@ -9,6 +9,7 @@ import com.gersonsilvafilho.petfunding.model.user.UserComponent
 import com.gersonsilvafilho.petfunding.model.user.UserFirebaseRepository
 import com.gersonsilvafilho.petfunding.model.user.UserModule
 import com.google.firebase.FirebaseApp
+import com.google.firebase.database.FirebaseDatabase
 import com.miguelbcr.ui.rx_paparazzo2.RxPaparazzo
 
 
@@ -29,6 +30,7 @@ class PetApplication : Application() {
         super.onCreate()
         RxPaparazzo.register(this)
         FirebaseApp.initializeApp(this)
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true)
         initAppComponent()
     }
 

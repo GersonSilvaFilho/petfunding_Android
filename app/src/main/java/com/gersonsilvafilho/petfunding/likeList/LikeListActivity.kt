@@ -70,6 +70,6 @@ class LikeListActivity : AppCompatActivity(), LikeListContract.View {
 
     override fun startDetails(pet:Pet)
     {
-        startActivity<DetailActivity>("pet" to pet)
+        startActivity<DetailActivity>("pet" to pet, "matched" to true)
     }
 }

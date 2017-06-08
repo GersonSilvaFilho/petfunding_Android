@@ -1,7 +1,6 @@
 package com.gersonsilvafilho.petfunding.splash
 
 import com.facebook.AccessToken
-import com.gersonsilvafilho.petfunding.model.user.UserRepository
 
 
 /**
@@ -14,7 +13,6 @@ interface SplashContract {
         fun showToast()
         fun showFirebaseSuccess()
         fun goToMainMenuActivity()
-        fun startSelfActivity()
         fun handleFacebookAccessToken(token: AccessToken)
     }
 

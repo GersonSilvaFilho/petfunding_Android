@@ -16,6 +16,7 @@ class MatchFirebaseRepository : MatchReposity{
     var matchesRef = database.getReference("matches")
 
     override fun addMatch(petId: String, userId:String): Single<String> {
+        matchesRef.keepSynced(true)
         val key = matchesRef.push()
         var match = Match()
         match.petId = petId
@@ -25,6 +26,7 @@ class MatchFirebaseRepository : MatchReposity{
     }
 
     override fun checkIfMatchExists(petId: String, userId: String): Single<Boolean> {
+        FirebaseDatabase.getInstance()
         val ref = matchesRef.orderByChild("userId").equalTo(userId)
         return RxFirebaseDatabase.observeSingleValueEvent(ref, DataSnapshotMapper.listOf(Match::class.java))
                                     .map { t -> t.map { match -> match.petId }.contains(petId) }.toSingle()

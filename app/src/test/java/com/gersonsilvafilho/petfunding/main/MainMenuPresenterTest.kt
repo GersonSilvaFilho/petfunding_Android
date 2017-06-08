@@ -1,4 +1,4 @@
-package com.gersonsilvafilho.petfunding.SplashTests
+package com.gersonsilvafilho.petfunding
 
 import com.gersonsilvafilho.petfunding.main.MainMenuContract
 import com.gersonsilvafilho.petfunding.main.MainMenuPresenter

@@ -28,6 +28,7 @@ import com.gersonsilvafilho.petfunding.likeList.LikeListActivity
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.model.user.User
 import com.gersonsilvafilho.petfunding.myPets.MyPetsActivity
+import com.gersonsilvafilho.petfunding.splash.SplashActivity
 import com.gersonsilvafilho.petfunding.util.DropDownAnim
 import com.gersonsilvafilho.petfunding.util.PetApplication
 import com.jakewharton.rxbinding2.view.clicks
@@ -35,6 +36,9 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.app_bar_navigation.*
 import kotlinx.android.synthetic.main.content_filter.*
 import kotlinx.android.synthetic.main.content_navigation.*
+import org.jetbrains.anko.clearTop
+import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.newTask
 import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
@@ -94,6 +98,10 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
 
         val button = dialog.findViewById(R.id.buttonMatchMessage) as Button
         button.setOnClickListener { startActivity<ChatActivity>("pet" to pet) }
+
+        val buttonDismiss = dialog.findViewById(R.id.buttonMatchDismiss) as Button
+        buttonDismiss.setOnClickListener { dialog.dismiss() }
+
         dialog.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
     }
@@ -283,6 +291,11 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         contentCards.visibility = View.VISIBLE
         ripple.visibility = View.GONE
         ripple.stopRippleAnimation()
+    }
+
+    override fun startSplashActivity() {
+        startActivity(intentFor<SplashActivity>().clearTop().newTask())
+        finish()
     }
 
     override fun filterTypeChanges() = group_choices_type.OnCheckedStateChangeListener()

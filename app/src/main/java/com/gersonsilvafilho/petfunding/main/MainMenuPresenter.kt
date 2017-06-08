@@ -69,7 +69,7 @@ class MainMenuPresenter: MainMenuContract.Presenter
             else
             {
                 mMatchRepository.addMatch(pet.uid, mUserRepository.getCurrentUserId())
-                        .toObservable().subscribe {
+                        .subscribe {
                             a -> mMainMenuView.showItsMatchDialog(pet)
                             mUserRepository.addMatchToUser(a).subscribe()
 
@@ -85,6 +85,7 @@ class MainMenuPresenter: MainMenuContract.Presenter
 
     override fun userLogout() {
         mUserRepository.userLogout()
+        mMainMenuView.startSplashActivity()
     }
 
     override fun loadPets() {

@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
+import android.view.View
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.chat.ChatActivity
 import com.gersonsilvafilho.petfunding.detail.fragments.AboutFragment
@@ -30,12 +31,16 @@ class DetailActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         val pet = intent.getSerializableExtra("pet") as Pet
+        val matched = intent.getBooleanExtra("matched", false)
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setTitle(pet.name)
         supportActionBar!!.setSubtitle("Macho")
 
+
+
         val fab = findViewById(R.id.fab) as FloatingActionButton
+        fab.visibility = if (matched) View.VISIBLE else View.GONE
         fab.setOnClickListener { view ->
             startActivity<ChatActivity>("pet" to pet)
         }

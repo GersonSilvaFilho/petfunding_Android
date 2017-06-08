@@ -61,7 +61,8 @@ class ChatPresenter : ChatContract.Presenter
         {
             mMatchRepository.getAllMatches(mUserRepository.getCurrentUserId())
                     .subscribe { matches ->
-                        val match = matches.filter { m -> m.petId == pet.uid }.first()
+                        val matches = matches.filter { m -> m.petId == pet.uid }
+                        val match = matches.first()
                         mCurrentChatId = match.chatId
                         if(mCurrentChatId != null && mCurrentChatId != "")
                         {
