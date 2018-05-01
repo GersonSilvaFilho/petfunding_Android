@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gersonsilvafilho.petfunding">
+<manifest package="com.gersonsilvafilho.petfunding"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:name=".util.PetApplication"
@@ -14,30 +14,30 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
+            android:value="@string/facebook_app_id"/>
 
         <activity
             android:name=".splash.SplashActivity"
             android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".main.MainMenuActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".detail.DetailActivity"
             android:label="Nino"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".add_pet.AddPetActivity"
             android:label="Adicionar Pet"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -46,14 +46,21 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_provider_paths" />
+                android:resource="@xml/file_provider_paths"/>
         </provider>
 
-        <activity android:name=".chat.ChatActivity" />
-        <activity android:name=".likeList.LikeListActivity"
-            android:label="Minhas Curtidas"></activity>
-        <activity android:name=".myPets.MyPetsActivity"
-            android:label="Meus Pets"></activity>
+        <activity android:name=".chat.ChatActivity"/>
+        <activity
+            android:name=".likeList.LikeListActivity"
+            android:label="Minhas Curtidas"/>
+        <activity
+            android:name=".myPets.MyPetsActivity"
+            android:label="Meus Pets"/>
+        <activity
+            android:name=".test.ScrollingActivity"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

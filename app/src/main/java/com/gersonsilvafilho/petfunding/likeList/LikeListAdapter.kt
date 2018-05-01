@@ -1,5 +1,6 @@
 package com.gersonsilvafilho.petfunding.likeList
 
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -29,7 +30,7 @@ class LikeListAdapter(val items: List<Pet>, val listener: (Pet) -> Unit) : Recyc
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(item: Pet, listener: (Pet) -> Unit) = with(itemView) {
-            itemView.findViewById(R.id.cardLikeList).setOnClickListener { listener(item) }
+            itemView.findViewById<CardView>(R.id.cardLikeList).setOnClickListener { listener(item) }
             firstLine.text = item.name
             secondLine.text = item.contactName
             Picasso.with(this.context)

@@ -14,14 +14,9 @@ import kotlinx.android.synthetic.main.condition_add_fragment.*
 
 class ConditionAddFragment(private val presenter: AddPetContract.Presenter,val pet: Pet?)  : Fragment(), AddPetContract.ViewCondition {
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater!!.inflate(R.layout.condition_add_fragment, container, false)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        return inflater.inflate(R.layout.condition_add_fragment, container, false)
     }
 
     override fun onResume() {
@@ -30,7 +25,7 @@ class ConditionAddFragment(private val presenter: AddPetContract.Presenter,val p
 
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         if(pet != null)

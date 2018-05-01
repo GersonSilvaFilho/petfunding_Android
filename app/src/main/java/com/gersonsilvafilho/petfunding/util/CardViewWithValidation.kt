@@ -7,7 +7,7 @@ import org.jetbrains.anko.backgroundColor
 /**
  * Created by GersonSilva on 5/27/17.
  */
-class CardViewWithValidation(context: Context?) : CardView(context)
+class CardViewWithValidation(context: Context?) : CardView(context!!)
 {
     var normalBackgroundColor:Int? = null
 

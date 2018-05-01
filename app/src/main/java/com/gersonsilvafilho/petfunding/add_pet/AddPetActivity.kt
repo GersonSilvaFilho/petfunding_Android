@@ -55,7 +55,7 @@ class AddPetActivity : AppCompatActivity(), AddPetContract.View {
 
     private fun setupToolbar()
     {
-        val toolbar = findViewById(R.id.toolbar) as Toolbar
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         toolbar.setTitle("Adicionar PET")
         setSupportActionBar(toolbar)
         getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)

@@ -1,5 +1,6 @@
 package com.gersonsilvafilho.petfunding.myPets.expandable
 
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.ImageView
@@ -20,17 +21,17 @@ class MyPetsUserChildViewHolder : RecyclerView.ViewHolder{
 
     fun setUser(user: User,pet: Pet, startChatUser: (pet: Pet, userId:String) -> Unit)
     {
-        val userChildNameText = this.itemView.findViewById(R.id.userChildNameTextView) as TextView
+        val userChildNameText = this.itemView.findViewById<TextView>(R.id.userChildNameTextView)
         userChildNameText.setText(user.name)
 
-        val userChildImage = this.itemView.findViewById(R.id.userChildImage) as ImageView
+        val userChildImage = this.itemView.findViewById<ImageView>(R.id.userChildImage)
         userChildNameText.setText(user.name)
 
         Picasso.with(this.itemView.context)
                 .load(user.imageUrl)
                 .into(userChildImage)
 
-        itemView.findViewById(R.id.cardLikeList)?.setOnClickListener {
+        itemView.findViewById<CardView>(R.id.cardLikeList)?.setOnClickListener {
             startChatUser(pet, user.uid)
         }
     }

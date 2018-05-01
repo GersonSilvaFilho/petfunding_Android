@@ -1,5 +1,6 @@
 package com.gersonsilvafilho.petfunding.myPets.expandable
 
+import android.support.v7.widget.CardView
 import android.support.v7.widget.PopupMenu
 import android.view.View
 import com.ericliu.asyncexpandablelist.async.AsyncExpandableListView
@@ -37,7 +38,7 @@ class MyPetsParentViewHolder : AsyncHeaderViewHolder, AsyncExpandableListView.On
 
     fun setPet(pet: Pet, listener: (Pet) -> Unit, editListener: (Pet) -> Unit, groupOrdinal: Int) = with(itemView) {
 
-        itemView.findViewById(R.id.cardMypets)?.setOnClickListener {
+        itemView.findViewById<CardView>(R.id.cardMypets).setOnClickListener {
             mAsyncExpandableListView.onGroupClicked(groupOrdinal)
         }
         firstLine.text = pet.name

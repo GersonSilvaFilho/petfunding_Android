@@ -16,13 +16,12 @@ class StatusFragment (val mPet: Pet): Fragment() {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater!!.inflate(R.layout.status_fragment, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         textViewStatusCastrated.text = (if(mPet.castrated) "Sim" else "Não")
         textViewStatusVaccinated.text = (if(mPet.vaccinated) "Sim" else "Não")
         textViewStatusDewormed.text = (if(mPet.dewormed) "Sim" else "Não")

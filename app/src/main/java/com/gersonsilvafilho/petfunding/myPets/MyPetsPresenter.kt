@@ -11,13 +11,12 @@ import com.gersonsilvafilho.petfunding.model.user.UserRepository
 class MyPetsPresenter : MyPetsContract.Presenter {
 
 
-    private val  mPetRepository:PetRepository
-    private val  mUserRepository: UserRepository
-    private val  mMatchRepository:MatchReposity
-    private val  mView: MyPetsContract.View
+    private val mPetRepository: PetRepository
+    private val mUserRepository: UserRepository
+    private val mMatchRepository: MatchReposity
+    private val mView: MyPetsContract.View
 
-    constructor(likeListView: MyPetsContract.View, userRepository: UserRepository, petRepository: PetRepository, matchReposity: MatchReposity)
-    {
+    constructor(likeListView: MyPetsContract.View, userRepository: UserRepository, petRepository: PetRepository, matchReposity: MatchReposity) {
         mView = likeListView
         mUserRepository = userRepository
         mPetRepository = petRepository
@@ -27,7 +26,7 @@ class MyPetsPresenter : MyPetsContract.Presenter {
 
 
     override fun loadLikes() {
-        mPetRepository.getPetsFromUserId(mUserRepository.getCurrentUserId()).subscribe{l ->
+        mPetRepository.getPetsFromUserId(mUserRepository.getCurrentUserId()).subscribe { l ->
             mView.setAdapter(l)
         }
     }
@@ -40,11 +39,10 @@ class MyPetsPresenter : MyPetsContract.Presenter {
         mView.startEditPet(it)
     }
 
-    override fun getUsersFromPet(groupOrdinal:Int, petId:String)
-    {
-        mMatchRepository.getAllMatchesFromPet(petId).subscribe { t1, t2 ->
-            mUserRepository.getUserFromMatch(petId).subscribe{l ->
-                mView.setUser(groupOrdinal, l.filter {user -> t1.map { t -> t.userId }.contains(user.uid) })
+    override fun getUsersFromPet(groupOrdinal: Int, petId: String) {
+        mMatchRepository.getAllMatchesFromPet(petId).subscribe { t1 ->
+            mUserRepository.getUserFromMatch(petId).subscribe { l ->
+                mView.setUser(groupOrdinal, l.filter { user -> t1.map { t -> t.userId }.contains(user.uid) })
             }
         }
 

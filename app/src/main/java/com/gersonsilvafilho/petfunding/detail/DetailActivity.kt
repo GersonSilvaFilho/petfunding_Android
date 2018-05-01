@@ -26,7 +26,7 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
-        val toolbar = findViewById(R.id.toolbar) as Toolbar
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         val pet = intent.getSerializableExtra("pet") as Pet
@@ -35,7 +35,7 @@ class DetailActivity : AppCompatActivity() {
         supportActionBar!!.setTitle(pet.name)
         supportActionBar!!.setSubtitle("Macho")
 
-        val fab = findViewById(R.id.fab) as FloatingActionButton
+        val fab = findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener { view ->
             startActivity<ChatActivity>("pet" to pet)
         }

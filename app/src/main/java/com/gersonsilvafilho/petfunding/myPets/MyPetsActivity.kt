@@ -43,7 +43,7 @@ class MyPetsActivity : AppCompatActivity(), MyPetsContract.View, AsyncExpandable
         initDagger()
         setupToolbar()
 
-        mAsyncExpandableListView = findViewById(R.id.asyncExpandableCollectionView) as AsyncExpandableListView<Pet, User>
+        mAsyncExpandableListView = findViewById<AsyncExpandableListView<Pet, User>>(R.id.asyncExpandableCollectionView)
         mAsyncExpandableListView.setCallbacks(this)
 
         mLayoutManager = LinearLayoutManager(this)

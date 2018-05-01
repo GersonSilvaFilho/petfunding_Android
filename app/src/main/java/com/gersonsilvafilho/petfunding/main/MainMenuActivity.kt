@@ -58,7 +58,7 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         val listn = SwipeListener(this)
         cardStack.setListener(listn)
 
-        val toolbar = findViewById(R.id.toolbar) as Toolbar
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         fabLike.clicks().subscribe {
@@ -68,13 +68,13 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
             cardStack.discardTop(2)
         }
 
-        val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
+        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
         val toggle = ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer.setDrawerListener(toggle)
         toggle.syncState()
 
-        val navigationView = findViewById(R.id.nav_view) as NavigationView
+        val navigationView = findViewById<NavigationView>(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
 
         mActionsListener.loadPets()
@@ -85,14 +85,14 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
     override fun showItsMatchDialog(pet:Pet) {
         val dialog = Dialog(this,android.R.style.Theme_Black_NoTitleBar_Fullscreen)
         dialog.setContentView(R.layout.match_layout)
-        val imageView = dialog.findViewById(R.id.imageMatch) as ImageView
+        val imageView = dialog.findViewById<ImageView>(R.id.imageMatch)
         Picasso.with(this)
                 .load(pet.photosUrl[0])
                 .into(imageView)
-        val textView = dialog.findViewById(R.id.textViewDialogName) as TextView
+        val textView = dialog.findViewById<TextView>(R.id.textViewDialogName)
         textView.setText(pet.name + " está muito feliz que você deseja adotá-lo!")
 
-        val button = dialog.findViewById(R.id.buttonMatchMessage) as Button
+        val button = dialog.findViewById<Button>(R.id.buttonMatchMessage)
         button.setOnClickListener { startActivity<ChatActivity>("pet" to pet) }
         dialog.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
@@ -103,17 +103,17 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
     }
 
     override fun setDrawerUserInformation(user: User) {
-        val navigationView = findViewById(R.id.nav_view) as NavigationView
+        val navigationView = findViewById<NavigationView>(R.id.nav_view)
         val hView = navigationView.getHeaderView(0)
-        val usernameHeaderTextView = (hView.findViewById(R.id.usernameHeaderTextView)) as TextView
+        val usernameHeaderTextView = (hView.findViewById<TextView>(R.id.usernameHeaderTextView))
         usernameHeaderTextView.text = user.name
 
-        val emailHeaderTextView = (hView.findViewById(R.id.emailHeaderTextView)) as TextView
+        val emailHeaderTextView = (hView.findViewById<TextView>(R.id.emailHeaderTextView))
         emailHeaderTextView.text = user.email
 
         if(!user.imageUrl.isNullOrEmpty())
         {
-            val imageView = (hView.findViewById(R.id.headerUserImage)) as ImageView
+            val imageView = (hView.findViewById<ImageView>(R.id.headerUserImage))
 
             Picasso.with(this)
                     .load(user.imageUrl)
@@ -143,7 +143,7 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
     }
 
     override fun onBackPressed() {
-        val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
+        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START)
         } else {
@@ -217,7 +217,7 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
             mActionsListener.userLogout()
         }
 
-        val drawer = findViewById(R.id.drawer_layout) as DrawerLayout
+        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
         drawer.closeDrawer(GravityCompat.START)
         return true
     }
