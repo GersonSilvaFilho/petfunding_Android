@@ -34,18 +34,16 @@ import com.jakewharton.rxbinding2.view.clicks
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.app_bar_navigation.*
 import kotlinx.android.synthetic.main.content_filter.*
-import kotlinx.android.synthetic.main.content_navigation.*
 import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
 
-
-class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , NavigationView.OnNavigationItemSelectedListener, SwipeListener.mClickListener{
+class MainMenuActivity : AppCompatActivity(), MainMenuContract.View, NavigationView.OnNavigationItemSelectedListener, SwipeListener.mClickListener {
 
     @Inject
-    lateinit var  mActionsListener: MainMenuContract.Presenter
+    lateinit var mActionsListener: MainMenuContract.Presenter
 
-    private var filterStatus:Boolean = false
+    private var filterStatus: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +51,7 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         initDagger()
 
         cardStack.setContentResource(R.layout.card_layout)
-        cardStack.setStackMargin(20)
+//        cardStack.setStackMargin(20)
 
         val listn = SwipeListener(this)
         cardStack.setListener(listn)
@@ -70,7 +68,8 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
 
         val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
         val toggle = ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+            this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+        )
         drawer.setDrawerListener(toggle)
         toggle.syncState()
 
@@ -82,13 +81,13 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
 
     }
 
-    override fun showItsMatchDialog(pet:Pet) {
-        val dialog = Dialog(this,android.R.style.Theme_Black_NoTitleBar_Fullscreen)
+    override fun showItsMatchDialog(pet: Pet) {
+        val dialog = Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
         dialog.setContentView(R.layout.match_layout)
         val imageView = dialog.findViewById<ImageView>(R.id.imageMatch)
         Picasso.with(this)
-                .load(pet.photosUrl[0])
-                .into(imageView)
+            .load(pet.photosUrl[0])
+            .into(imageView)
         val textView = dialog.findViewById<TextView>(R.id.textViewDialogName)
         textView.setText(pet.name + " está muito feliz que você deseja adotá-lo!")
 
@@ -111,13 +110,12 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         val emailHeaderTextView = (hView.findViewById<TextView>(R.id.emailHeaderTextView))
         emailHeaderTextView.text = user.email
 
-        if(!user.imageUrl.isNullOrEmpty())
-        {
+        if (!user.imageUrl.isNullOrEmpty()) {
             val imageView = (hView.findViewById<ImageView>(R.id.headerUserImage))
 
             Picasso.with(this)
-                    .load(user.imageUrl)
-                    .into(imageView)
+                .load(user.imageUrl)
+                .into(imageView)
         }
 
     }
@@ -134,12 +132,11 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         startActivity<DetailActivity>("pet" to getCurrentPet())
     }
 
-    private fun initDagger()
-    {
+    private fun initDagger() {
         (application as PetApplication).get(this)
-                .getUserComponent()!!
-                .plus(MainMenuModule(this))
-                .inject(this)
+            .getUserComponent()!!
+            .plus(MainMenuModule(this))
+            .inject(this)
     }
 
     override fun onBackPressed() {
@@ -182,8 +179,7 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         }
     }
 
-    override fun hideFilterView()
-    {
+    override fun hideFilterView() {
         var viewSize = this.window.decorView.height - getActionBarSize() - getStatusBarHeight()
         val animation = DropDownAnim(filter, viewSize, false)
         animation.duration = 700
@@ -197,23 +193,19 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
 
         if (id == R.id.nav_main) {
 
-        }
-        else if (id == R.id.nav_likes) {
+        } else if (id == R.id.nav_likes) {
             startActivity<LikeListActivity>()
             //Add new pet activity
 
-        }
-        else if (id == R.id.nav_add) {
+        } else if (id == R.id.nav_add) {
             startActivity<AddPetActivity>()
             //Add new pet activity
 
-        }
-        else if (id == R.id.nav_my_pets) {
+        } else if (id == R.id.nav_my_pets) {
             startActivity<MyPetsActivity>()
             //Add new pet activity
 
-        }
-        else if (id == R.id.nav_logout) {
+        } else if (id == R.id.nav_logout) {
             mActionsListener.userLogout()
         }
 
@@ -221,7 +213,6 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         drawer.closeDrawer(GravityCompat.START)
         return true
     }
-
 
 
     override fun cardDiscartedRight(cardId: Int) {
@@ -232,15 +223,14 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         mActionsListener.userUnmatchedPet(getLastPet())
     }
 
-    private fun getCurrentPet():Pet
-    {
-        return cardStack.adapter.getItem(cardStack.currIndex%cardStack.adapter.count) as Pet
+    private fun getCurrentPet(): Pet {
+        return cardStack.adapter.getItem(cardStack.currIndex % cardStack.adapter.count) as Pet
     }
 
-    private fun getLastPet():Pet
-    {
-        return cardStack.adapter.getItem((cardStack.currIndex-1)%cardStack.adapter.count) as Pet
+    private fun getLastPet(): Pet {
+        return cardStack.adapter.getItem((cardStack.currIndex - 1) % cardStack.adapter.count) as Pet
     }
+
     // Methods inside this block are static
     companion object {
         fun launch(activity: Activity, sharedView: View) {
@@ -251,36 +241,37 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View , Navigation
         }
     }
 
-    private fun getActionBarSize():Int {
-        val styledAttributes = theme.obtainStyledAttributes( arrayOf(android.R.attr.actionBarSize).toIntArray())
-        val actionBarSize = styledAttributes.getDimension(0,0f).toInt()
+    private fun getActionBarSize(): Int {
+        val styledAttributes = theme.obtainStyledAttributes(arrayOf(android.R.attr.actionBarSize).toIntArray())
+        val actionBarSize = styledAttributes.getDimension(0, 0f).toInt()
         styledAttributes.recycle()
         return actionBarSize
     }
 
-     private fun getStatusBarHeight() :Int{
+    private fun getStatusBarHeight(): Int {
         var height = 0
         val idStatusBarHeight = resources.getIdentifier("status_bar_height", "dimen", "android")
         if (idStatusBarHeight > 0) {
             height = getResources().getDimensionPixelSize(idStatusBarHeight)
-        }else{
+        } else {
             height = 0
         }
         return height;
     }
 
-    override fun showRippleWaiting()
-    {
-        contentButtons.visibility = View.GONE
-        contentCards.visibility = View.GONE
+    override fun showRippleWaiting() {
+        fabLike.visibility = View.GONE
+        fabdislike.visibility = View.GONE
+        cardStack.visibility = View.GONE
         ripple.visibility = View.VISIBLE
         ripple.startRippleAnimation()
     }
 
-    override fun hideRippleWaiting()
-    {
-        contentButtons.visibility = View.VISIBLE
-        contentCards.visibility = View.VISIBLE
+    override fun hideRippleWaiting() {
+        fabLike.visibility = View.VISIBLE
+        fabdislike.visibility = View.VISIBLE
+        fabLike.visibility = View.VISIBLE
+        cardStack.visibility = View.VISIBLE
         ripple.visibility = View.GONE
         ripple.stopRippleAnimation()
     }
