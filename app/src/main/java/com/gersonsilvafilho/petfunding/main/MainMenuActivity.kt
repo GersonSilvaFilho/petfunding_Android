@@ -165,7 +165,7 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View, NavigationV
     }
 
     fun toggleFilter() {
-        var viewSize = this.window.decorView.height - getActionBarSize() - getStatusBarHeight()
+        var viewSize = cardStack.height
         if (!filterStatus) {
             val animation = DropDownAnim(filter, viewSize, true)
             animation.duration = 700
@@ -180,7 +180,7 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View, NavigationV
     }
 
     override fun hideFilterView() {
-        var viewSize = this.window.decorView.height - getActionBarSize() - getStatusBarHeight()
+        var viewSize = cardStack.height
         val animation = DropDownAnim(filter, viewSize, false)
         animation.duration = 700
         filter.startAnimation(animation)

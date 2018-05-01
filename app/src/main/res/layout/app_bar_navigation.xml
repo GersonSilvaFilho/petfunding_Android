@@ -88,6 +88,13 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/fabContribute"
             app:srcCompat="@drawable/afago_icon" />
+
+        <include
+            android:id="@+id/filter"
+            layout="@layout/content_filter"
+            app:layout_constraintEnd_toEndOf="@+id/cardStack"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appBarLayout" />
     </android.support.constraint.ConstraintLayout>
 
 
@@ -118,8 +125,5 @@
         </FrameLayout>
     </com.skyfishjy.library.RippleBackground>
 
-    <include
-        android:id="@+id/filter"
-        layout="@layout/content_filter" />
 
 </android.support.design.widget.CoordinatorLayout>
