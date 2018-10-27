@@ -9,7 +9,7 @@ import dagger.Subcomponent
  */
 
 @ActivityScope
-@Subcomponent(modules = arrayOf(SplashModule::class))
+@Subcomponent(modules = [SplashModule::class])
 interface SplashComponent {
     fun inject(activity: SplashActivity)
 }
