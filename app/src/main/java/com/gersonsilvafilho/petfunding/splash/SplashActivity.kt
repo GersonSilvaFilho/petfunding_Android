@@ -76,6 +76,4 @@ class SplashActivity : AppCompatActivity(), View {
     }
 
     override fun goToMainMenuActivity() = startActivity<MainMenuActivity>()
-
-    override fun startSelfActivity() = startActivity<SplashActivity>()
 }

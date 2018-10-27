@@ -16,21 +16,21 @@ class SplashPresenter(private val view: SplashContract.View, private val userRep
                 .take(1)
                 .subscribe { logged ->
                     if (logged) {
-                        view.showToast("Facebook Success")
                         view.goToMainMenuActivity()
                         userRepository.monitorCurrentUser()
-                    } else {
-                        view.startSelfActivity()
                     }
                 })
     }
 
     override fun facebookSuccess(token: String)
     {
+        view.showToast("Facebook Success")
         compositeDisposable.add(
             userRepository.loginWithFacebook(token)
                 .take(1)
-                .subscribe { userRepository.getUsernameFromFacebook() }
+                .subscribe {
+                    view.goToMainMenuActivity()
+                }
         )
     }
 

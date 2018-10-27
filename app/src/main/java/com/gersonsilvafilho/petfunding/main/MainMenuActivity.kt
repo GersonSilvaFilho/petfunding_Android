@@ -28,12 +28,23 @@ import com.gersonsilvafilho.petfunding.likeList.LikeListActivity
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.model.user.User
 import com.gersonsilvafilho.petfunding.myPets.MyPetsActivity
+import com.gersonsilvafilho.petfunding.splash.SplashActivity
 import com.gersonsilvafilho.petfunding.util.DropDownAnim
 import com.gersonsilvafilho.petfunding.util.PetApplication
 import com.jakewharton.rxbinding2.view.clicks
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.app_bar_navigation.*
-import kotlinx.android.synthetic.main.content_filter.*
+import kotlinx.android.synthetic.main.app_bar_navigation.cardStack
+import kotlinx.android.synthetic.main.app_bar_navigation.fabLike
+import kotlinx.android.synthetic.main.app_bar_navigation.fabdislike
+import kotlinx.android.synthetic.main.app_bar_navigation.filter
+import kotlinx.android.synthetic.main.app_bar_navigation.ripple
+import kotlinx.android.synthetic.main.content_filter.applyFilterButton
+import kotlinx.android.synthetic.main.content_filter.group_choices_age
+import kotlinx.android.synthetic.main.content_filter.group_choices_condition
+import kotlinx.android.synthetic.main.content_filter.group_choices_like
+import kotlinx.android.synthetic.main.content_filter.group_choices_sex
+import kotlinx.android.synthetic.main.content_filter.group_choices_size
+import kotlinx.android.synthetic.main.content_filter.group_choices_type
 import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
@@ -284,4 +295,6 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View, NavigationV
     override fun filterAgeChanges() = group_choices_age.OnCheckedStateChangeListener()
 
     override fun applyButtonClicked() = applyFilterButton.clicks()
+
+    override fun startSplashActivity() = startActivity<SplashActivity>()
 }

@@ -44,6 +44,11 @@ class MainMenuPresenter : MainMenuContract.Presenter {
             loadPets()
             mMainMenuView.hideFilterView()
         }
+
+
+        mUserRepository.userStatus().filter { !it }.subscribe {
+            view.startSplashActivity()
+        }
     }
 
 

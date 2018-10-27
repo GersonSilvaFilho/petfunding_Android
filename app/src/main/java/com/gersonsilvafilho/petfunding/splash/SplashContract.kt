@@ -7,7 +7,6 @@ package com.gersonsilvafilho.petfunding.splash
 interface SplashContract {
     interface View {
         fun goToMainMenuActivity()
-        fun startSelfActivity()
         fun showToast(message: String)
     }
 

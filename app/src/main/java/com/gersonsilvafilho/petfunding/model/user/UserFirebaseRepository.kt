@@ -55,6 +55,7 @@ class UserFirebaseRepository : UserRepository
         return RxFirebaseAuth.signInWithCredential((mAuth), credential)
                 .map { authResult -> authResult.user!= null }
                 .toObservable()
+            .doOnNext { getUsernameFromFacebook() }
     }
 
     override fun userLogout() {
@@ -67,7 +68,7 @@ class UserFirebaseRepository : UserRepository
     }
 
     override fun getCurrentUser(): User {
-        return mCurrentUser!!
+        return mCurrentUser
     }
 
     override fun getUsernameFromFacebook()
@@ -75,14 +76,14 @@ class UserFirebaseRepository : UserRepository
         Log.d("Facebook Parameters", "GetNameFrom FB")
         val request = GraphRequest.newMeRequest(
                 AccessToken.getCurrentAccessToken()
-        ) { `object`, response ->
+        ) { fbObject, response ->
             // Application code
             try {
 
-                val email = `object`.getString("email")
-                val gender = `object`.getString("gender")
-                val name = `object`.getString("name")
-                val id = `object`.getString("id")
+                val email = fbObject.getString("email")
+                val gender = fbObject.getString("gender")
+                val name = fbObject.getString("name")
+                val id = fbObject.getString("id")
 
 
                 Log.d("Facebook Parameters", "Passou =" + name)

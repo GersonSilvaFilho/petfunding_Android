@@ -25,6 +25,7 @@ interface MainMenuContract {
         fun filterConditionChanges(): Observable<List<String>>
         fun filterLikeChanges(): Observable<List<String>>
         fun filterAgeChanges(): Observable<List<String>>
+        fun startSplashActivity()
     }
 
     interface Presenter
