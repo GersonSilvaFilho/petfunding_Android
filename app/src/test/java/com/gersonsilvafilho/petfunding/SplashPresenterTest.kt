@@ -5,6 +5,7 @@ import com.gersonsilvafilho.petfunding.splash.SplashContract
 import com.gersonsilvafilho.petfunding.splash.SplashPresenter
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Observable
@@ -39,7 +40,8 @@ class SplashPresenterTest {
         whenever(userRepository.userStatus()).thenReturn(Observable.just(false))
         presenter = SplashPresenter(view, userRepository)
 
-        verify(view).startSelfActivity()
+        verify(view, never()).goToMainMenuActivity()
+        verify(userRepository, never()).monitorCurrentUser()
     }
 
     @Test

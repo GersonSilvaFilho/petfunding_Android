@@ -34,17 +34,10 @@ class SplashPresenter(private val view: SplashContract.View, private val userRep
         )
     }
 
-    override fun facebookCancel()
-    {
-        view.showToast("User canceled")
-    }
+    override fun facebookCancel() = view.showToast("User canceled")
+    
+    override fun facebookOnError() = view.showToast("Error on try to login on Facebook")
 
-    override fun facebookOnError()
-    {
-        view.showToast("Error on try to login on Facebook")
-    }
+    override fun onStop() = compositeDisposable.clear()
 
-    override fun onStop() {
-        compositeDisposable.clear()
-    }
 }
