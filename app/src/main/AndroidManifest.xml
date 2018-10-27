@@ -17,7 +17,7 @@
             android:value="@string/facebook_app_id"/>
 
         <activity
-            android:name=".splash.SplashActivity"
+            android:name=".splash.ui.SplashActivity"
             android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -27,7 +27,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".main.MainMenuActivity"
+            android:name=".main.ui.MainMenuActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".detail.DetailActivity"

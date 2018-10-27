@@ -1,15 +1,14 @@
 package com.gersonsilvafilho.petfunding
 
 import com.gersonsilvafilho.petfunding.model.user.UserRepository
-import com.gersonsilvafilho.petfunding.splash.SplashContract
-import com.gersonsilvafilho.petfunding.splash.SplashPresenter
+import com.gersonsilvafilho.petfunding.splash.ui.SplashContract
+import com.gersonsilvafilho.petfunding.splash.ui.SplashPresenter
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Observable
-import org.junit.Before
 import org.junit.Test
 
 /**
@@ -19,12 +18,7 @@ class SplashPresenterTest {
 
     private val view: SplashContract.View = mock()
     private val userRepository: UserRepository = mock()
-    lateinit var presenter: SplashPresenter
-
-    @Before
-    fun init() {
-
-    }
+    private lateinit var presenter: SplashPresenter
 
     @Test
     fun `test init with user already logged`() {

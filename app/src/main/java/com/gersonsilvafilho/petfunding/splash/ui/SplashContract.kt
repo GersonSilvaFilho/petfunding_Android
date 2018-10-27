@@ -1,4 +1,4 @@
-package com.gersonsilvafilho.petfunding.splash
+package com.gersonsilvafilho.petfunding.splash.ui
 
 
 /**

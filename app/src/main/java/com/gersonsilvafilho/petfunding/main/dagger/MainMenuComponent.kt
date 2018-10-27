@@ -1,5 +1,6 @@
-package com.gersonsilvafilho.petfunding.main
+package com.gersonsilvafilho.petfunding.main.dagger
 
+import com.gersonsilvafilho.petfunding.main.ui.MainMenuActivity
 import com.gersonsilvafilho.petfunding.util.ActivityScope
 import dagger.Subcomponent
 

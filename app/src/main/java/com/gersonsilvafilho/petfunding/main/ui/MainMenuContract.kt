@@ -1,4 +1,4 @@
-package com.gersonsilvafilho.petfunding.main
+package com.gersonsilvafilho.petfunding.main.ui
 
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.model.user.User

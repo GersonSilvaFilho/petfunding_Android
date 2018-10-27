@@ -6,12 +6,12 @@ import com.gersonsilvafilho.petfunding.chat.ChatComponent
 import com.gersonsilvafilho.petfunding.chat.ChatModule
 import com.gersonsilvafilho.petfunding.likeList.LikeListComponent
 import com.gersonsilvafilho.petfunding.likeList.LikeListModule
-import com.gersonsilvafilho.petfunding.main.MainMenuComponent
-import com.gersonsilvafilho.petfunding.main.MainMenuModule
+import com.gersonsilvafilho.petfunding.main.dagger.MainMenuComponent
+import com.gersonsilvafilho.petfunding.main.dagger.MainMenuModule
 import com.gersonsilvafilho.petfunding.myPets.MyPetsComponent
 import com.gersonsilvafilho.petfunding.myPets.MyPetsModule
-import com.gersonsilvafilho.petfunding.splash.SplashComponent
-import com.gersonsilvafilho.petfunding.splash.SplashModule
+import com.gersonsilvafilho.petfunding.splash.dagger.SplashComponent
+import com.gersonsilvafilho.petfunding.splash.dagger.SplashModule
 import dagger.Subcomponent
 
 /**
@@ -21,7 +21,7 @@ import dagger.Subcomponent
 @Subcomponent(modules = arrayOf(UserModule::class))
 interface UserComponent
 {
-    fun plus(mainMenuModule: MainMenuModule):MainMenuComponent
+    fun plus(mainMenuModule: MainMenuModule): MainMenuComponent
     fun plus(chatModule: ChatModule):ChatComponent
     fun plus(splashActivityModule: SplashModule): SplashComponent
     fun plus(likeListModule: LikeListModule):LikeListComponent

@@ -1,4 +1,4 @@
-package com.gersonsilvafilho.petfunding.splash
+package com.gersonsilvafilho.petfunding.splash.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,8 +9,9 @@ import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginResult
 import com.gersonsilvafilho.petfunding.R
-import com.gersonsilvafilho.petfunding.main.MainMenuActivity
-import com.gersonsilvafilho.petfunding.splash.SplashContract.View
+import com.gersonsilvafilho.petfunding.main.ui.MainMenuActivity
+import com.gersonsilvafilho.petfunding.splash.ui.SplashContract.View
+import com.gersonsilvafilho.petfunding.splash.dagger.SplashModule
 import com.gersonsilvafilho.petfunding.util.PetApplication
 import kotlinx.android.synthetic.main.activity_splash.fbLoginButton
 import org.jetbrains.anko.startActivity

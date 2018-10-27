@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context="com.gersonsilvafilho.petfunding.splash.SplashActivity">
+    tools:context="com.gersonsilvafilho.petfunding.splash.ui.SplashActivity">
 
     <ImageView
         android:src="@drawable/splash_icon"

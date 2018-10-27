@@ -1,4 +1,4 @@
-package com.gersonsilvafilho.petfunding.main
+package com.gersonsilvafilho.petfunding.main.ui
 
 import android.app.Activity
 import android.app.Dialog
@@ -25,10 +25,13 @@ import com.gersonsilvafilho.petfunding.add_pet.fragments.OnCheckedStateChangeLis
 import com.gersonsilvafilho.petfunding.chat.ChatActivity
 import com.gersonsilvafilho.petfunding.detail.DetailActivity
 import com.gersonsilvafilho.petfunding.likeList.LikeListActivity
+import com.gersonsilvafilho.petfunding.main.CardsDataAdapter
+import com.gersonsilvafilho.petfunding.main.SwipeListener
+import com.gersonsilvafilho.petfunding.main.dagger.MainMenuModule
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.model.user.User
 import com.gersonsilvafilho.petfunding.myPets.MyPetsActivity
-import com.gersonsilvafilho.petfunding.splash.SplashActivity
+import com.gersonsilvafilho.petfunding.splash.ui.SplashActivity
 import com.gersonsilvafilho.petfunding.util.DropDownAnim
 import com.gersonsilvafilho.petfunding.util.PetApplication
 import com.jakewharton.rxbinding2.view.clicks
@@ -49,7 +52,8 @@ import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
 
-class MainMenuActivity : AppCompatActivity(), MainMenuContract.View, NavigationView.OnNavigationItemSelectedListener, SwipeListener.mClickListener {
+class MainMenuActivity : AppCompatActivity(), MainMenuContract.View, NavigationView.OnNavigationItemSelectedListener,
+    SwipeListener.mClickListener {
 
     @Inject
     lateinit var mActionsListener: MainMenuContract.Presenter
@@ -62,7 +66,6 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View, NavigationV
         initDagger()
 
         cardStack.setContentResource(R.layout.card_layout)
-//        cardStack.setStackMargin(20)
 
         val listn = SwipeListener(this)
         cardStack.setListener(listn)

@@ -1,5 +1,6 @@
-package com.gersonsilvafilho.petfunding.splash
+package com.gersonsilvafilho.petfunding.splash.dagger
 
+import com.gersonsilvafilho.petfunding.splash.ui.SplashActivity
 import com.gersonsilvafilho.petfunding.util.ActivityScope
 import dagger.Subcomponent
 

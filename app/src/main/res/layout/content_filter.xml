@@ -9,7 +9,7 @@
     android:clickable="true"
     android:elevation="10dp"
     android:focusable="true"
-    tools:context="com.gersonsilvafilho.petfunding.main.MainMenuActivity"
+    tools:context="com.gersonsilvafilho.petfunding.main.ui.MainMenuActivity"
     tools:layout_height="match_parent">
 
 
