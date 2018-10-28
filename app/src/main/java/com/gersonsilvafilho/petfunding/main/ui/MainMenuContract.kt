@@ -17,15 +17,15 @@ interface MainMenuContract {
         fun setDrawerUserInformation(user: User)
         fun hideRippleWaiting()
         fun showRippleWaiting()
-        fun filterTypeChanges(): Observable<List<String>>
         fun applyButtonClicked(): Observable<Unit>
         fun hideFilterView()
-        fun filterSexChanges(): Observable<List<String>>
-        fun filterSizeChanges(): Observable<List<String>>
-        fun filterConditionChanges(): Observable<List<String>>
-        fun filterLikeChanges(): Observable<List<String>>
-        fun filterAgeChanges(): Observable<List<String>>
         fun startSplashActivity()
+        fun filterTypeList(): List<String>
+        fun filterSexList(): List<String>
+        fun filterSizeList(): List<String>
+        fun filterConditionList(): List<String>
+        fun filterLikeList(): List<String>
+        fun filterAgeList(): List<String>
     }
 
     interface Presenter
@@ -35,5 +35,6 @@ interface MainMenuContract {
         fun userMatchedPet(pet:Pet)
         fun userUnmatchedPet(pet:Pet)
         fun setUserProfile()
+        fun onStop()
     }
 }

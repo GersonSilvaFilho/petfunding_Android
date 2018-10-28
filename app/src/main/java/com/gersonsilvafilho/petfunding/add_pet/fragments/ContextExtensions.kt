@@ -22,11 +22,17 @@ fun com.nex3z.togglebuttongroup.MultiSelectToggleGroup.OnCheckedStateChangeListe
     return Observable.defer<List<String>> {
         Observable.create {
             if (!it.isDisposed) {
-                setOnCheckedChangeListener { group, checkedId, isChecked -> it.onNext(checkedIds.map { id -> (group
-                        .findViewById<LabelToggle>(id)).text.toString()  }.toList())}
+                setOnCheckedChangeListener { group, checkedId, isChecked ->
+                    it.onNext(getSelectedList())
+                }
             }
         }}
 }
+
+fun com.nex3z.togglebuttongroup.MultiSelectToggleGroup.getSelectedList(): List<String> {
+    return this.checkedIds.map { id -> (this.findViewById<LabelToggle>(id)).text.toString() }
+}
+
 
 
 fun com.nex3z.togglebuttongroup.SingleSelectToggleGroup.SetObjectWithName(name:String) {

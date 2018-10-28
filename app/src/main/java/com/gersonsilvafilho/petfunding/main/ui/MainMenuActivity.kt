@@ -22,6 +22,7 @@ import android.widget.TextView
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.add_pet.AddPetActivity
 import com.gersonsilvafilho.petfunding.add_pet.fragments.OnCheckedStateChangeListener
+import com.gersonsilvafilho.petfunding.add_pet.fragments.getSelectedList
 import com.gersonsilvafilho.petfunding.chat.ChatActivity
 import com.gersonsilvafilho.petfunding.detail.DetailActivity
 import com.gersonsilvafilho.petfunding.likeList.LikeListActivity
@@ -52,11 +53,13 @@ import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
 
-class MainMenuActivity : AppCompatActivity(), MainMenuContract.View, NavigationView.OnNavigationItemSelectedListener,
+class MainMenuActivity : AppCompatActivity(),
+    MainMenuContract.View,
+    NavigationView.OnNavigationItemSelectedListener,
     SwipeListener.mClickListener {
 
     @Inject
-    lateinit var mActionsListener: MainMenuContract.Presenter
+    lateinit var presenter: MainMenuContract.Presenter
 
     private var filterStatus: Boolean = false
 
@@ -84,14 +87,14 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View, NavigationV
         val toggle = ActionBarDrawerToggle(
             this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
-        drawer.setDrawerListener(toggle)
+        drawer.addDrawerListener(toggle)
         toggle.syncState()
 
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
 
-        mActionsListener.loadPets()
-        mActionsListener.setUserProfile()
+        presenter.loadPets()
+        presenter.setUserProfile()
 
     }
 
@@ -220,7 +223,7 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View, NavigationV
             //Add new pet activity
 
         } else if (id == R.id.nav_logout) {
-            mActionsListener.userLogout()
+            presenter.userLogout()
         }
 
         val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
@@ -230,11 +233,11 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View, NavigationV
 
 
     override fun cardDiscartedRight(cardId: Int) {
-        mActionsListener.userMatchedPet(getLastPet())
+        presenter.userMatchedPet(getLastPet())
     }
 
     override fun cardDiscartedLeft(cardId: Int) {
-        mActionsListener.userUnmatchedPet(getLastPet())
+        presenter.userUnmatchedPet(getLastPet())
     }
 
     private fun getCurrentPet(): Pet {
@@ -290,14 +293,19 @@ class MainMenuActivity : AppCompatActivity(), MainMenuContract.View, NavigationV
         ripple.stopRippleAnimation()
     }
 
-    override fun filterTypeChanges() = group_choices_type.OnCheckedStateChangeListener()
-    override fun filterSexChanges() = group_choices_sex.OnCheckedStateChangeListener()
-    override fun filterSizeChanges() = group_choices_size.OnCheckedStateChangeListener()
-    override fun filterConditionChanges() = group_choices_condition.OnCheckedStateChangeListener()
-    override fun filterLikeChanges() = group_choices_like.OnCheckedStateChangeListener()
-    override fun filterAgeChanges() = group_choices_age.OnCheckedStateChangeListener()
+    override fun filterTypeList() = group_choices_type.getSelectedList()
+    override fun filterSexList() = group_choices_sex.getSelectedList()
+    override fun filterSizeList() = group_choices_size.getSelectedList()
+    override fun filterConditionList() = group_choices_condition.getSelectedList()
+    override fun filterLikeList() = group_choices_like.getSelectedList()
+    override fun filterAgeList() = group_choices_age.getSelectedList()
 
     override fun applyButtonClicked() = applyFilterButton.clicks()
 
     override fun startSplashActivity() = startActivity<SplashActivity>()
+
+    override fun onStop() {
+        presenter.onStop()
+        super.onStop()
+    }
 }
