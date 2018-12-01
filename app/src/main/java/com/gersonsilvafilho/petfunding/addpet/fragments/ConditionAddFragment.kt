@@ -1,4 +1,4 @@
-package com.gersonsilvafilho.petfunding.add_pet.fragments
+package com.gersonsilvafilho.petfunding.addpet.fragments
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.gersonsilvafilho.petfunding.R
-import com.gersonsilvafilho.petfunding.add_pet.AddPetContract
+import com.gersonsilvafilho.petfunding.addpet.AddPetContract
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.condition_add_fragment.*

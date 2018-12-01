@@ -1,4 +1,4 @@
-package com.gersonsilvafilho.petfunding.add_pet
+package com.gersonsilvafilho.petfunding.addpet
 
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import io.reactivex.Observable

@@ -1,4 +1,4 @@
-package com.gersonsilvafilho.petfunding.likeList
+package com.gersonsilvafilho.petfunding.likelist
 
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView

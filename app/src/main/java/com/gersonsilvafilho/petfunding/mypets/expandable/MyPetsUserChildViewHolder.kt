@@ -1,4 +1,4 @@
-package com.gersonsilvafilho.petfunding.myPets.expandable
+package com.gersonsilvafilho.petfunding.mypets.expandable
 
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView

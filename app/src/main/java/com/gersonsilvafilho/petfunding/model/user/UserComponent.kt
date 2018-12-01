@@ -4,12 +4,12 @@ import com.gersonsilvafilho.petfunding.chat.AddPetComponent
 import com.gersonsilvafilho.petfunding.chat.AddPetModule
 import com.gersonsilvafilho.petfunding.chat.ChatComponent
 import com.gersonsilvafilho.petfunding.chat.ChatModule
-import com.gersonsilvafilho.petfunding.likeList.LikeListComponent
-import com.gersonsilvafilho.petfunding.likeList.LikeListModule
+import com.gersonsilvafilho.petfunding.likelist.LikeListComponent
+import com.gersonsilvafilho.petfunding.likelist.LikeListModule
 import com.gersonsilvafilho.petfunding.main.dagger.MainMenuComponent
 import com.gersonsilvafilho.petfunding.main.dagger.MainMenuModule
-import com.gersonsilvafilho.petfunding.myPets.MyPetsComponent
-import com.gersonsilvafilho.petfunding.myPets.MyPetsModule
+import com.gersonsilvafilho.petfunding.mypets.MyPetsComponent
+import com.gersonsilvafilho.petfunding.mypets.MyPetsModule
 import com.gersonsilvafilho.petfunding.splash.dagger.SplashComponent
 import com.gersonsilvafilho.petfunding.splash.dagger.SplashModule
 import dagger.Subcomponent

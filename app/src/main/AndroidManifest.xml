@@ -34,7 +34,7 @@
             android:label="Nino"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".add_pet.AddPetActivity"
+            android:name=".addpet.AddPetActivity"
             android:label="Adicionar Pet"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize"/>
@@ -51,10 +51,10 @@
 
         <activity android:name=".chat.ChatActivity"/>
         <activity
-            android:name=".likeList.LikeListActivity"
+            android:name=".likelist.LikeListActivity"
             android:label="Minhas Curtidas"/>
         <activity
-            android:name=".myPets.MyPetsActivity"
+            android:name=".mypets.MyPetsActivity"
             android:label="Meus Pets"/>
         <activity
             android:name=".test.ScrollingActivity"

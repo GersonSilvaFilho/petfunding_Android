@@ -1,6 +1,6 @@
 package com.gersonsilvafilho.petfunding.chat
 
-import com.gersonsilvafilho.petfunding.add_pet.AddPetActivity
+import com.gersonsilvafilho.petfunding.addpet.AddPetActivity
 import com.gersonsilvafilho.petfunding.util.ActivityScope
 import dagger.Subcomponent
 

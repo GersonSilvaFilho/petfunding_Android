@@ -1,4 +1,4 @@
-package com.gersonsilvafilho.petfunding.add_pet
+package com.gersonsilvafilho.petfunding.addpet
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -10,10 +10,10 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import com.gersonsilvafilho.petfunding.R
-import com.gersonsilvafilho.petfunding.add_pet.fragments.AboutAddFragment
-import com.gersonsilvafilho.petfunding.add_pet.fragments.ConditionAddFragment
-import com.gersonsilvafilho.petfunding.add_pet.fragments.ContactAddFragment
-import com.gersonsilvafilho.petfunding.add_pet.fragments.InfoAddFragment
+import com.gersonsilvafilho.petfunding.addpet.fragments.AboutAddFragment
+import com.gersonsilvafilho.petfunding.addpet.fragments.ConditionAddFragment
+import com.gersonsilvafilho.petfunding.addpet.fragments.ContactAddFragment
+import com.gersonsilvafilho.petfunding.addpet.fragments.InfoAddFragment
 import com.gersonsilvafilho.petfunding.chat.AddPetModule
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.util.PetApplication

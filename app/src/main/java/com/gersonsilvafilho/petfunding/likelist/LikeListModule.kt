@@ -1,4 +1,4 @@
-package com.gersonsilvafilho.petfunding.likeList
+package com.gersonsilvafilho.petfunding.likelist
 
 import com.gersonsilvafilho.petfunding.model.match.MatchReposity
 import com.gersonsilvafilho.petfunding.model.pet.PetRepository

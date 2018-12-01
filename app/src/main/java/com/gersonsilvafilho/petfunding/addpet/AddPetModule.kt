@@ -1,8 +1,8 @@
 package com.gersonsilvafilho.petfunding.chat
 
-import com.gersonsilvafilho.petfunding.add_pet.AddPetActivity
-import com.gersonsilvafilho.petfunding.add_pet.AddPetContract
-import com.gersonsilvafilho.petfunding.add_pet.AddPetPresenter
+import com.gersonsilvafilho.petfunding.addpet.AddPetActivity
+import com.gersonsilvafilho.petfunding.addpet.AddPetContract
+import com.gersonsilvafilho.petfunding.addpet.AddPetPresenter
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.model.pet.PetRepository
 import com.gersonsilvafilho.petfunding.model.user.UserRepository

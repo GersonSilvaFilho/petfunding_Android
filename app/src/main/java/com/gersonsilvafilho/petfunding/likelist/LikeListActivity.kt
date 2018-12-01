@@ -1,4 +1,4 @@
-package com.gersonsilvafilho.petfunding.likeList
+package com.gersonsilvafilho.petfunding.likelist
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity

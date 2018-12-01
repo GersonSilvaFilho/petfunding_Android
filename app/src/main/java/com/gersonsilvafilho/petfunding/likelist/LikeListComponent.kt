@@ -1,4 +1,4 @@
-package com.gersonsilvafilho.petfunding.likeList
+package com.gersonsilvafilho.petfunding.likelist
 
 import com.gersonsilvafilho.petfunding.util.ActivityScope
 import dagger.Subcomponent

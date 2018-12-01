@@ -1,4 +1,4 @@
-package com.gersonsilvafilho.petfunding.myPets.expandable
+package com.gersonsilvafilho.petfunding.mypets.expandable
 
 import com.bignerdranch.expandablerecyclerview.Model.ParentObject
 import com.gersonsilvafilho.petfunding.model.pet.Pet

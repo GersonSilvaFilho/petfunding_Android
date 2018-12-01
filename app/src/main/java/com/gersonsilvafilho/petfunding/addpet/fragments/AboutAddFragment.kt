@@ -1,4 +1,4 @@
-package com.gersonsilvafilho.petfunding.add_pet.fragments
+package com.gersonsilvafilho.petfunding.addpet.fragments
 
 import android.app.Activity.RESULT_OK
 import android.os.Bundle
@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.gersonsilvafilho.petfunding.R
-import com.gersonsilvafilho.petfunding.add_pet.AddPetContract
+import com.gersonsilvafilho.petfunding.addpet.AddPetContract
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.jakewharton.rxbinding2.view.selected
 import com.jakewharton.rxbinding2.widget.textChanges

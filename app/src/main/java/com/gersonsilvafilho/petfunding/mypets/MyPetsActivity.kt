@@ -1,4 +1,4 @@
-package com.gersonsilvafilho.petfunding.myPets
+package com.gersonsilvafilho.petfunding.mypets
 
 import android.content.Context
 import android.os.Bundle
@@ -13,13 +13,13 @@ import com.ericliu.asyncexpandablelist.async.AsyncExpandableListView
 import com.ericliu.asyncexpandablelist.async.AsyncExpandableListViewCallbacks
 import com.ericliu.asyncexpandablelist.async.AsyncHeaderViewHolder
 import com.gersonsilvafilho.petfunding.R
-import com.gersonsilvafilho.petfunding.add_pet.AddPetActivity
+import com.gersonsilvafilho.petfunding.addpet.AddPetActivity
 import com.gersonsilvafilho.petfunding.chat.ChatActivity
 import com.gersonsilvafilho.petfunding.detail.DetailActivity
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.model.user.User
-import com.gersonsilvafilho.petfunding.myPets.expandable.MyPetsParentViewHolder
-import com.gersonsilvafilho.petfunding.myPets.expandable.MyPetsUserChildViewHolder
+import com.gersonsilvafilho.petfunding.mypets.expandable.MyPetsParentViewHolder
+import com.gersonsilvafilho.petfunding.mypets.expandable.MyPetsUserChildViewHolder
 import com.gersonsilvafilho.petfunding.util.PetApplication
 import org.jetbrains.anko.startActivity
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.gersonsilvafilho.petfunding.myPets
+package com.gersonsilvafilho.petfunding.mypets
 
 import com.gersonsilvafilho.petfunding.util.ActivityScope
 import dagger.Subcomponent

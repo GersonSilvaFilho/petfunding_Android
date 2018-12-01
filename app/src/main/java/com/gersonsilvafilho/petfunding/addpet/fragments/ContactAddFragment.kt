@@ -1,4 +1,4 @@
-package com.gersonsilvafilho.petfunding.add_pet.fragments
+package com.gersonsilvafilho.petfunding.addpet.fragments
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.gersonsilvafilho.petfunding.R
-import com.gersonsilvafilho.petfunding.add_pet.AddPetContract
+import com.gersonsilvafilho.petfunding.addpet.AddPetContract
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.jaredrummler.materialspinner.MaterialSpinner
