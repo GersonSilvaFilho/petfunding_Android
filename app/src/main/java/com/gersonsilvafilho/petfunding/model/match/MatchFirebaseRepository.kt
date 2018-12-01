@@ -20,7 +20,7 @@ class MatchFirebaseRepository : MatchReposity{
         var match = Match()
         match.petId = petId
         match.userId = userId
-        match.uid = key.key
+        match.uid = key.key!!
         return RxFirebaseDatabase.updateChildren(key, match.toMap()).toSingle { key.key }
     }
 

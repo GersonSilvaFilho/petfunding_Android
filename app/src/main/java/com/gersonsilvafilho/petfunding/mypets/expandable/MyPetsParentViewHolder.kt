@@ -8,15 +8,22 @@ import com.ericliu.asyncexpandablelist.async.AsyncHeaderViewHolder
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.model.user.User
+import com.jakewharton.rxbinding3.view.clicks
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.mypet_item.view.*
-import org.jetbrains.anko.onClick
+import kotlinx.android.synthetic.main.mypet_item.view.firstLine
+import kotlinx.android.synthetic.main.mypet_item.view.likedListImage
+import kotlinx.android.synthetic.main.mypet_item.view.secondLine
+import kotlinx.android.synthetic.main.mypet_item.view.textViewOptions
 
 
 /**
  * Created by GersonSilva on 6/2/17.
  */
-class MyPetsParentViewHolder : AsyncHeaderViewHolder, AsyncExpandableListView.OnGroupStateChangeListener {
+class MyPetsParentViewHolder(itemView: View, groupOrdinal: Int, asyncExpandableListView: AsyncExpandableListView<Pet, User>) : AsyncHeaderViewHolder(
+    itemView,
+    groupOrdinal,
+    asyncExpandableListView
+), AsyncExpandableListView.OnGroupStateChangeListener {
     override fun onGroupCollapsed() {
     }
 
@@ -27,13 +34,7 @@ class MyPetsParentViewHolder : AsyncHeaderViewHolder, AsyncExpandableListView.On
 
     }
 
-    val mAsyncExpandableListView:AsyncExpandableListView<Pet, User>
-
-    constructor(itemView:View, groupOrdinal:Int, asyncExpandableListView:AsyncExpandableListView<Pet, User>)
-            :super(itemView, groupOrdinal, asyncExpandableListView)
-    {
-        mAsyncExpandableListView = asyncExpandableListView
-    }
+    val mAsyncExpandableListView: AsyncExpandableListView<Pet, User> = asyncExpandableListView
 
 
     fun setPet(pet: Pet, listener: (Pet) -> Unit, editListener: (Pet) -> Unit, groupOrdinal: Int) = with(itemView) {
@@ -46,7 +47,7 @@ class MyPetsParentViewHolder : AsyncHeaderViewHolder, AsyncExpandableListView.On
         Picasso.with(this.context)
                 .load(pet.photosUrl[0])
                 .into(likedListImage)
-        textViewOptions.onClick {
+        textViewOptions.clicks().subscribe {
             val popup = PopupMenu(this.context, textViewOptions)
             popup.inflate(R.menu.menu_detail)
             popup.setOnMenuItemClickListener { item ->

@@ -60,9 +60,7 @@ dependencies {
     kapt lib.daggerCompiler
 
     //Anko
-    implementation lib.ankoSdk
-    implementation lib.ankoSupport
-    implementation lib.ankoCompat
+    implementation lib.anko
 
     //Custom UI
     implementation lib.toggleButton

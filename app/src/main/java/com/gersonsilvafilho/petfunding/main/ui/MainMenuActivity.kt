@@ -34,7 +34,7 @@ import com.gersonsilvafilho.petfunding.mypets.MyPetsActivity
 import com.gersonsilvafilho.petfunding.splash.ui.SplashActivity
 import com.gersonsilvafilho.petfunding.util.DropDownAnim
 import com.gersonsilvafilho.petfunding.util.PetApplication
-import com.jakewharton.rxbinding2.view.clicks
+import com.jakewharton.rxbinding3.view.clicks
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.app_bar_navigation.cardStack
 import kotlinx.android.synthetic.main.app_bar_navigation.fabLike

@@ -12,15 +12,19 @@ import android.widget.ImageView
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.addpet.AddPetContract
 import com.gersonsilvafilho.petfunding.model.pet.Pet
-import com.jakewharton.rxbinding2.view.selected
-import com.jakewharton.rxbinding2.widget.textChanges
+import com.jakewharton.rxbinding3.view.clicks
+import com.jakewharton.rxbinding3.widget.textChanges
 import com.miguelbcr.ui.rx_paparazzo2.RxPaparazzo
 import com.squareup.picasso.Picasso
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.about_add_fragment.*
-import org.jetbrains.anko.onClick
+import kotlinx.android.synthetic.main.about_add_fragment.addEditTextDescription
+import kotlinx.android.synthetic.main.about_add_fragment.addEditTextName
+import kotlinx.android.synthetic.main.about_add_fragment.image1
+import kotlinx.android.synthetic.main.about_add_fragment.image2
+import kotlinx.android.synthetic.main.about_add_fragment.image3
+import kotlinx.android.synthetic.main.about_add_fragment.image4
 
 
 class AboutAddFragment(private val presenter: AddPetContract.Presenter,val pet:Pet?) : Fragment(), AddPetContract.ViewAbout {
@@ -42,14 +46,14 @@ class AboutAddFragment(private val presenter: AddPetContract.Presenter,val pet:P
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        imageViews.add(image1)
-        imageViews.add(image2)
-        imageViews.add(image3)
-        imageViews.add(image4)
+        imageViews.add(image1 as ImageView)
+        imageViews.add(image2 as ImageView)
+        imageViews.add(image3 as ImageView)
+        imageViews.add(image4 as ImageView)
 
         for ((index, value) in imageViews.withIndex())
         {
-            value.onClick { v(index) }
+            value.clicks().subscribe { v(index) }
         }
 
         if(pet != null)
@@ -97,12 +101,12 @@ class AboutAddFragment(private val presenter: AddPetContract.Presenter,val pet:P
 
     override fun showInvalidName() {
         addEditTextName.setError("Nome inválido")
-        addEditTextDescription.selected()
+        addEditTextDescription.selectAll()
     }
 
     override fun showInvalidDescription() {
         addEditTextDescription.setError("Descrição inválida")
-        addEditTextDescription.selected()
+        addEditTextDescription.selectAll()
     }
 
     override fun showInvalidPhotosMessage() {

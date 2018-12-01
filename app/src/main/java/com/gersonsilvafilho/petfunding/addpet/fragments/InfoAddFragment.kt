@@ -10,7 +10,7 @@ import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.addpet.AddPetContract
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.util.monthsSinceNow
-import com.jakewharton.rxbinding2.widget.textChanges
+import com.jakewharton.rxbinding3.widget.textChanges
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.info_add_fragment.*
 import java.util.*

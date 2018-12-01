@@ -7,7 +7,7 @@ import durdinapps.rxfirebase2.RxFirebaseChildEvent
 import durdinapps.rxfirebase2.RxFirebaseDatabase
 import io.reactivex.Observable
 import io.reactivex.Single
-import java.util.*
+import java.util.HashMap
 
 /**
  * Created by GersonSilva on 5/12/17.
@@ -38,17 +38,17 @@ class ChatFirebaseRepository : ChatRepository
     override fun sendMessage(chatId: String, message: Message): Single<String>
     {
         val key = chatRef.child(chatId).child("messages").push()
-        message.uid = key.key
+        message.uid = key.key!!
         return RxFirebaseDatabase.updateChildren(key,message.toMap()).toSingle { key.key }
     }
 
     override fun initNewChat(matchId: String, userId: String): Single<String> {
         val key = chatRef.push()
         val mChat = Chat()
-        mChat.uid = key.key
+        mChat.uid = key.key!!
         val matchAddRef = matchesRef.orderByChild("userId").equalTo(userId)
         val values = HashMap<String, Any>()
-        values.put("chatId", key.key)
+        values.put("chatId", key.key!!)
         return RxFirebaseDatabase.updateChildren(key,mChat.toMap()).toSingle { mChat.uid }
     }
 }

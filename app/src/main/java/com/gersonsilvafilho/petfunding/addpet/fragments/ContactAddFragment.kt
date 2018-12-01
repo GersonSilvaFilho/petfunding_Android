@@ -9,10 +9,14 @@ import android.view.ViewGroup
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.addpet.AddPetContract
 import com.gersonsilvafilho.petfunding.model.pet.Pet
-import com.jakewharton.rxbinding2.widget.textChanges
+import com.jakewharton.rxbinding3.widget.textChanges
 import com.jaredrummler.materialspinner.MaterialSpinner
 import io.reactivex.Observable
-import kotlinx.android.synthetic.main.contact_add_fragment.*
+import kotlinx.android.synthetic.main.contact_add_fragment.editTextContactName
+import kotlinx.android.synthetic.main.contact_add_fragment.editTextContactPhone
+import kotlinx.android.synthetic.main.contact_add_fragment.spinnerCity
+import kotlinx.android.synthetic.main.contact_add_fragment.spinnerOng
+import kotlinx.android.synthetic.main.contact_add_fragment.spinnerState
 
 
 class ContactAddFragment(private val presenter: AddPetContract.Presenter,val pet: Pet?) : Fragment(), AddPetContract.ViewContact {

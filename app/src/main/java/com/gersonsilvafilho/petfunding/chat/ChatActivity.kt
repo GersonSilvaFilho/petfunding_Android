@@ -7,12 +7,13 @@ import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.model.message.Message
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.util.PetApplication
-import com.jakewharton.rxbinding2.view.clicks
-import com.jakewharton.rxbinding2.widget.textChanges
+import com.jakewharton.rxbinding3.view.clicks
+import com.jakewharton.rxbinding3.widget.textChanges
 import com.squareup.picasso.Picasso
 import com.stfalcon.chatkit.commons.ImageLoader
 import com.stfalcon.chatkit.messages.MessagesListAdapter
-import kotlinx.android.synthetic.main.activity_chat.*
+import kotlinx.android.synthetic.main.activity_chat.input
+import kotlinx.android.synthetic.main.activity_chat.messagesList
 import javax.inject.Inject
 
 
@@ -73,6 +74,6 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         return super.onOptionsItemSelected(item)
     }
 
-    val imageLoader = ImageLoader { imageView, url -> Picasso.with(imageView.context).load(url).into(imageView) }
+    val imageLoader = ImageLoader { imageView, url, payload -> Picasso.with(imageView.context).load(url).into(imageView) }
 }
 

@@ -13,7 +13,7 @@ class CardViewWithValidation(context: Context?) : CardView(context!!)
 
     fun OnError()
     {
-        normalBackgroundColor = this.backgroundColor
+        normalBackgroundColor = this.cardBackgroundColor.defaultColor
         this.backgroundColor = 0xff0000
         this.setOnFocusChangeListener { v, hasFocus ->
             if(this.isFocused)

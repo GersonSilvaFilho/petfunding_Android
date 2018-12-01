@@ -10,7 +10,6 @@ ext {
     androidMinSdkVersion = 16
     androidTargetSdkVersion = 28
     androidCompileSdkVersion = 28
-    playServicesVersion = "9.4.0"
     appcompatVersion = "26.0.2"
     designVersion = "24.2.1"
 
@@ -18,8 +17,8 @@ ext {
     daggerVersion = '2.6.1'
     rxJavaVersion = '1.1.8'
     rxAndroidVersion = '1.2.1'
-    firebase = '10.2.1'
-    anko = '0.9.1'
+    firebase = '16.0.5'
+    anko = '0.10.8'
 
     //Testing libraries
     jUnitVersion = '4.12'
@@ -38,13 +37,13 @@ ext {
             firebaseStorage   : "com.google.firebase:firebase-storage:${firebase}",
 
             //RX + Firebase
-            firebaseRx        : "com.github.frangsierra:rx2firebase:1.1.1",
+            firebaseRx        : "com.github.FrangSierra:RxFirebase:1.5.6",
 
             //RX
-            rxBinding         : "com.jakewharton.rxbinding2:rxbinding-kotlin:2.0.0",
+            rxBinding         : "com.jakewharton.rxbinding3:rxbinding:3.0.0-alpha1",
 
             //Rx + Image
-            rxPaparazzo       : "com.github.miguelbcr:RxPaparazzo:0.5.2-2.x",
+            rxPaparazzo       : "com.github.miguelbcr:RxPaparazzo:0.6.0-2.x",
 
             //Social
             facebook          : "com.facebook.android:facebook-android-sdk:[4,5)",
@@ -54,15 +53,13 @@ ext {
             dagger            : "com.google.dagger:dagger:${daggerVersion}",
 
             //Anko
-            ankoSdk           : "org.jetbrains.anko:anko-sdk15:${anko}",
-            ankoSupport       : "org.jetbrains.anko:anko-support-v4:${anko}",
-            ankoCompat        : "org.jetbrains.anko:anko-appcompat-v7:${anko}",
+            anko          : "org.jetbrains.anko:anko:${anko}",
 
             //Custom UI
-            toggleButton      : "com.nex3z:toggle-button-group:1.1.4",
+            toggleButton      : "com.nex3z:toggle-button-group:1.1.8",
             roundedImageView  : "com.makeramen:roundedimageview:2.3.0",
             rangeBar          : "com.appyvet:materialrangebar:1.3",
-            spinner           : "com.jaredrummler:material-spinner:1.1.0",
+            spinner           : "com.jaredrummler:material-spinner:1.3.1",
             blur              : "jp.wasabeef:blurry:2.1.1",
             expandableRecycler: "com.bignerdranch.android:expandablerecyclerview:1.0.3",
             asyncExpandList   : "com.ericliu.asyncexpandablelist:asyncexpandablelist:1.1.0",
@@ -70,10 +67,10 @@ ext {
             swipeCards        : "android-card-stack-0.1.6",
 
             //Image Loading
-            picasso           : "com.squareup.picasso:picasso:2.5.2",
+            picasso           : "com.squareup.picasso:picasso:2.71828",
 
             //Chat
-            chatKit           : "com.github.stfalcon:chatkit:0.2.1",
+            chatKit           : "com.github.stfalcon:chatkit:0.3.3",
 
             //Tests
             jUnit             : "junit:junit:${jUnitVersion}",

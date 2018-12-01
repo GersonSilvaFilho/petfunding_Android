@@ -9,7 +9,7 @@ import durdinapps.rxfirebase2.RxFirebaseStorage
 import io.reactivex.Completable
 import io.reactivex.Observable
 import java.io.File
-import java.util.*
+import java.util.UUID
 
 /**
  * Created by GersonSilva on 5/8/17.
@@ -41,7 +41,7 @@ class PetFirebaseRepository : PetRepository {
 
     override fun addPet(pet:Pet): Completable{
         val key = petsRef.push()
-        pet.uid = key.key
+        pet.uid = key.key!!
         return RxFirebaseDatabase.updateChildren(key, pet.toMap())
     }
 
@@ -50,11 +50,21 @@ class PetFirebaseRepository : PetRepository {
         return RxFirebaseDatabase.updateChildren(key, pet.toMap())
     }
 
-    override fun sendPetPhoto(index:Int, file: File): Observable<String> {
+    override fun sendPetPhoto(index: Int, file: File): Observable<String> {
         val storage = FirebaseStorage.getInstance()
-        return RxFirebaseStorage.putFile(storage.getReferenceFromUrl("gs://petfunding-7ab38.appspot.com/pets")
-                .child(UUID.randomUUID().toString()), Uri.fromFile(file))
-                .map { a -> a.downloadUrl.toString() }
+        val reference = storage.getReferenceFromUrl("gs://petfunding-7ab38.appspot.com/pets")
+            .child(UUID.randomUUID().toString())
+
+
+        return RxFirebaseStorage.putFile(reference, Uri.fromFile(file))
+//            .flatMap { task ->
+//                Observable.create<String> { emmiter ->
+//                    reference.downloadUrl.onSuccessTask {
+//                        emmiter.onNext(it.toString())
+//                    }
+//                }
+//            }
+            .map { it.uploadSessionUri.toString() }
                 .toObservable()
     }
 

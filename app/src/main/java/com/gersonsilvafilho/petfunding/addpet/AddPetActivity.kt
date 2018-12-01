@@ -17,7 +17,7 @@ import com.gersonsilvafilho.petfunding.addpet.fragments.InfoAddFragment
 import com.gersonsilvafilho.petfunding.chat.AddPetModule
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.util.PetApplication
-import com.jakewharton.rxbinding2.view.clicks
+import com.jakewharton.rxbinding3.view.clicks
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_add_pet.*
 import org.jetbrains.anko.contentView
