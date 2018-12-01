@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'com.github.kt3k.coveralls'
 
 android {
     compileSdkVersion androidCompileSdkVersion
@@ -99,11 +98,6 @@ dependencies {
 
 coveralls {
     jacocoReportPath = "${buildDir}/reports/coverage/debug/report.xml"
-}
-
-tasks.coveralls {
-    dependsOn 'connectedAndroidTest'
-    onlyIf { System.env.'CI' }
 }
 
 repositories {
