@@ -21,7 +21,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.addpet.AddPetActivity
-import com.gersonsilvafilho.petfunding.addpet.fragments.getSelectedList
 import com.gersonsilvafilho.petfunding.chat.ChatActivity
 import com.gersonsilvafilho.petfunding.detail.DetailActivity
 import com.gersonsilvafilho.petfunding.likelist.LikeListActivity
@@ -31,22 +30,14 @@ import com.gersonsilvafilho.petfunding.main.dagger.MainMenuModule
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.model.user.User
 import com.gersonsilvafilho.petfunding.mypets.MyPetsActivity
+import com.gersonsilvafilho.petfunding.splash.ui.FilterActivity
 import com.gersonsilvafilho.petfunding.splash.ui.SplashActivity
-import com.gersonsilvafilho.petfunding.util.DropDownAnim
 import com.gersonsilvafilho.petfunding.util.PetApplication
 import com.jakewharton.rxbinding3.view.clicks
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.app_bar_navigation.applyFilterButton
 import kotlinx.android.synthetic.main.app_bar_navigation.cardStack
 import kotlinx.android.synthetic.main.app_bar_navigation.fabLike
 import kotlinx.android.synthetic.main.app_bar_navigation.fabdislike
-import kotlinx.android.synthetic.main.app_bar_navigation.filter
-import kotlinx.android.synthetic.main.app_bar_navigation.group_choices_age
-import kotlinx.android.synthetic.main.app_bar_navigation.group_choices_condition
-import kotlinx.android.synthetic.main.app_bar_navigation.group_choices_like
-import kotlinx.android.synthetic.main.app_bar_navigation.group_choices_sex
-import kotlinx.android.synthetic.main.app_bar_navigation.group_choices_size
-import kotlinx.android.synthetic.main.app_bar_navigation.group_choices_type
 import kotlinx.android.synthetic.main.app_bar_navigation.ripple
 import org.jetbrains.anko.startActivity
 import javax.inject.Inject
@@ -173,35 +164,35 @@ class MainMenuActivity : AppCompatActivity(),
         val id = item.itemId
 
         if (id == R.id.action_filter) {
-            toggleFilter()
+            startActivity<FilterActivity>()
             return true
         }
 
         return super.onOptionsItemSelected(item)
     }
 
-    private fun toggleFilter() {
-        val viewSize = cardStack.height
-        if (!filterStatus) {
-            val animation = DropDownAnim(filter, viewSize, true)
-            animation.duration = 700
-            filter.startAnimation(animation)
-            filterStatus = true
-        } else {
-            val animation = DropDownAnim(filter, viewSize, false)
-            animation.duration = 700
-            filter.startAnimation(animation)
-            filterStatus = false
-        }
-    }
-
-    override fun hideFilterView() {
-        val viewSize = cardStack.height
-        val animation = DropDownAnim(filter, viewSize, false)
-        animation.duration = 700
-        filter.startAnimation(animation)
-        filterStatus = false
-    }
+//    private fun toggleFilter() {
+//        val viewSize = cardStack.height
+//        if (!filterStatus) {
+//            val animation = DropDownAnim(filter, viewSize, true)
+//            animation.duration = 700
+//            filter.startAnimation(animation)
+//            filterStatus = true
+//        } else {
+//            val animation = DropDownAnim(filter, viewSize, false)
+//            animation.duration = 700
+//            filter.startAnimation(animation)
+//            filterStatus = false
+//        }
+//    }
+//
+//    override fun hideFilterView() {
+//        val viewSize = cardStack.height
+//        val animation = DropDownAnim(filter, viewSize, false)
+//        animation.duration = 700
+//        filter.startAnimation(animation)
+//        filterStatus = false
+//    }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
@@ -286,15 +277,6 @@ class MainMenuActivity : AppCompatActivity(),
         ripple.visibility = View.GONE
         ripple.stopRippleAnimation()
     }
-
-    override fun filterTypeList() = group_choices_type.getSelectedList()
-    override fun filterSexList() = group_choices_sex.getSelectedList()
-    override fun filterSizeList() = group_choices_size.getSelectedList()
-    override fun filterConditionList() = group_choices_condition.getSelectedList()
-    override fun filterLikeList() = group_choices_like.getSelectedList()
-    override fun filterAgeList() = group_choices_age.getSelectedList()
-
-    override fun applyButtonClicked() = applyFilterButton.clicks()
 
     override fun startSplashActivity() = startActivity<SplashActivity>()
 

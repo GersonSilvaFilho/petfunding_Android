@@ -4,7 +4,6 @@ import com.gersonsilvafilho.petfunding.model.match.MatchReposity
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.model.pet.PetRepository
 import com.gersonsilvafilho.petfunding.model.user.UserRepository
-import com.gersonsilvafilho.petfunding.util.monthsSinceNow
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import java.util.concurrent.TimeUnit
@@ -26,14 +25,6 @@ class MainMenuPresenter(
         compositeDisposable.add(
             userRepository.currentUserChanged()
                 .subscribe { setUserProfile() }
-        )
-
-        compositeDisposable.add(
-            view.applyButtonClicked()
-                .subscribe {
-                    loadPets()
-                    view.hideFilterView()
-                }
         )
 
         compositeDisposable.add(
@@ -80,27 +71,27 @@ class MainMenuPresenter(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { petsList ->
                     val filteredPets = petsList
-                        .filter { pet -> view.filterTypeList().isEmpty() || view.filterTypeList().contains(pet.type) }
-                        .filter { pet -> view.filterSexList().isEmpty() || view.filterSexList().contains(pet.sex) }
-                        .filter { pet -> view.filterSizeList().isEmpty() || view.filterSizeList().contains(pet.size) }
-                        .filter { pet ->
-                            view.filterConditionList().isEmpty() ||
-                                    ((view.filterConditionList().contains("Vacinado") && pet.vaccinated) ||
-                                            (view.filterConditionList().contains("Castrado") && pet.castrated) ||
-                                            (view.filterConditionList().contains("Desverminado") && pet.dewormed))
-                        }
-                        .filter { pet ->
-                            view.filterLikeList().isEmpty() ||
-                                    ((pet.likeChildren && view.filterLikeList().contains("Crianças")) ||
-                                            (pet.likeAnimals && view.filterLikeList().contains("Outros Animais")) ||
-                                            (pet.likeElders && view.filterLikeList().contains("Idosos")))
-                        }
-                        .filter { pet ->
-                            view.filterAgeList().isEmpty() ||
-                                    ((view.filterAgeList().contains("Filhote") && pet.birthDate.monthsSinceNow() < 12) ||
-                                            (view.filterAgeList().contains("Adulto") && pet.birthDate.monthsSinceNow() >= 12 && pet.birthDate.monthsSinceNow() < 96) ||
-                                            (view.filterAgeList().contains("Idoso") && pet.birthDate.monthsSinceNow() >= 96))
-                        }
+//                        .filter { pet -> view.filterTypeList().isEmpty() || view.filterTypeList().contains(pet.type) }
+//                        .filter { pet -> view.filterSexList().isEmpty() || view.filterSexList().contains(pet.sex) }
+//                        .filter { pet -> view.filterSizeList().isEmpty() || view.filterSizeList().contains(pet.size) }
+//                        .filter { pet ->
+//                            view.filterConditionList().isEmpty() ||
+//                                    ((view.filterConditionList().contains("Vacinado") && pet.vaccinated) ||
+//                                            (view.filterConditionList().contains("Castrado") && pet.castrated) ||
+//                                            (view.filterConditionList().contains("Desverminado") && pet.dewormed))
+//                        }
+//                        .filter { pet ->
+//                            view.filterLikeList().isEmpty() ||
+//                                    ((pet.likeChildren && view.filterLikeList().contains("Crianças")) ||
+//                                            (pet.likeAnimals && view.filterLikeList().contains("Outros Animais")) ||
+//                                            (pet.likeElders && view.filterLikeList().contains("Idosos")))
+//                        }
+//                        .filter { pet ->
+//                            view.filterAgeList().isEmpty() ||
+//                                    ((view.filterAgeList().contains("Filhote") && pet.birthDate.monthsSinceNow() < 12) ||
+//                                            (view.filterAgeList().contains("Adulto") && pet.birthDate.monthsSinceNow() >= 12 && pet.birthDate.monthsSinceNow() < 96) ||
+//                                            (view.filterAgeList().contains("Idoso") && pet.birthDate.monthsSinceNow() >= 96))
+//                        }
                     view.updateCardAdapter(filteredPets)
                     view.hideRippleWaiting()
                 }

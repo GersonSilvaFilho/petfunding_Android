@@ -61,6 +61,9 @@
             android:label="@string/title_activity_scrolling"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".splash.ui.FilterActivity"
+            android:label="Filter Activity"></activity>
     </application>
 
 </manifest>
