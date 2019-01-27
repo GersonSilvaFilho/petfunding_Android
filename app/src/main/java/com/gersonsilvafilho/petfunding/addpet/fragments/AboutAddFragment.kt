@@ -41,7 +41,7 @@ class AboutAddFragment(private val presenter: AddPetContract.Presenter,val pet:P
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater!!.inflate(R.layout.about_add_fragment, container, false)
+        return inflater.inflate(R.layout.about_add_fragment, container, false)
     }
 
 
@@ -63,7 +63,7 @@ class AboutAddFragment(private val presenter: AddPetContract.Presenter,val pet:P
 
             for ((index, image) in pet.photosUrl.take(4).withIndex())
             {
-                Picasso.with(this.activity)
+                Picasso.get()
                         .load(image)
                         .into(imageViews[index])
             }
@@ -77,20 +77,19 @@ class AboutAddFragment(private val presenter: AddPetContract.Presenter,val pet:P
                 .usingGallery()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ response ->
+            .subscribe { response ->
                     Log.i("RXPAPARAZZO", response.resultCode().toString())
                     // See response.resultCode() doc
                     if (response.resultCode() == RESULT_OK) {
-                        if(response.data()?.file != null)
-                        {
-                            Picasso.with(this.activity)
-                                    .load(response.data().file)
-                                    .into(imageViews[num])
+                        if (response.data()?.file != null) {
+                            Picasso.get()
+                                .load(response.data().file)
+                                .into(imageViews[num])
                             presenter.imageReady(num, response.data().file)
                         }
 
                     }
-                })
+            }
     }
 
 

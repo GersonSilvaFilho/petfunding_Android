@@ -92,6 +92,7 @@ dependencies {
     //Utils
     implementation lib.khronos
     implementation lib.gson
+    implementation lib.kotlin
 }
 
 coveralls {

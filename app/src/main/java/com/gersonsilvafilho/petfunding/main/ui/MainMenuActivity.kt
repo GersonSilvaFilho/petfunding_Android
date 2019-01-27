@@ -36,18 +36,18 @@ import com.gersonsilvafilho.petfunding.util.DropDownAnim
 import com.gersonsilvafilho.petfunding.util.PetApplication
 import com.jakewharton.rxbinding3.view.clicks
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.app_bar_navigation.applyFilterButton
 import kotlinx.android.synthetic.main.app_bar_navigation.cardStack
 import kotlinx.android.synthetic.main.app_bar_navigation.fabLike
 import kotlinx.android.synthetic.main.app_bar_navigation.fabdislike
 import kotlinx.android.synthetic.main.app_bar_navigation.filter
+import kotlinx.android.synthetic.main.app_bar_navigation.group_choices_age
+import kotlinx.android.synthetic.main.app_bar_navigation.group_choices_condition
+import kotlinx.android.synthetic.main.app_bar_navigation.group_choices_like
+import kotlinx.android.synthetic.main.app_bar_navigation.group_choices_sex
+import kotlinx.android.synthetic.main.app_bar_navigation.group_choices_size
+import kotlinx.android.synthetic.main.app_bar_navigation.group_choices_type
 import kotlinx.android.synthetic.main.app_bar_navigation.ripple
-import kotlinx.android.synthetic.main.content_filter.applyFilterButton
-import kotlinx.android.synthetic.main.content_filter.group_choices_age
-import kotlinx.android.synthetic.main.content_filter.group_choices_condition
-import kotlinx.android.synthetic.main.content_filter.group_choices_like
-import kotlinx.android.synthetic.main.content_filter.group_choices_sex
-import kotlinx.android.synthetic.main.content_filter.group_choices_size
-import kotlinx.android.synthetic.main.content_filter.group_choices_type
 import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
@@ -101,7 +101,7 @@ class MainMenuActivity : AppCompatActivity(),
         val dialog = Dialog(this, android.R.style.Theme_Black_NoTitleBar_Fullscreen)
         dialog.setContentView(R.layout.match_layout)
         val imageView = dialog.findViewById<ImageView>(R.id.imageMatch)
-        Picasso.with(this)
+        Picasso.get()
             .load(pet.photosUrl[0])
             .into(imageView)
         val textView = dialog.findViewById<TextView>(R.id.textViewDialogName)
@@ -129,7 +129,7 @@ class MainMenuActivity : AppCompatActivity(),
         if (!user.imageUrl.isNullOrEmpty()) {
             val imageView = (hView.findViewById<ImageView>(R.id.headerUserImage))
 
-            Picasso.with(this)
+            Picasso.get()
                 .load(user.imageUrl)
                 .into(imageView)
         }
@@ -137,7 +137,7 @@ class MainMenuActivity : AppCompatActivity(),
     }
 
     override fun updateCardAdapter(pets: List<Pet>) {
-        var mCardAdapter = CardsDataAdapter(applicationContext, 0)
+        val mCardAdapter = CardsDataAdapter(applicationContext, 0)
         mCardAdapter.addAll(pets)
         cardStack.setAdapter(mCardAdapter)
         cardStack.reset(true)
@@ -180,8 +180,8 @@ class MainMenuActivity : AppCompatActivity(),
         return super.onOptionsItemSelected(item)
     }
 
-    fun toggleFilter() {
-        var viewSize = cardStack.height
+    private fun toggleFilter() {
+        val viewSize = cardStack.height
         if (!filterStatus) {
             val animation = DropDownAnim(filter, viewSize, true)
             animation.duration = 700
@@ -196,7 +196,7 @@ class MainMenuActivity : AppCompatActivity(),
     }
 
     override fun hideFilterView() {
-        var viewSize = cardStack.height
+        val viewSize = cardStack.height
         val animation = DropDownAnim(filter, viewSize, false)
         animation.duration = 700
         filter.startAnimation(animation)
@@ -207,22 +207,17 @@ class MainMenuActivity : AppCompatActivity(),
         // Handle navigation view item clicks here.
         val id = item.itemId
 
-        if (id == R.id.nav_main) {
+        when (id) {
+            R.id.nav_main -> {
 
-        } else if (id == R.id.nav_likes) {
-            startActivity<LikeListActivity>()
+            }
+            R.id.nav_likes -> startActivity<LikeListActivity>()
             //Add new pet activity
-
-        } else if (id == R.id.nav_add) {
-            startActivity<AddPetActivity>()
+            R.id.nav_add -> startActivity<AddPetActivity>()
             //Add new pet activity
-
-        } else if (id == R.id.nav_my_pets) {
-            startActivity<MyPetsActivity>()
+            R.id.nav_my_pets -> startActivity<MyPetsActivity>()
             //Add new pet activity
-
-        } else if (id == R.id.nav_logout) {
-            presenter.userLogout()
+            R.id.nav_logout -> presenter.userLogout()
         }
 
         val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)

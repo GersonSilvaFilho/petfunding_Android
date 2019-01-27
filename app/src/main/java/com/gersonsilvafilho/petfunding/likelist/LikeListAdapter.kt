@@ -33,7 +33,8 @@ class LikeListAdapter(val items: List<Pet>, val listener: (Pet) -> Unit) : Recyc
             itemView.findViewById<CardView>(R.id.cardLikeList).setOnClickListener { listener(item) }
             firstLine.text = item.name
             secondLine.text = item.contactName
-            Picasso.with(this.context)
+
+            Picasso.get()
                     .load(item.photosUrl[0])
                     .into(likedListImage)
         }

@@ -44,7 +44,7 @@ class MyPetsParentViewHolder(itemView: View, groupOrdinal: Int, asyncExpandableL
         }
         firstLine.text = pet.name
         secondLine.text = pet.contactName
-        Picasso.with(this.context)
+        Picasso.get()
                 .load(pet.photosUrl[0])
                 .into(likedListImage)
         textViewOptions.clicks().subscribe {

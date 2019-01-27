@@ -4,16 +4,16 @@
     xmlns:card_view="http://schemas.android.com/tools"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     android:clickable="true"
     android:elevation="10dp"
     android:focusable="true"
-    tools:context="com.gersonsilvafilho.petfunding.main.ui.MainMenuActivity"
-    tools:layout_height="match_parent">
+    tools:context="com.gersonsilvafilho.petfunding.main.ui.MainMenuActivity">
 
 
     <LinearLayout
+        android:id="@+id/filtersLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -421,12 +421,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right|bottom"
-        android:layout_margin="10dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_margin="5dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/filtersLayout"
         app:layout_constraintEnd_toEndOf="parent">
 
 

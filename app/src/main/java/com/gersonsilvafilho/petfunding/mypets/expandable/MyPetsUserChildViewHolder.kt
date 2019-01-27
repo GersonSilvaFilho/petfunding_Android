@@ -27,7 +27,7 @@ class MyPetsUserChildViewHolder : RecyclerView.ViewHolder{
         val userChildImage = this.itemView.findViewById<ImageView>(R.id.userChildImage)
         userChildNameText.setText(user.name)
 
-        Picasso.with(this.itemView.context)
+        Picasso.get()
                 .load(user.imageUrl)
                 .into(userChildImage)
 

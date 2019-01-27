@@ -25,7 +25,7 @@ class CardsDataAdapter(context:Context, @LayoutRes resource: Int) : ArrayAdapter
         val pet = getItem(position)
         if(!pet.photosUrl.isEmpty())
         {
-            Picasso.with(this.context)
+            Picasso.get()
                     .load(pet.photosUrl.get(0))
                     .into(imageView)
         }

@@ -5,6 +5,8 @@ import com.gersonsilvafilho.petfunding.model.pet.MatchModule
 import com.gersonsilvafilho.petfunding.model.pet.PetModule
 import com.gersonsilvafilho.petfunding.model.user.UserComponent
 import com.gersonsilvafilho.petfunding.model.user.UserModule
+import com.gersonsilvafilho.petfunding.splash.dagger.FilterComponent
+import com.gersonsilvafilho.petfunding.splash.dagger.FilterModule
 import dagger.Component
 import javax.inject.Singleton
 
@@ -16,4 +18,5 @@ import javax.inject.Singleton
 @Component(modules = [AppModule::class, ChatRepositoryModule::class, PetModule::class, MatchModule::class])
 interface AppComponent {
     fun plus(userModule: UserModule):UserComponent
+    fun plus(filterModule: FilterModule): FilterComponent
 }

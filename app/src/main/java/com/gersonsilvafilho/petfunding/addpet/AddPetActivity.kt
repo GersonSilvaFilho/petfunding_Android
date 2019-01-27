@@ -19,9 +19,11 @@ import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.util.PetApplication
 import com.jakewharton.rxbinding3.view.clicks
 import io.reactivex.Observable
-import kotlinx.android.synthetic.main.activity_add_pet.*
+import kotlinx.android.synthetic.main.activity_add_pet.addPetButtonSave
+import kotlinx.android.synthetic.main.activity_add_pet.tabs
+import kotlinx.android.synthetic.main.activity_add_pet.viewpager
 import org.jetbrains.anko.contentView
-import java.util.*
+import java.util.ArrayList
 import javax.inject.Inject
 
 
@@ -106,7 +108,7 @@ class AddPetActivity : AppCompatActivity(), AddPetContract.View {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.getItemId() === android.R.id.home)
+        if (item.getItemId() == android.R.id.home)
         {
             finish()
         }

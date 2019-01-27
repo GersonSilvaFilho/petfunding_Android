@@ -10,6 +10,8 @@ import com.gersonsilvafilho.petfunding.main.dagger.MainMenuComponent
 import com.gersonsilvafilho.petfunding.main.dagger.MainMenuModule
 import com.gersonsilvafilho.petfunding.mypets.MyPetsComponent
 import com.gersonsilvafilho.petfunding.mypets.MyPetsModule
+import com.gersonsilvafilho.petfunding.splash.dagger.FilterComponent
+import com.gersonsilvafilho.petfunding.splash.dagger.FilterModule
 import com.gersonsilvafilho.petfunding.splash.dagger.SplashComponent
 import com.gersonsilvafilho.petfunding.splash.dagger.SplashModule
 import dagger.Subcomponent
@@ -18,7 +20,7 @@ import dagger.Subcomponent
  * Created by GersonSilva on 5/21/17.
  */
 @UserScope
-@Subcomponent(modules = arrayOf(UserModule::class))
+@Subcomponent(modules = [UserModule::class])
 interface UserComponent
 {
     fun plus(mainMenuModule: MainMenuModule): MainMenuComponent

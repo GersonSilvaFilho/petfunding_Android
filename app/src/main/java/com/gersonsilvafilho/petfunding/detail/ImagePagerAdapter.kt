@@ -31,7 +31,7 @@ internal class ImagePagerAdapter(var mContext: Context, var mResources:List<Stri
         val itemView = mLayoutInflater.inflate(R.layout.image_pager, container, false)
 
         val imageView = itemView.findViewById<ImageView>(R.id.imageView)
-        Picasso.with(mContext)
+        Picasso.get()
                 .load(mResources[position])
                 .into(imageView)
 

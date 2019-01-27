@@ -74,6 +74,6 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
         return super.onOptionsItemSelected(item)
     }
 
-    val imageLoader = ImageLoader { imageView, url, payload -> Picasso.with(imageView.context).load(url).into(imageView) }
+    val imageLoader = ImageLoader { imageView, url, payload -> Picasso.get().load(url).into(imageView) }
 }
 
