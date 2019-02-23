@@ -1,5 +1,6 @@
 package com.gersonsilvafilho.petfunding.splash.ui
 
+import com.gersonsilvafilho.petfunding.filter.model.FilterList
 import io.reactivex.Observable
 
 
@@ -16,7 +17,7 @@ interface FilterContract {
         fun filterLikeList(): List<String>
         fun filterAgeList(): List<String>
         fun applyButtonClicked(): Observable<Unit>
-        fun finishFilter()
+        fun finishFilter(filters: FilterList)
     }
 
     interface Presenter {

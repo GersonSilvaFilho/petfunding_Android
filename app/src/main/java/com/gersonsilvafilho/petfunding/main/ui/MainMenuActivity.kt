@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -23,6 +24,7 @@ import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.addpet.AddPetActivity
 import com.gersonsilvafilho.petfunding.chat.ChatActivity
 import com.gersonsilvafilho.petfunding.detail.DetailActivity
+import com.gersonsilvafilho.petfunding.filter.model.FilterList
 import com.gersonsilvafilho.petfunding.likelist.LikeListActivity
 import com.gersonsilvafilho.petfunding.main.CardsDataAdapter
 import com.gersonsilvafilho.petfunding.main.SwipeListener
@@ -83,7 +85,7 @@ class MainMenuActivity : AppCompatActivity(),
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
 
-        presenter.loadPets()
+        presenter.loadPets(FilterList(listOf()))
         presenter.setUserProfile()
 
     }
@@ -164,7 +166,9 @@ class MainMenuActivity : AppCompatActivity(),
         val id = item.itemId
 
         if (id == R.id.action_filter) {
-            startActivity<FilterActivity>()
+            val i = Intent(this, FilterActivity::class.java)
+            i.putExtra("filters", presenter.filterList)
+            startActivityForResult(i, 999)
             return true
         }
 
@@ -284,4 +288,17 @@ class MainMenuActivity : AppCompatActivity(),
         presenter.onStop()
         super.onStop()
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == Activity.RESULT_OK && requestCode == 999) {
+            val filterList = data?.getSerializableExtra("filters") as FilterList
+            Log.d("Result Filter", filterList.toString())
+            presenter.loadPets(filterList)
+        }
+
+    }
 }
+
+

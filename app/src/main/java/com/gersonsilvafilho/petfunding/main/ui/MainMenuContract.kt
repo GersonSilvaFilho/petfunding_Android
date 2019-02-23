@@ -1,5 +1,6 @@
 package com.gersonsilvafilho.petfunding.main.ui
 
+import com.gersonsilvafilho.petfunding.filter.model.FilterList
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.model.user.User
 
@@ -22,11 +23,12 @@ interface MainMenuContract {
 
     interface Presenter
     {
-        fun loadPets()
         fun userLogout()
         fun userMatchedPet(pet:Pet)
         fun userUnmatchedPet(pet:Pet)
         fun setUserProfile()
         fun onStop()
+        fun loadPets(filterList: FilterList)
+        val filterList: FilterList
     }
 }

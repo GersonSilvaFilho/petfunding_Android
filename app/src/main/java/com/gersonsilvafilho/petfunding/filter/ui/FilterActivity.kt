@@ -1,10 +1,13 @@
 package com.gersonsilvafilho.petfunding.splash.ui
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.facebook.CallbackManager
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.addpet.fragments.getSelectedList
+import com.gersonsilvafilho.petfunding.filter.model.FilterList
 import com.gersonsilvafilho.petfunding.splash.dagger.FilterModule
 import com.gersonsilvafilho.petfunding.util.PetApplication
 import com.jakewharton.rxbinding3.view.clicks
@@ -48,7 +51,11 @@ class FilterActivity : AppCompatActivity(), FilterContract.View {
     override fun applyButtonClicked() = applyFilterButton.clicks()
 
 
-    override fun finishFilter() = finish()
+    override fun finishFilter(filters: FilterList) {
+        val intent = Intent().putExtra("filters", filters)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
+    }
 
     override fun onStop() {
         super.onStop()

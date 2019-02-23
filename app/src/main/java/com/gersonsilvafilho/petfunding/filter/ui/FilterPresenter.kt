@@ -1,5 +1,7 @@
 package com.gersonsilvafilho.petfunding.splash.ui
 
+import com.gersonsilvafilho.petfunding.filter.model.Filter
+import com.gersonsilvafilho.petfunding.filter.model.FilterList
 import io.reactivex.disposables.CompositeDisposable
 
 /**
@@ -14,7 +16,8 @@ class FilterPresenter(private val view: FilterContract.View) : FilterContract.Pr
         compositeDisposable.add(
             view.applyButtonClicked()
                 .subscribe {
-                    view.finishFilter()
+                    val filters = FilterList(listOf(getTypeFilter(), getSexFilter(), getAgeFilter(), getSizeFilter(), getFilterCondition(), getLikeFilter()))
+                    view.finishFilter(filters)
                 }
         )
 
@@ -24,5 +27,19 @@ class FilterPresenter(private val view: FilterContract.View) : FilterContract.Pr
     override fun onStop() {
         compositeDisposable.clear()
     }
+
+    private fun getTypeFilter(): Filter<List<String>> = Filter(Filter.Type.AnimalType, view.filterTypeList())
+
+    private fun getSexFilter(): Filter<List<String>> = Filter(Filter.Type.Sex, view.filterSexList())
+
+    private fun getAgeFilter(): Filter<List<String>> = Filter(Filter.Type.Age, view.filterAgeList())
+
+    private fun getSizeFilter(): Filter<List<String>> = Filter(Filter.Type.Size, view.filterSizeList())
+
+    private fun getFilterCondition(): Filter<List<String>> = Filter(Filter.Type.Condition, view.filterConditionList())
+
+    private fun getLikeFilter(): Filter<List<String>> = Filter(Filter.Type.Likes, view.filterLikeList())
+
+
 
 }
