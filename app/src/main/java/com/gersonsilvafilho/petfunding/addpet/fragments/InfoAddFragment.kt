@@ -29,11 +29,11 @@ class InfoAddFragment(private val presenter: AddPetContract.Presenter,val pet: P
 
         if (pet != null)
         {
-            group_choices_type.SetObjectWithName(pet.type)
-            group_choices_sex.SetObjectWithName(pet.sex)
-            group_choices_size.SetObjectWithName(pet.size)
-            group_choices_fur.SetObjectWithName(pet.furSize)
-            group_choices_fur_color.SetObjectsWithNames(pet.furColors)
+            group_choices_type.setObjectWithName(pet.type)
+            group_choices_sex.setObjectWithName(pet.sex)
+            group_choices_size.setObjectWithName(pet.size)
+            group_choices_fur.setObjectWithName(pet.furSize)
+            group_choices_fur_color.setObjectsWithNames(pet.furColors)
 
             spinnerYear.selectedIndex = pet.birthDate.monthsSinceNow() / 12
             spinnerMonth.selectedIndex = pet.birthDate.monthsSinceNow() % 12

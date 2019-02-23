@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import com.facebook.CallbackManager
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.addpet.fragments.getSelectedList
+import com.gersonsilvafilho.petfunding.addpet.fragments.setObjectsWithNames
 import com.gersonsilvafilho.petfunding.filter.model.FilterList
 import com.gersonsilvafilho.petfunding.splash.dagger.FilterModule
 import com.gersonsilvafilho.petfunding.util.PetApplication
@@ -32,6 +33,7 @@ class FilterActivity : AppCompatActivity(), FilterContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_filter)
         setupActivityComponent()
+        presenter.initFilterCache(intent.getSerializableExtra("filters") as FilterList)
     }
 
     private fun setupActivityComponent() {
@@ -40,6 +42,14 @@ class FilterActivity : AppCompatActivity(), FilterContract.View {
             .plus(FilterModule(this))
             .inject(this)
     }
+
+    override fun setTypeList(list: List<String>) = group_choices_type.setObjectsWithNames(list)
+    override fun setSexList(list: List<String>) = group_choices_sex.setObjectsWithNames(list)
+    override fun setSizeList(list: List<String>) = group_choices_size.setObjectsWithNames(list)
+    override fun setConditionList(list: List<String>) = group_choices_condition.setObjectsWithNames(list)
+    override fun setLikeList(list: List<String>) = group_choices_like.setObjectsWithNames(list)
+    override fun setAgeList(list: List<String>) = group_choices_age.setObjectsWithNames(list)
+
 
     override fun filterTypeList() = group_choices_type.getSelectedList()
     override fun filterSexList() = group_choices_sex.getSelectedList()

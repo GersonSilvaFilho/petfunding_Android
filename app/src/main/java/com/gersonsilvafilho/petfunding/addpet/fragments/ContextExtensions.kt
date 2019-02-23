@@ -3,7 +3,7 @@ package com.gersonsilvafilho.petfunding.addpet.fragments
 
 import com.nex3z.togglebuttongroup.button.LabelToggle
 import io.reactivex.Observable
-import org.jetbrains.anko.childrenSequence
+import org.jetbrains.anko.childrenRecursiveSequence
 
 /**
  * Created by GersonSilva on 4/8/17.
@@ -34,13 +34,12 @@ fun com.nex3z.togglebuttongroup.MultiSelectToggleGroup.getSelectedList(): List<S
 }
 
 
-
-fun com.nex3z.togglebuttongroup.SingleSelectToggleGroup.SetObjectWithName(name:String) {
-    var selected = this.childrenSequence().filter { it is LabelToggle && it.text == name}.first().id
+fun com.nex3z.togglebuttongroup.SingleSelectToggleGroup.setObjectWithName(name: String) {
+    val selected = this.childrenRecursiveSequence().filter { it is LabelToggle && it.text == name }.first().id
     this.check(selected)
 }
 
-fun com.nex3z.togglebuttongroup.MultiSelectToggleGroup.SetObjectsWithNames(name:List<String>) {
-    var selected = this.childrenSequence().filter { it is LabelToggle && name.contains(it.text)}.map { it.id }
+fun com.nex3z.togglebuttongroup.MultiSelectToggleGroup.setObjectsWithNames(name: List<String>) {
+    val selected = this.childrenRecursiveSequence().filter { it is LabelToggle && name.contains(it.text) }.map { it.id }
     for (i in selected) { this.check(i) }
 }

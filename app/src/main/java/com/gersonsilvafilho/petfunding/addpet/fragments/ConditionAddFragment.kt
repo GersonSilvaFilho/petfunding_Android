@@ -34,21 +34,21 @@ class ConditionAddFragment(private val presenter: AddPetContract.Presenter,val p
             if (pet.vaccinated) stateList.add("Vacinado")
             if (pet.castrated) stateList.add("Castrado")
             if (pet.dewormed) stateList.add("Desverminado")
-            group_choices_state.SetObjectsWithNames(stateList)
+            group_choices_state.setObjectsWithNames(stateList)
 
             var likeList = ArrayList<String>()
             if (pet.likeChildren) likeList.add("Crianças")
             if (pet.likeAnimals) likeList.add("Outros Animais")
             if (pet.likeElders) likeList.add("Idosos")
-            group_choices_like.SetObjectsWithNames(likeList)
+            group_choices_like.setObjectsWithNames(likeList)
 
             var specialList = ArrayList<String>()
             if (pet.hasLocomotionProblems) specialList.add("Problema Físico")
             if (pet.blind) specialList.add("Cego")
             if (pet.hasBadBehaviour) specialList.add("Comportamento")
-            group_choices_like.SetObjectsWithNames(specialList)
+            group_choices_like.setObjectsWithNames(specialList)
 
-            group_choices_person.SetObjectsWithNames(pet.behaviour)
+            group_choices_person.setObjectsWithNames(pet.behaviour)
         }
     }
 
