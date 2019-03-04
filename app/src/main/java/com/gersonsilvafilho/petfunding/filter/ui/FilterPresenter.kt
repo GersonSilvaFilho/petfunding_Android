@@ -32,7 +32,6 @@ class FilterPresenter(private val view: FilterContract.View) : FilterContract.Pr
         getListFromType(filter, Filter.Type.Sex)?.let {
             view.setSexList(it)
         }
-
     }
 
     private val compositeDisposable = CompositeDisposable()

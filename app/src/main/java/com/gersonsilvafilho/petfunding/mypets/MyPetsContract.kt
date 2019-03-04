@@ -24,5 +24,6 @@ interface MyPetsContract {
         fun petSelected(pet: Pet)
         fun  petEdit(it: Pet)
         fun getUsersFromPet(groupOrdinal: Int,petId: String)
+        fun onStop()
     }
 }
