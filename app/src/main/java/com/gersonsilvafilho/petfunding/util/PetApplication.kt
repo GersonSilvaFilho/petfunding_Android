@@ -2,8 +2,6 @@ package com.gersonsilvafilho.petfunding.util
 
 import android.app.Activity
 import android.app.Application
-import android.content.Context
-import com.gersonsilvafilho.petfunding.dagger.AppComponent
 import com.gersonsilvafilho.petfunding.dagger.DaggerAppComponent
 import com.google.firebase.FirebaseApp
 import com.miguelbcr.ui.rx_paparazzo2.RxPaparazzo
@@ -22,8 +20,6 @@ class PetApplication : Application(), HasActivityInjector {
     @Inject
     lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
 
-    lateinit var appComponent: AppComponent
-
     override fun onCreate() {
         super.onCreate()
         RxPaparazzo.register(this)
@@ -31,17 +27,11 @@ class PetApplication : Application(), HasActivityInjector {
         initDagger()
     }
 
-    fun get(context: Context): PetApplication {
-        return context.getApplicationContext() as PetApplication
-    }
-
     private fun initDagger() {
-        appComponent = DaggerAppComponent.builder()
+        val appComponent = DaggerAppComponent.builder()
             .application(this)
             .build()
 
         appComponent.inject(this)
     }
-
-
 }
