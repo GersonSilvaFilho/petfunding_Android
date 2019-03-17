@@ -13,7 +13,6 @@ import javax.inject.Singleton
 class MatchModule{
 
     @Provides
-    @Singleton
     fun module(): MatchReposity
     {
         return MatchFirebaseRepository()

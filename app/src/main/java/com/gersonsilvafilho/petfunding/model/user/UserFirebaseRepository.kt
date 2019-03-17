@@ -22,9 +22,9 @@ import org.json.JSONException
 class UserFirebaseRepository : UserRepository
 {
 
-    val database = FirebaseDatabase.getInstance()
-    var usersRef = database.getReference("users")
-    var mCurrentUser : User = User()
+    private val database = FirebaseDatabase.getInstance()
+    private var usersRef = database.getReference("users")
+    private var mCurrentUser: User = User()
 
     private val  mAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
@@ -37,16 +37,16 @@ class UserFirebaseRepository : UserRepository
     override fun monitorCurrentUser() {
         val key = usersRef.child(getCurrentUserId())
         RxFirebaseDatabase.observeValueEvent(key, User::class.java)
-                .doOnError { e -> Log.d("UserRepo", "User is null - " + e.localizedMessage)
-                     Exception("TADA !")}
-                .subscribe ({ if(it != null) mCurrentUser = it }, {})
+            .subscribe({ if (it != null) mCurrentUser = it }, { e ->
+                Log.d("UserRepo", "User is null - " + e.localizedMessage)
+                Exception("TADA !")
+            })
     }
 
     override fun currentUserChanged(): Observable<User> {
         val key = usersRef.child(getCurrentUserId())
         return RxFirebaseDatabase.observeValueEvent(key, User::class.java)
                 .doOnError { e -> Log.d("UserRepo", "User is null - " + e.localizedMessage)
-                     Exception("TADA !")
                 }.toObservable()
     }
 

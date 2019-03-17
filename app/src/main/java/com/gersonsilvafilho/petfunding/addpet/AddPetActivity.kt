@@ -18,6 +18,7 @@ import com.gersonsilvafilho.petfunding.chat.AddPetModule
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.util.PetApplication
 import com.jakewharton.rxbinding3.view.clicks
+import dagger.android.AndroidInjection
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_add_pet.addPetButtonSave
 import kotlinx.android.synthetic.main.activity_add_pet.tabs
@@ -35,24 +36,15 @@ class AddPetActivity : AppCompatActivity(), AddPetContract.View {
     lateinit var mActionsListener: AddPetContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_pet)
 
         val pet = intent.getSerializableExtra("pet") as Pet?
 
-        initDagger(pet)
-
         setupToolbar()
         setupViewPager(viewpager, pet)
         tabs.setupWithViewPager(viewpager)
-    }
-
-    private fun initDagger(pet:Pet?)
-    {
-        (application as PetApplication).get(this)
-                .getUserComponent()!!
-                .plus(AddPetModule(this, pet))
-                .inject(this)
     }
 
     private fun setupToolbar()

@@ -14,7 +14,7 @@ interface UserRepository
     fun loginWithFacebook(token: String): Observable<Boolean>
     fun userStatus(): Observable<Boolean>
     fun userLogout()
-    fun getCurrentUserId():String
+    fun getCurrentUserId(): String
     fun addUnmatch(petId:String): Completable
     fun getUsernameFromFacebook()
     fun getCurrentUser():User

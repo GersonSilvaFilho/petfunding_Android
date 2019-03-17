@@ -10,7 +10,6 @@ import javax.inject.Singleton
 @Module
 class ChatRepositoryModule {
     @Provides
-    @Singleton
     fun module(): ChatRepository
     {
         return ChatFirebaseRepository()

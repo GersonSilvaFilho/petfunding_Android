@@ -11,8 +11,7 @@ import com.facebook.login.LoginResult
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.main.ui.MainMenuActivity
 import com.gersonsilvafilho.petfunding.splash.ui.SplashContract.View
-import com.gersonsilvafilho.petfunding.splash.dagger.SplashModule
-import com.gersonsilvafilho.petfunding.util.PetApplication
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_splash.fbLoginButton
 import org.jetbrains.anko.startActivity
 import javax.inject.Inject
@@ -40,17 +39,11 @@ class SplashActivity : AppCompatActivity(), View {
     lateinit var presenter: SplashPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-        setupActivityComponent()
-        initFacebook()
-    }
 
-    private fun setupActivityComponent() {
-        (application as PetApplication).get(this)
-                .createUserComponent()
-                .plus(SplashModule(this))
-                .inject(this)
+        initFacebook()
     }
 
     private fun initFacebook()

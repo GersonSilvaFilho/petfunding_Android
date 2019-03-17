@@ -9,9 +9,8 @@ import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.addpet.fragments.getSelectedList
 import com.gersonsilvafilho.petfunding.addpet.fragments.setObjectsWithNames
 import com.gersonsilvafilho.petfunding.filter.model.FilterList
-import com.gersonsilvafilho.petfunding.splash.dagger.FilterModule
-import com.gersonsilvafilho.petfunding.util.PetApplication
 import com.jakewharton.rxbinding3.view.clicks
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_filter.applyFilterButton
 import kotlinx.android.synthetic.main.activity_filter.group_choices_age
 import kotlinx.android.synthetic.main.activity_filter.group_choices_condition
@@ -30,17 +29,10 @@ class FilterActivity : AppCompatActivity(), FilterContract.View {
     lateinit var presenter: FilterContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_filter)
-        setupActivityComponent()
         presenter.initFilterCache(intent.getSerializableExtra("filters") as FilterList)
-    }
-
-    private fun setupActivityComponent() {
-        (application as PetApplication).get(this)
-            .getAppComponent()
-            .plus(FilterModule(this))
-            .inject(this)
     }
 
     override fun setTypeList(list: List<String>) = group_choices_type.setObjectsWithNames(list)

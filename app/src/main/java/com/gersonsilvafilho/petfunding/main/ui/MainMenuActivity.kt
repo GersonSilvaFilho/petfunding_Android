@@ -28,15 +28,14 @@ import com.gersonsilvafilho.petfunding.filter.model.FilterList
 import com.gersonsilvafilho.petfunding.likelist.LikeListActivity
 import com.gersonsilvafilho.petfunding.main.CardsDataAdapter
 import com.gersonsilvafilho.petfunding.main.SwipeListener
-import com.gersonsilvafilho.petfunding.main.dagger.MainMenuModule
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.model.user.User
 import com.gersonsilvafilho.petfunding.mypets.MyPetsActivity
 import com.gersonsilvafilho.petfunding.splash.ui.FilterActivity
 import com.gersonsilvafilho.petfunding.splash.ui.SplashActivity
-import com.gersonsilvafilho.petfunding.util.PetApplication
 import com.jakewharton.rxbinding3.view.clicks
 import com.squareup.picasso.Picasso
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.app_bar_navigation.cardStack
 import kotlinx.android.synthetic.main.app_bar_navigation.fabLike
 import kotlinx.android.synthetic.main.app_bar_navigation.fabdislike
@@ -56,9 +55,9 @@ class MainMenuActivity : AppCompatActivity(),
     private var filterStatus: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
-        initDagger()
 
         cardStack.setContentResource(R.layout.card_layout)
 
@@ -139,13 +138,6 @@ class MainMenuActivity : AppCompatActivity(),
     override fun mClick() {
         ///launch(this, card_full)
         startActivity<DetailActivity>("pet" to getCurrentPet())
-    }
-
-    private fun initDagger() {
-        (application as PetApplication).get(this)
-            .getUserComponent()!!
-            .plus(MainMenuModule(this))
-            .inject(this)
     }
 
     override fun onBackPressed() {

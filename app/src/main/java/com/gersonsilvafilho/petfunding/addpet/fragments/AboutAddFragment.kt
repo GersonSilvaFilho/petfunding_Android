@@ -16,7 +16,6 @@ import com.jakewharton.rxbinding3.view.clicks
 import com.jakewharton.rxbinding3.widget.textChanges
 import com.miguelbcr.ui.rx_paparazzo2.RxPaparazzo
 import com.squareup.picasso.Picasso
-import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.about_add_fragment.addEditTextDescription
@@ -31,13 +30,9 @@ class AboutAddFragment(private val presenter: AddPetContract.Presenter,val pet:P
 
     var imageViews:ArrayList<ImageView> = ArrayList<ImageView>()
 
-    override fun nameChanges(): Observable<CharSequence> = addEditTextName.textChanges()
-    override fun descriptionChanges(): Observable<CharSequence> = addEditTextDescription.textChanges()
+    override fun nameChanges() = addEditTextName.textChanges()
+    override fun descriptionChanges() = addEditTextDescription.textChanges()
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment

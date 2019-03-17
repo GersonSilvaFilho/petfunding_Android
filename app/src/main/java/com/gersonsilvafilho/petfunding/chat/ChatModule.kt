@@ -6,14 +6,26 @@ import com.gersonsilvafilho.petfunding.model.pet.PetRepository
 import com.gersonsilvafilho.petfunding.model.user.UserRepository
 import dagger.Module
 import dagger.Provides
+import dagger.android.ContributesAndroidInjector
 
 /**
  * Created by GersonSilva on 5/20/17.
  */
 @Module
-class ChatModule(val chatActivity: ChatActivity) {
+class ChatModule {
     @Provides
-    fun provideMainChatPresenter(chatRepository: ChatRepository, userRepository: UserRepository, matchReposity: MatchReposity, petRepository: PetRepository): ChatContract.Presenter{
-        return ChatPresenter(chatActivity, chatRepository, userRepository, matchReposity, petRepository)
-    }
+    fun provideMainChatPresenter(
+        chatActivity: ChatActivity,
+        chatRepository: ChatRepository,
+        userRepository: UserRepository,
+        matchReposity: MatchReposity,
+        petRepository: PetRepository
+    ): ChatContract.Presenter = ChatPresenter(chatActivity, chatRepository, userRepository, matchReposity, petRepository)
+
+}
+
+@Module
+abstract class ChatActivityBuilderModule {
+    @ContributesAndroidInjector(modules = [ChatModule::class])
+    abstract fun contributeVoucherActivity(): ChatActivity
 }

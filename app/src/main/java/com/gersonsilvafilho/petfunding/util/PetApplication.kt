@@ -1,63 +1,47 @@
 package com.gersonsilvafilho.petfunding.util
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import com.gersonsilvafilho.petfunding.dagger.AppComponent
-import com.gersonsilvafilho.petfunding.dagger.AppModule
 import com.gersonsilvafilho.petfunding.dagger.DaggerAppComponent
-import com.gersonsilvafilho.petfunding.model.user.UserComponent
-import com.gersonsilvafilho.petfunding.model.user.UserFirebaseRepository
-import com.gersonsilvafilho.petfunding.model.user.UserModule
 import com.google.firebase.FirebaseApp
 import com.miguelbcr.ui.rx_paparazzo2.RxPaparazzo
-
-
-
-
-
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasActivityInjector
+import javax.inject.Inject
 
 
 /**
  * Created by GersonSilva on 5/7/17.
  */
-class PetApplication : Application() {
+class PetApplication : Application(), HasActivityInjector {
 
-    private var userComponent: UserComponent? = null
-    private lateinit var appComponent: AppComponent
+    override fun activityInjector() = dispatchingActivityInjector
+
+    @Inject
+    lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
+
+    lateinit var appComponent: AppComponent
 
     override fun onCreate() {
         super.onCreate()
         RxPaparazzo.register(this)
         FirebaseApp.initializeApp(this)
-        initAppComponent()
+        initDagger()
     }
 
     fun get(context: Context): PetApplication {
         return context.getApplicationContext() as PetApplication
     }
 
-    private fun initAppComponent() {
+    private fun initDagger() {
         appComponent = DaggerAppComponent.builder()
-                .appModule(AppModule(this))
-                .build()
+            .application(this)
+            .build()
+
+        appComponent.inject(this)
     }
 
-
-    fun getAppComponent(): AppComponent {
-        return appComponent
-    }
-
-    fun createUserComponent(): UserComponent {
-        userComponent = appComponent.plus(UserModule(UserFirebaseRepository()))
-        return userComponent!!
-    }
-
-    fun releaseUserComponent() {
-        userComponent = null
-    }
-
-    fun getUserComponent(): UserComponent? {
-        return userComponent
-    }
 
 }

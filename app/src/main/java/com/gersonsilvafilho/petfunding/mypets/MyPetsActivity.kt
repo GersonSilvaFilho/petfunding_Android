@@ -20,7 +20,7 @@ import com.gersonsilvafilho.petfunding.model.pet.Pet
 import com.gersonsilvafilho.petfunding.model.user.User
 import com.gersonsilvafilho.petfunding.mypets.expandable.MyPetsParentViewHolder
 import com.gersonsilvafilho.petfunding.mypets.expandable.MyPetsUserChildViewHolder
-import com.gersonsilvafilho.petfunding.util.PetApplication
+import dagger.android.AndroidInjection
 import org.jetbrains.anko.startActivity
 import javax.inject.Inject
 
@@ -51,10 +51,7 @@ class MyPetsActivity : AppCompatActivity(), MyPetsContract.View, AsyncExpandable
 
     private fun initDagger()
     {
-        (application as PetApplication).get(this)
-                .getUserComponent()!!
-                .plus(MyPetsModule(this))
-                .inject(this)
+        AndroidInjection.inject(this)
     }
 
     private fun setupToolbar()

@@ -53,11 +53,15 @@ dependencies {
     implementation lib.firebaseRx
 
     //Social
-    implementation lib.facebook
+    implementation lib.facebookCore
+    implementation lib.facebookLogin
 
     //Dagger
     implementation lib.dagger
+    implementation lib.daggerAndroid
+    implementation lib.daggerAndroidSupport
     kapt lib.daggerCompiler
+    kapt lib.daggerCompilerAndroid
 
     //Anko
     implementation lib.anko
