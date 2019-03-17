@@ -17,8 +17,8 @@ import java.util.UUID
 class PetFirebaseRepository : PetRepository {
 
 
-    val database = FirebaseDatabase.getInstance()
-    var petsRef = database.getReference("pets")
+    private val database = FirebaseDatabase.getInstance()
+    private var petsRef = database.getReference("pets")
 
     override fun getPetsFromKeys(petIds: List<String>): Observable<List<Pet>> {
         return RxFirebaseDatabase.observeSingleValueEvent(petsRef, DataSnapshotMapper.listOf(Pet::class.java))

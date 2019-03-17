@@ -27,15 +27,16 @@ class MainMenuPresenter(
     private val compositeDisposable = CompositeDisposable()
     override var filterList = FilterList(listOf())
 
-    init {
+    override fun onCreate() {
         compositeDisposable.add(
             userRepository.userStatus()
                 .filter { !it }
                 .subscribe {
                     setUserProfile()
-                    loadPets(FilterList(listOf()))
                 }
         )
+
+        loadPets(FilterList(listOf()))
     }
 
 
@@ -58,7 +59,10 @@ class MainMenuPresenter(
     }
 
     override fun userUnmatchedPet(pet: Pet) {
-        compositeDisposable.add(userRepository.addUnmatch(pet.uid).subscribe())
+        compositeDisposable.add(
+            userRepository.addUnmatch(pet.uid)
+                .subscribe({}, { e -> Log.e("MainMenuPresenter", "Error on Unmatch ${e}") })
+        )
     }
 
     override fun userLogout() {
@@ -105,12 +109,9 @@ class MainMenuPresenter(
     }
 
     override fun onMatchButtonClicked(pet: Pet) {
-        if (userRepository.getCurrentUserId() != null)
-        {
-            view.startChatActivity(pet)
-        }
-        else
-        {
+        if (userRepository.getCurrentUserId() != null) {
+            view.startChatActivity(pet, userRepository.getCurrentUserId()!!)
+        } else {
             view.startSplashActivity()
         }
     }

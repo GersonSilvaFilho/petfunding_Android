@@ -11,20 +11,22 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.model.pet.Pet
-import com.gersonsilvafilho.petfunding.util.SquareImageView
 import com.gersonsilvafilho.petfunding.util.monthsSinceNow
 import com.squareup.picasso.Picasso
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.GregorianCalendar
 
 class CardsDataAdapter(context:Context, @LayoutRes resource: Int) : ArrayAdapter<Pet>(context, resource) {
 
-    override fun getView(position: Int, contentView: View?, parent: ViewGroup): View {
+    override fun getView(position: Int, contentView: View, parent: ViewGroup): View {
 
-        val imageView = contentView!!.findViewById<ImageView>(R.id.card_image)
 
-        val pet = getItem(position)
+        val pet = getItem(position) ?: return contentView
+
         if(!pet.photosUrl.isEmpty())
         {
+            val imageView = contentView.findViewById<ImageView>(R.id.card_image)
             Picasso.get()
                     .load(pet.photosUrl.get(0))
                     .into(imageView)
@@ -32,48 +34,46 @@ class CardsDataAdapter(context:Context, @LayoutRes resource: Int) : ArrayAdapter
 
 
         val nameTextView = contentView.findViewById<TextView>(R.id.textViewCardName)
-
-        var ageString = ""
-        val today = Date()
-        val monthsTotal = pet.birthDate.monthsSinceNow()
-        val years = monthsTotal / 12
-        if(years > 0)
-        {
-            ageString = (years.toString() + " Ano")
-            ageString +=  (if(years > 1) "s" else "")
-        }
-        val months = monthsTotal % 12
-        if(months > 0 && years < 2)
-        {
-            if(ageString.isNotEmpty())
-            {
-                ageString += " e "
-            }
-
-            ageString += (months.toString() + " Mes")
-            ageString +=  (if(months > 1) "es" else "")
-        }
-
-        nameTextView.text = pet.name + ", " + ageString
+        nameTextView?.text = "${pet.name}, ${getPetAgeString(pet)}"
 
         val genderImageView = contentView.findViewById<ImageView>(R.id.genderImageView)
 
         if(pet.sex == "Masculino")
         {
-            genderImageView.setImageResource(R.drawable.male_icon)
+            genderImageView?.setImageResource(R.drawable.male_icon)
         }
         else
         {
-            genderImageView.setImageResource(R.drawable.female_icon)
+            genderImageView?.setImageResource(R.drawable.female_icon)
         }
 
         val vaccinated = contentView.findViewById<ImageView>(R.id.vacinnatedImageView)
-        vaccinated.visibility = if (pet.vaccinated) VISIBLE else GONE
+        vaccinated?.visibility = if (pet.vaccinated) VISIBLE else GONE
 
         val castrated = contentView.findViewById<ImageView>(R.id.castratesImageView)
         castrated.visibility = if (pet.castrated) VISIBLE else GONE
 
         return contentView
+    }
+
+    private fun getPetAgeString(pet: Pet): String {
+        var ageString = ""
+        val monthsTotal = pet.birthDate.monthsSinceNow()
+        val years = monthsTotal / 12
+        if (years > 0) {
+            ageString = (years.toString() + " Ano")
+            ageString += (if (years > 1) "s" else "")
+        }
+        val months = monthsTotal % 12
+        if (months > 0 && years < 2) {
+            if (ageString.isNotEmpty()) {
+                ageString += " e "
+            }
+
+            ageString += (months.toString() + " Mes")
+            ageString += (if (months > 1) "es" else "")
+        }
+        return ageString
     }
 
     private fun getMonthDiff(startDate:Date, endDate:Date):Int

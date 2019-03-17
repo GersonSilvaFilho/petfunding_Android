@@ -2,15 +2,12 @@ package com.gersonsilvafilho.petfunding.main
 
 import android.util.Log
 import com.wenchao.cardstack.CardStack
-import io.reactivex.Observable
 
 /**
  * Created by GersonSilva on 5/2/17.
  */
 
-class SwipeListener (val clickListener:mClickListener): CardStack.CardEventListener{
-
-
+class SwipeListener(private val clickListener: mClickListener) : CardStack.CardEventListener {
     //implement card event interface
     override fun swipeEnd(direction: Int, distance: Float): Boolean {
         //if "return true" the dismiss animation will be triggered
@@ -23,18 +20,14 @@ class SwipeListener (val clickListener:mClickListener): CardStack.CardEventListe
         // ----------
         //  2  |  3
 
-        return if (distance > 300) true else false
+        return distance > 300
     }
 
     override fun swipeStart(direction: Int, distance: Float): Boolean {
-
         return true
     }
 
     override fun swipeContinue(direction: Int, distanceX: Float, distanceY: Float): Boolean {
-
-
-
         return true
     }
 

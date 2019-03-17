@@ -18,8 +18,7 @@ interface MainMenuContract {
         fun hideRippleWaiting()
         fun showRippleWaiting()
         fun startSplashActivity()
-
-        fun startChatActivity(pet: Pet)
+        fun startChatActivity(pet: Pet, userId: String)
     }
 
     interface Presenter
@@ -28,6 +27,7 @@ interface MainMenuContract {
         fun userMatchedPet(pet:Pet)
         fun userUnmatchedPet(pet:Pet)
         fun setUserProfile()
+        fun onCreate()
         fun onStop()
         fun loadPets(filterList: FilterList)
         fun onMatchButtonClicked(pet: Pet)

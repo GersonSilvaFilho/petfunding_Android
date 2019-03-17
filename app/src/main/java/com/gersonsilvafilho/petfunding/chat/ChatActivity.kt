@@ -43,7 +43,6 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
     override fun initChatView(currentUserId: String) {
         adapter = MessagesListAdapter<Message>(currentUserId, imageLoader)
         messagesList.setAdapter(adapter)
-
     }
 
     override fun loadChatMessages(messages: List<Message>)
@@ -63,7 +62,7 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.getItemId() === android.R.id.home)
+        if (item.getItemId() == android.R.id.home)
         {
             finish()
         }

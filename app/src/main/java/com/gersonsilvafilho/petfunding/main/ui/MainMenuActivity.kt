@@ -83,6 +83,8 @@ class MainMenuActivity : AppCompatActivity(),
 
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
+
+        presenter.onCreate()
     }
 
     override fun showItsMatchDialog(pet: Pet) {
@@ -93,16 +95,20 @@ class MainMenuActivity : AppCompatActivity(),
             .load(pet.photosUrl[0])
             .into(imageView)
         val textView = dialog.findViewById<TextView>(R.id.textViewDialogName)
-        textView.setText(pet.name + " está muito feliz que você deseja adotá-lo!")
+        textView.setText("${pet.name} está muito feliz que você deseja adotá-lo!")
 
         val button = dialog.findViewById<Button>(R.id.buttonMatchMessage)
         button.setOnClickListener { presenter.onMatchButtonClicked(pet) }
-        dialog.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val buttonContinueSearch = dialog.findViewById<Button>(R.id.buttonContinueSearch)
+        buttonContinueSearch.setOnClickListener { dialog.dismiss() }
+
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
     }
 
-    override fun startChatActivity(pet: Pet) {
-        startActivity<ChatActivity>("pet" to pet)
+    override fun startChatActivity(pet: Pet, userId: String) {
+        startActivity<ChatActivity>("pet" to pet, "userId" to userId)
     }
 
     override fun startDetailActivity(pet: Pet) {
