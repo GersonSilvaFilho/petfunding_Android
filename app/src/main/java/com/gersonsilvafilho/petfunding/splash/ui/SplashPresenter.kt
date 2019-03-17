@@ -1,7 +1,6 @@
 package com.gersonsilvafilho.petfunding.splash.ui
 
 import com.gersonsilvafilho.petfunding.model.user.UserRepository
-import com.gersonsilvafilho.petfunding.splash.ui.SplashContract
 import io.reactivex.disposables.CompositeDisposable
 
 /**
@@ -18,7 +17,7 @@ class SplashPresenter(private val view: SplashContract.View, private val userRep
                 .subscribe { logged ->
                     if (logged) {
                         view.goToMainMenuActivity()
-                        userRepository.monitorCurrentUser()
+//                        userRepository.monitorCurrentUser()
                     }
                 })
     }

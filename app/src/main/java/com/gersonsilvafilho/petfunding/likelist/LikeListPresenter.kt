@@ -21,11 +21,13 @@ class LikeListPresenter(
 
 
     override fun loadLikes() {
-        matchRepository.getAllMatches(userRepository.getCurrentUserId()).subscribe { t1 ->
+        userRepository.getCurrentUserId()?.let {
+            matchRepository.getAllMatches(it).subscribe { t1 ->
             petRepository.getPets().subscribe { l ->
                 view.setAdapter(l.filter { pet -> t1.map { match -> match.petId }.contains(pet.uid) })
             }
         }
+    }
     }
 
     override fun petSelected(pet: Pet) {

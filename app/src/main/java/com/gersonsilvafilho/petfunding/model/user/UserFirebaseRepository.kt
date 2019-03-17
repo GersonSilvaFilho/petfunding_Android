@@ -43,15 +43,6 @@ class UserFirebaseRepository : UserRepository
         return userIsLoggedSubject
     }
 
-    override fun monitorCurrentUser() {
-        val key = usersRef.child(getCurrentUserId())
-        RxFirebaseDatabase.observeValueEvent(key, User::class.java)
-            .subscribe({ if (it != null) mCurrentUser = it }, { e ->
-                Log.d("UserRepo", "User is null - " + e.localizedMessage)
-                Exception("TADA !")
-            })
-    }
-
     override fun loginWithFacebook(token: String): Observable<Boolean> {
         val credential = FacebookAuthProvider.getCredential(token)
         RxFirebaseAuth.signInWithCredential((mAuth), credential)
@@ -69,8 +60,8 @@ class UserFirebaseRepository : UserRepository
         mAuth.signOut()
     }
 
-    override fun getCurrentUserId(): String {
-        return FirebaseAuth.getInstance().currentUser!!.uid
+    override fun getCurrentUserId(): String? {
+        return FirebaseAuth.getInstance().currentUser?.uid
     }
 
     override fun getCurrentUser(): User {
@@ -82,7 +73,7 @@ class UserFirebaseRepository : UserRepository
         Log.d("Facebook Parameters", "GetNameFrom FB")
         val request = GraphRequest.newMeRequest(
                 AccessToken.getCurrentAccessToken()
-        ) { fbObject, response ->
+        ) { fbObject, _ ->
             // Application code
             try {
 
@@ -93,9 +84,9 @@ class UserFirebaseRepository : UserRepository
 
 
                 Log.d("Facebook Parameters", "Passou =" + name)
-                val key = usersRef.child(getCurrentUserId())
+                val key = usersRef.child(getCurrentUserId()!!)
                 mCurrentUser.username = name
-                mCurrentUser.uid = getCurrentUserId()
+                mCurrentUser.uid = getCurrentUserId()!!
                 mCurrentUser.email = email
                 mCurrentUser.gender = gender
                 mCurrentUser.imageUrl = "https://graph.facebook.com/"+id+"/picture?type=large"
@@ -114,14 +105,12 @@ class UserFirebaseRepository : UserRepository
     }
 
     override fun addUnmatch(petId: String): Completable {
-        val key = usersRef.child(getCurrentUserId())
-        mCurrentUser.unmatches.add(petId)
-        return RxFirebaseDatabase.updateChildren(key, mCurrentUser.toMap())
-    }
-
-    fun getChatListFromMyPets(petId:String)
-    {
-        val ref = usersRef.child("matches").orderByChild("petId").equalTo(petId)
+        getCurrentUserId()?.let {
+            val key = usersRef.child(it)
+            mCurrentUser.unmatches.add(petId)
+            return RxFirebaseDatabase.updateChildren(key, mCurrentUser.toMap())
+        }
+        return Completable.complete()
     }
 
     override fun getUserFromMatch(matchId:String):Observable<List<User>>
@@ -137,9 +126,12 @@ class UserFirebaseRepository : UserRepository
     }
 
     override fun addMatchToUser(matchId: String): Completable {
-        val key = usersRef.child(getCurrentUserId())
-        mCurrentUser.matches.add(matchId)
-        return RxFirebaseDatabase.updateChildren(key, mCurrentUser.toMap())
+        getCurrentUserId()?.let {
+            val key = usersRef.child(it)
+            mCurrentUser.matches.add(matchId)
+            return RxFirebaseDatabase.updateChildren(key, mCurrentUser.toMap())
+        }
+        return Completable.complete()
     }
 
 }

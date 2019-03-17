@@ -6,7 +6,7 @@ import com.gersonsilvafilho.petfunding.model.pet.PetRepository
 import com.gersonsilvafilho.petfunding.model.user.UserRepository
 import khronos.day
 import java.io.File
-import java.util.*
+import java.util.ArrayList
 
 
 /**
@@ -168,9 +168,9 @@ class AddPetPresenter : AddPetContract.Presenter {
 
 
 
-        if(pet.uid.isNullOrBlank())
+        if (mUserRepository.getCurrentUserId() != null && pet.uid.isNullOrBlank())
         {
-            pet.createdBy = mUserRepository.getCurrentUserId()
+            pet.createdBy = mUserRepository.getCurrentUserId()!!
             mPetRepository.addPet(pet).doOnComplete {
                 mView.showSuccessMessage()
                 mView.finishActivity()

@@ -83,10 +83,6 @@ class MainMenuActivity : AppCompatActivity(),
 
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
-
-        presenter.loadPets(FilterList(listOf()))
-        presenter.setUserProfile()
-
     }
 
     override fun showItsMatchDialog(pet: Pet) {

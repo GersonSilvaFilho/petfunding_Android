@@ -5,88 +5,84 @@ import com.gersonsilvafilho.petfunding.model.chat.ChatRepository
 import com.gersonsilvafilho.petfunding.model.match.MatchReposity
 import com.gersonsilvafilho.petfunding.model.message.Message
 import com.gersonsilvafilho.petfunding.model.pet.Pet
-import com.gersonsilvafilho.petfunding.model.pet.PetRepository
 import com.gersonsilvafilho.petfunding.model.user.UserRepository
 import durdinapps.rxfirebase2.RxFirebaseChildEvent
 
 /**
  * Created by GersonSilva on 5/12/17.
  */
-class ChatPresenter : ChatContract.Presenter {
-    var mChatRepository: ChatRepository
-    var mUserRepository: UserRepository
-    var mMatchRepository: MatchReposity
-    var mPetRepository: PetRepository
-
-    private var mView: ChatContract.View
+class ChatPresenter(
+    private val view: ChatContract.View,
+    private val chatRepository: ChatRepository,
+    private val userRepository: UserRepository,
+    private val matchReposity: MatchReposity
+) : ChatContract.Presenter {
 
     private var mCurrentChatId: String? = null
     private var mCurrentText: String? = null
 
 
-    constructor(chatView: ChatContract.View, chatRepository: ChatRepository, userRepository: UserRepository, matchReposity: MatchReposity, petRepository: PetRepository) {
-        //initDagger()
-        mView = chatView
-        mChatRepository = chatRepository
-        mUserRepository = userRepository
-        mMatchRepository = matchReposity
-        mPetRepository = petRepository
+    private var userId: String? = null
 
-        mView.initChatView(mUserRepository.getCurrentUserId())
+    init {
 
-        mView.onSendMessageClick().map { mCurrentText != null }.subscribe { sendMessage(mCurrentText!!) }
-        mView.onTextChange().subscribe { s -> mCurrentText = s.toString() }
+        userRepository.getCurrentUserId()?.let {
+            userId = it
+            view.initChatView(it)
+        }
+
+        view.onSendMessageClick().map { mCurrentText != null }.subscribe { sendMessage(mCurrentText!!) }
+        view.onTextChange().subscribe { s -> mCurrentText = s.toString() }
     }
 
     override fun initChat(pet: Pet, userId: String?) {
-        if (pet.createdBy == mUserRepository.getCurrentUserId() && !userId.isNullOrEmpty()) {
-            mMatchRepository.getMatch(pet.uid, userId!!).subscribe { match ->
+        if (pet.createdBy == userRepository.getCurrentUserId() && !userId.isNullOrEmpty()) {
+            matchReposity.getMatch(pet.uid, userId!!).subscribe { match ->
                 mCurrentChatId = match.chatId
-                mChatRepository.getChatFromId(mCurrentChatId!!)
+                chatRepository.getChatFromId(mCurrentChatId!!)
                     .subscribe({ l: Chat ->
-                        mChatRepository.listenMessages(mCurrentChatId!!).subscribe(
+                        chatRepository.listenMessages(mCurrentChatId!!).subscribe(
                             { msg ->
                                 if (msg.eventType == RxFirebaseChildEvent.EventType.ADDED) {
-                                    mView.addNewMessage(msg.value)
+                                    view.addNewMessage(msg.value)
                                 }
                             },
                             { t -> })
                     }, { t -> })
             }
         } else {
-            mMatchRepository.getAllMatches(mUserRepository.getCurrentUserId())
+            matchReposity.getAllMatches(userId!!)
                 .subscribe { matches ->
                     val match = matches.firstOrNull { m -> m.petId == pet.uid }
                     mCurrentChatId = match?.chatId
                     if (mCurrentChatId != null && mCurrentChatId != "") {
-                        mChatRepository.listenMessages(mCurrentChatId!!)
-                            .subscribe({ msg -> mView.addNewMessage(msg.value) }, { t -> })
+                        chatRepository.listenMessages(mCurrentChatId!!)
+                            .subscribe({ msg -> view.addNewMessage(msg.value) }, { t -> })
 
                     } else if (match != null) {
-                        mChatRepository.initNewChat(match.uid, mUserRepository.getCurrentUserId())
-                            .doAfterSuccess {
-                                mCurrentChatId = it
-                                mMatchRepository.addChatToMatch(match, it)
-                                mChatRepository.listenMessages(mCurrentChatId!!).subscribe({ msg -> mView.addNewMessage(msg.value) }, { t -> })
+                        chatRepository.initNewChat(match.uid, userId!!)
+                            .subscribe { chatIt ->
+                                mCurrentChatId = chatIt
+                                matchReposity.addChatToMatch(match, chatIt)
+                                chatRepository.listenMessages(mCurrentChatId!!).subscribe({ msg -> view.addNewMessage(msg.value) })
                             }
-                            .subscribe { a -> a }
+
                     }
-
                 }
-        }
 
+        }
     }
 
 
     override fun sendMessage(message: String) {
         val msg = Message()
         msg.itext = message
-        msg.userId = mUserRepository.getCurrentUserId()
-        mChatRepository.sendMessage(mCurrentChatId!!, msg)
+        msg.userId = userId!!
+        chatRepository.sendMessage(userId!!, msg)
             .subscribe { id ->
                 msg.uid = id
                 //mView.addNewMessage(msg)
-                mView.clearMessageBox()
+                view.clearMessageBox()
             }
     }
 }

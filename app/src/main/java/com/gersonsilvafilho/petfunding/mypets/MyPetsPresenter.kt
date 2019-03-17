@@ -20,9 +20,11 @@ class MyPetsPresenter(val view: MyPetsContract.View, val userRepository: UserRep
 
 
     override fun loadLikes() {
-        compositeDisposable.add(petRepository.getPetsFromUserId(userRepository.getCurrentUserId()).subscribe { l ->
-            view.setAdapter(l)
-        })
+        userRepository.getCurrentUserId()?.let {
+            compositeDisposable.add(petRepository.getPetsFromUserId(it).subscribe { l ->
+                view.setAdapter(l)
+            })
+        }
     }
 
     override fun petSelected(pet: Pet) {

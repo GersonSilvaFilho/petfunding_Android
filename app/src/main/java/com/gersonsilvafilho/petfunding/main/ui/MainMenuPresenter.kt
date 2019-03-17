@@ -1,5 +1,6 @@
 package com.gersonsilvafilho.petfunding.main.ui
 
+import android.util.Log
 import com.gersonsilvafilho.petfunding.filter.model.Filter
 import com.gersonsilvafilho.petfunding.filter.model.FilterList
 import com.gersonsilvafilho.petfunding.filter.model.containsString
@@ -30,12 +31,10 @@ class MainMenuPresenter(
     init {
         compositeDisposable.add(
             userRepository.userStatus()
+                .filter { !it }
                 .subscribe {
-                    if (it) {
                         setUserProfile()
-                    } else {
-                        view.startSplashActivity()
-                    }
+                    loadPets(FilterList(listOf()))
                 }
         )
     }
@@ -74,7 +73,8 @@ class MainMenuPresenter(
             petRepository.getPets()
                 .delay(2, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { petsList ->
+                .doOnComplete { view.hideRippleWaiting() }
+                .subscribe({ petsList ->
                     val filteredPets = petsList
                         .filter { filterList.containsString(Filter.Type.AnimalType, it.type) }
                         .filter { filterList.containsString(Filter.Type.Sex, it.sex) }
@@ -92,8 +92,8 @@ class MainMenuPresenter(
                                     filterList.containsStringWithValue(Filter.Type.Age, "Idoso", it.birthDate.monthsSinceNow() >= 96)
                         }
                     view.updateCardAdapter(filteredPets)
-                    view.hideRippleWaiting()
-                }
+                }, { e -> Log.e("Error", "Failed to load pets ${e.message}") })
+
         )
     }
 

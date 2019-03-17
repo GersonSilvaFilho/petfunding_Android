@@ -2,7 +2,6 @@ package com.gersonsilvafilho.petfunding.chat
 
 import com.gersonsilvafilho.petfunding.model.chat.ChatRepository
 import com.gersonsilvafilho.petfunding.model.match.MatchReposity
-import com.gersonsilvafilho.petfunding.model.pet.PetRepository
 import com.gersonsilvafilho.petfunding.model.user.UserRepository
 import dagger.Module
 import dagger.Provides
@@ -18,9 +17,8 @@ class ChatActivityModule {
         chatActivity: ChatActivity,
         chatRepository: ChatRepository,
         userRepository: UserRepository,
-        matchReposity: MatchReposity,
-        petRepository: PetRepository
-    ): ChatContract.Presenter = ChatPresenter(chatActivity, chatRepository, userRepository, matchReposity, petRepository)
+        matchReposity: MatchReposity
+    ): ChatContract.Presenter = ChatPresenter(chatActivity, chatRepository, userRepository, matchReposity)
 
 }
 
