@@ -8,7 +8,8 @@ import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 
 @Module
-class FilterActivityModule {
+object FilterActivityModule {
+    @JvmStatic
     @Provides
     fun provideFilterPresenter(filterActivity: FilterActivity): FilterContract.Presenter {
         return FilterPresenter(filterActivity)

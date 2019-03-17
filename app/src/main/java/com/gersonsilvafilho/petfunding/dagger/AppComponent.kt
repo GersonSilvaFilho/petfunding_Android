@@ -13,11 +13,13 @@ import com.gersonsilvafilho.petfunding.splash.dagger.SplashActivityBuilderModule
 import com.gersonsilvafilho.petfunding.util.PetApplication
 import dagger.BindsInstance
 import dagger.Component
+import javax.inject.Singleton
 
 
 /**
  * Created by GersonSilva on 5/19/17.
  */
+@Singleton
 @Component(
     modules = [
         AppModule::class,

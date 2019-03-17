@@ -9,24 +9,32 @@ import com.gersonsilvafilho.petfunding.model.user.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.android.support.AndroidSupportInjectionModule
+import javax.inject.Singleton
 
 
 /**
  * Created by GersonSilva on 5/19/17.
  */
 @Module(includes = [AndroidSupportInjectionModule::class])
-class AppModule {
+object AppModule {
+
+    @Singleton
     @Provides
+    @JvmStatic
     fun providePetRepository(): PetRepository {
         return PetFirebaseRepository()
     }
 
+    @Singleton
     @Provides
+    @JvmStatic
     fun provideMatchRepository(): MatchReposity {
         return MatchFirebaseRepository()
     }
 
+    @Singleton
     @Provides
+    @JvmStatic
     fun provideUserRepository(): UserRepository {
         return UserFirebaseRepository()
     }

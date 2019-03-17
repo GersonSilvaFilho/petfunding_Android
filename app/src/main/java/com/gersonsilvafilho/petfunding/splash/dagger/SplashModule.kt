@@ -8,7 +8,8 @@ import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 
 @Module
-class SplashActivityModule {
+object SplashActivityModule {
+    @JvmStatic
     @Provides
     fun provideSplashPresenter(splashActivity: SplashActivity, userRepository: UserRepository): SplashPresenter {
         return SplashPresenter(splashActivity, userRepository)

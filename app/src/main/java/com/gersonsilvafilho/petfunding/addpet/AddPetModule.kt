@@ -13,7 +13,8 @@ import dagger.android.ContributesAndroidInjector
  * Created by GersonSilva on 5/20/17.
  */
 @Module
-class AddPetActivityModule {
+object AddPetActivityModule {
+    @JvmStatic
     @Provides
     fun provideMainChatPresenter(addPetActivity: AddPetActivity, userRepository: UserRepository, petRepository: PetRepository): AddPetContract.Presenter {
             return AddPetPresenter(addPetActivity, petRepository, userRepository)

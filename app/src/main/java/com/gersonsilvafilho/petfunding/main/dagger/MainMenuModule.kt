@@ -12,8 +12,9 @@ import dagger.android.ContributesAndroidInjector
 
 
 @Module
-class MainMenuModule {
+object MainMenuModule {
 
+    @JvmStatic
     @Provides
     fun provideMainMenuPresenter(
         chatActivity: MainMenuActivity,

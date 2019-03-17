@@ -11,7 +11,8 @@ import dagger.android.ContributesAndroidInjector
  * Created by GersonSilva on 5/22/17.
  */
 @Module
-class LikeListActivityModule {
+object LikeListActivityModule {
+    @JvmStatic
     @Provides
     fun provideListListPresenter(
         likeListView: LikeListActivity,

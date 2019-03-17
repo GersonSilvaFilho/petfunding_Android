@@ -9,7 +9,8 @@ import dagger.android.ContributesAndroidInjector
  * Created by GersonSilva on 5/20/17.
  */
 @Module
-class DetailActivityModule {
+object DetailActivityModule {
+    @JvmStatic
     @Provides
     fun provideMainChatPresenter(
         chatActivity: DetailActivity,
