@@ -1,5 +1,7 @@
 package com.gersonsilvafilho.petfunding.dagger
 
+import com.gersonsilvafilho.petfunding.model.chat.ChatFirebaseRepository
+import com.gersonsilvafilho.petfunding.model.chat.ChatRepository
 import com.gersonsilvafilho.petfunding.model.match.MatchFirebaseRepository
 import com.gersonsilvafilho.petfunding.model.match.MatchReposity
 import com.gersonsilvafilho.petfunding.model.pet.PetFirebaseRepository
@@ -37,5 +39,12 @@ object AppModule {
     @JvmStatic
     fun provideUserRepository(): UserRepository {
         return UserFirebaseRepository()
+    }
+
+    @Singleton
+    @JvmStatic
+    @Provides
+    fun module(): ChatRepository {
+        return ChatFirebaseRepository()
     }
 }

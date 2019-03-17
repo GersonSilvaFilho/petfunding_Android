@@ -12,7 +12,7 @@ import dagger.android.ContributesAndroidInjector
 
 
 @Module
-object MainMenuModule {
+object MainMenuActivityModule {
 
     @JvmStatic
     @Provides
@@ -27,7 +27,7 @@ object MainMenuModule {
 }
 
 @Module
-abstract class MainMenuBuilderModule {
-    @ContributesAndroidInjector(modules = [MainMenuModule::class])
+abstract class MainMenuActivityBuilderModule {
+    @ContributesAndroidInjector(modules = [MainMenuActivityModule::class])
     abstract fun contributeVoucherActivity(): MainMenuActivity
 }

@@ -5,8 +5,7 @@ import com.gersonsilvafilho.petfunding.chat.AddPetActivityBuilderModule
 import com.gersonsilvafilho.petfunding.chat.ChatActivityBuilderModule
 import com.gersonsilvafilho.petfunding.detail.DetailActivityBuilderModule
 import com.gersonsilvafilho.petfunding.likelist.LikeListActivityBuilderModule
-import com.gersonsilvafilho.petfunding.main.dagger.MainMenuBuilderModule
-import com.gersonsilvafilho.petfunding.model.chat.ChatRepositoryModule
+import com.gersonsilvafilho.petfunding.main.dagger.MainMenuActivityBuilderModule
 import com.gersonsilvafilho.petfunding.mypets.MyPetsActivityBuilderModule
 import com.gersonsilvafilho.petfunding.splash.dagger.FilterActivityBuilderModule
 import com.gersonsilvafilho.petfunding.splash.dagger.SplashActivityBuilderModule
@@ -23,9 +22,8 @@ import javax.inject.Singleton
 @Component(
     modules = [
         AppModule::class,
-        ChatRepositoryModule::class,
         ChatActivityBuilderModule::class,
-        MainMenuBuilderModule::class,
+        MainMenuActivityBuilderModule::class,
         FilterActivityBuilderModule::class,
         LikeListActivityBuilderModule::class,
         MyPetsActivityBuilderModule::class,
