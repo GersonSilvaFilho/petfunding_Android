@@ -38,20 +38,15 @@ class MyPetsActivity : AppCompatActivity(), MyPetsContract.View, AsyncExpandable
     var inventory: CollectionView.Inventory<Pet, User>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_pets)
-        initDagger()
         setupToolbar()
 
         mAsyncExpandableListView = findViewById<AsyncExpandableListView<Pet, User>>(R.id.asyncExpandableCollectionView)
         mAsyncExpandableListView.setCallbacks(this)
 
         mLayoutManager = LinearLayoutManager(this)
-    }
-
-    private fun initDagger()
-    {
-        AndroidInjection.inject(this)
     }
 
     private fun setupToolbar()

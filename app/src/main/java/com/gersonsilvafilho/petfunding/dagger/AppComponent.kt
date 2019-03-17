@@ -2,13 +2,12 @@ package com.gersonsilvafilho.petfunding.dagger
 
 import android.app.Application
 import com.gersonsilvafilho.petfunding.chat.ChatActivityBuilderModule
+import com.gersonsilvafilho.petfunding.likelist.LikeListActivityBuilderModule
 import com.gersonsilvafilho.petfunding.main.dagger.MainMenuBuilderModule
 import com.gersonsilvafilho.petfunding.model.chat.ChatRepositoryModule
-import com.gersonsilvafilho.petfunding.model.pet.MatchModule
-import com.gersonsilvafilho.petfunding.model.pet.PetModule
-import com.gersonsilvafilho.petfunding.model.user.UserModule
-import com.gersonsilvafilho.petfunding.splash.dagger.FilterComponent
-import com.gersonsilvafilho.petfunding.splash.dagger.FilterModule
+import com.gersonsilvafilho.petfunding.mypets.MyPetsActivityBuilderModule
+import com.gersonsilvafilho.petfunding.splash.dagger.FilterActivityBuilderModule
+import com.gersonsilvafilho.petfunding.splash.dagger.SplashActivityBuilderModule
 import com.gersonsilvafilho.petfunding.util.PetApplication
 import dagger.BindsInstance
 import dagger.Component
@@ -21,16 +20,15 @@ import dagger.Component
     modules = [
         AppModule::class,
         ChatRepositoryModule::class,
-        PetModule::class,
-        MatchModule::class,
-        UserModule::class,
         ChatActivityBuilderModule::class,
-        MainMenuBuilderModule::class]
+        MainMenuBuilderModule::class,
+        FilterActivityBuilderModule::class,
+        LikeListActivityBuilderModule::class,
+        MyPetsActivityBuilderModule::class,
+        SplashActivityBuilderModule::class]
 )
 interface AppComponent {
     fun inject(application: PetApplication)
-
-    fun plus(filterModule: FilterModule): FilterComponent
 
     @Component.Builder
     interface Builder {

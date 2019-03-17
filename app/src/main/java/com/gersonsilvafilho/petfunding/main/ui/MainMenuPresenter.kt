@@ -28,18 +28,16 @@ class MainMenuPresenter(
     override var filterList = FilterList(listOf())
 
     init {
-//        compositeDisposable.add(
-//            userRepository.currentUserChanged()
-//                .subscribe { setUserProfile() }
-//        )
-
-//        compositeDisposable.add(
-//            userRepository.userStatus()
-//                .filter { !it }
-//                .subscribe {
-//                    view.startSplashActivity()
-//                }
-//        )
+        compositeDisposable.add(
+            userRepository.userStatus()
+                .subscribe {
+                    if (it) {
+                        setUserProfile()
+                    } else {
+                        view.startSplashActivity()
+                    }
+                }
+        )
     }
 
 

@@ -8,10 +8,4 @@ import dagger.Provides
  */
 @Module
 class UserModule {
-
-    @Provides
-    fun module():UserRepository
-    {
-        return UserFirebaseRepository()
-    }
 }

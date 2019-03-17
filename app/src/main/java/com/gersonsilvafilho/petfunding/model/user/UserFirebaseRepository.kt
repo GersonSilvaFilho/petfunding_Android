@@ -13,6 +13,8 @@ import durdinapps.rxfirebase2.RxFirebaseAuth
 import durdinapps.rxfirebase2.RxFirebaseDatabase
 import io.reactivex.Completable
 import io.reactivex.Observable
+import io.reactivex.subjects.BehaviorSubject
+
 import org.json.JSONException
 
 
@@ -26,12 +28,19 @@ class UserFirebaseRepository : UserRepository
     private var usersRef = database.getReference("users")
     private var mCurrentUser: User = User()
 
+    private val userIsLoggedSubject = BehaviorSubject.create<Boolean>()
+
     private val  mAuth: FirebaseAuth = FirebaseAuth.getInstance()
+
+    init {
+        RxFirebaseAuth.observeAuthState(mAuth)
+            .map { t -> t.currentUser != null }
+            .subscribe(userIsLoggedSubject)
+    }
 
 
     override fun userStatus(): Observable<Boolean> {
-        return RxFirebaseAuth.observeAuthState(mAuth)
-                .map { t -> t.currentUser != null }
+        return userIsLoggedSubject
     }
 
     override fun monitorCurrentUser() {
@@ -43,22 +52,19 @@ class UserFirebaseRepository : UserRepository
             })
     }
 
-    override fun currentUserChanged(): Observable<User> {
-        val key = usersRef.child(getCurrentUserId())
-        return RxFirebaseDatabase.observeValueEvent(key, User::class.java)
-                .doOnError { e -> Log.d("UserRepo", "User is null - " + e.localizedMessage)
-                }.toObservable()
-    }
-
     override fun loginWithFacebook(token: String): Observable<Boolean> {
         val credential = FacebookAuthProvider.getCredential(token)
-        return RxFirebaseAuth.signInWithCredential((mAuth), credential)
+        RxFirebaseAuth.signInWithCredential((mAuth), credential)
                 .map { authResult -> authResult.user!= null }
                 .toObservable()
             .doOnNext { getUsernameFromFacebook() }
+            .subscribe(userIsLoggedSubject)
+
+        return userIsLoggedSubject
     }
 
     override fun userLogout() {
+        userIsLoggedSubject.onNext(false)
         LoginManager.getInstance().logOut()
         mAuth.signOut()
     }

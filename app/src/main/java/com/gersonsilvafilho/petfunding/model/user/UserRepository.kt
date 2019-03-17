@@ -19,7 +19,6 @@ interface UserRepository
     fun getUsernameFromFacebook()
     fun getCurrentUser():User
     fun monitorCurrentUser()
-    fun currentUserChanged(): Observable<User>
     fun getUserFromMatch(matchId: String): Observable<List<User>>
     fun addMatchToUser(matchId: String): Completable
 }

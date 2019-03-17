@@ -9,10 +9,6 @@ import dagger.Provides
 @Module
 class PetModule{
 
-    @Provides
-    fun module(): PetRepository
-    {
-        return PetFirebaseRepository()
-    }
+
 
 }

@@ -12,7 +12,7 @@ import dagger.android.ContributesAndroidInjector
  * Created by GersonSilva on 5/20/17.
  */
 @Module
-class ChatModule {
+class ChatActivityModule {
     @Provides
     fun provideMainChatPresenter(
         chatActivity: ChatActivity,
@@ -26,6 +26,6 @@ class ChatModule {
 
 @Module
 abstract class ChatActivityBuilderModule {
-    @ContributesAndroidInjector(modules = [ChatModule::class])
+    @ContributesAndroidInjector(modules = [ChatActivityModule::class])
     abstract fun contributeVoucherActivity(): ChatActivity
 }
