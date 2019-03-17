@@ -96,9 +96,13 @@ class MainMenuActivity : AppCompatActivity(),
         textView.setText(pet.name + " está muito feliz que você deseja adotá-lo!")
 
         val button = dialog.findViewById<Button>(R.id.buttonMatchMessage)
-        button.setOnClickListener { startActivity<ChatActivity>("pet" to pet) }
+        button.setOnClickListener { presenter.onMatchButtonClicked(pet) }
         dialog.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.show()
+    }
+
+    override fun startChatActivity(pet: Pet) {
+        startActivity<ChatActivity>("pet" to pet)
     }
 
     override fun startDetailActivity(pet: Pet) {
@@ -163,29 +167,6 @@ class MainMenuActivity : AppCompatActivity(),
         return super.onOptionsItemSelected(item)
     }
 
-//    private fun toggleFilter() {
-//        val viewSize = cardStack.height
-//        if (!filterStatus) {
-//            val animation = DropDownAnim(filter, viewSize, true)
-//            animation.duration = 700
-//            filter.startAnimation(animation)
-//            filterStatus = true
-//        } else {
-//            val animation = DropDownAnim(filter, viewSize, false)
-//            animation.duration = 700
-//            filter.startAnimation(animation)
-//            filterStatus = false
-//        }
-//    }
-//
-//    override fun hideFilterView() {
-//        val viewSize = cardStack.height
-//        val animation = DropDownAnim(filter, viewSize, false)
-//        animation.duration = 700
-//        filter.startAnimation(animation)
-//        filterStatus = false
-//    }
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         // Handle navigation view item clicks here.
         val id = item.itemId
@@ -233,24 +214,6 @@ class MainMenuActivity : AppCompatActivity(),
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, sharedView, transitionName)
             activity.startActivity(launcher, options.toBundle())
         }
-    }
-
-    private fun getActionBarSize(): Int {
-        val styledAttributes = theme.obtainStyledAttributes(arrayOf(android.R.attr.actionBarSize).toIntArray())
-        val actionBarSize = styledAttributes.getDimension(0, 0f).toInt()
-        styledAttributes.recycle()
-        return actionBarSize
-    }
-
-    private fun getStatusBarHeight(): Int {
-        var height = 0
-        val idStatusBarHeight = resources.getIdentifier("status_bar_height", "dimen", "android")
-        if (idStatusBarHeight > 0) {
-            height = getResources().getDimensionPixelSize(idStatusBarHeight)
-        } else {
-            height = 0
-        }
-        return height;
     }
 
     override fun showRippleWaiting() {

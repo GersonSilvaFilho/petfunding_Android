@@ -24,7 +24,6 @@ class MainMenuPresenter(
     private val petRepository: PetRepository,
     private val matchReposity: MatchReposity
 ) : MainMenuContract.Presenter {
-
     private val compositeDisposable = CompositeDisposable()
     override var filterList = FilterList(listOf())
 
@@ -33,7 +32,7 @@ class MainMenuPresenter(
             userRepository.userStatus()
                 .filter { !it }
                 .subscribe {
-                        setUserProfile()
+                    setUserProfile()
                     loadPets(FilterList(listOf()))
                 }
         )
@@ -103,5 +102,16 @@ class MainMenuPresenter(
 
     override fun onStop() {
         compositeDisposable.clear()
+    }
+
+    override fun onMatchButtonClicked(pet: Pet) {
+        if (userRepository.getCurrentUserId() != null)
+        {
+            view.startChatActivity(pet)
+        }
+        else
+        {
+            view.startSplashActivity()
+        }
     }
 }

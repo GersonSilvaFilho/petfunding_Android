@@ -19,6 +19,7 @@ interface MainMenuContract {
         fun showRippleWaiting()
         fun startSplashActivity()
 
+        fun startChatActivity(pet: Pet)
     }
 
     interface Presenter
@@ -29,6 +30,7 @@ interface MainMenuContract {
         fun setUserProfile()
         fun onStop()
         fun loadPets(filterList: FilterList)
+        fun onMatchButtonClicked(pet: Pet)
         val filterList: FilterList
     }
 }

@@ -1,6 +1,7 @@
 package com.gersonsilvafilho.petfunding.dagger
 
 import android.app.Application
+import com.gersonsilvafilho.petfunding.chat.AddPetActivityBuilderModule
 import com.gersonsilvafilho.petfunding.chat.ChatActivityBuilderModule
 import com.gersonsilvafilho.petfunding.likelist.LikeListActivityBuilderModule
 import com.gersonsilvafilho.petfunding.main.dagger.MainMenuBuilderModule
@@ -25,7 +26,8 @@ import dagger.Component
         FilterActivityBuilderModule::class,
         LikeListActivityBuilderModule::class,
         MyPetsActivityBuilderModule::class,
-        SplashActivityBuilderModule::class]
+        SplashActivityBuilderModule::class,
+        AddPetActivityBuilderModule::class]
 )
 interface AppComponent {
     fun inject(application: PetApplication)

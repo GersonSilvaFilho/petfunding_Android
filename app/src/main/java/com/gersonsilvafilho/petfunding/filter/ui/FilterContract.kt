@@ -29,5 +29,6 @@ interface FilterContract {
     interface Presenter {
         fun initFilterCache(filter: FilterList)
         fun onStop()
+        fun onCreate()
     }
 }

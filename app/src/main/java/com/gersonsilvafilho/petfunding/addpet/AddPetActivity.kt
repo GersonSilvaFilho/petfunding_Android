@@ -14,9 +14,7 @@ import com.gersonsilvafilho.petfunding.addpet.fragments.AboutAddFragment
 import com.gersonsilvafilho.petfunding.addpet.fragments.ConditionAddFragment
 import com.gersonsilvafilho.petfunding.addpet.fragments.ContactAddFragment
 import com.gersonsilvafilho.petfunding.addpet.fragments.InfoAddFragment
-import com.gersonsilvafilho.petfunding.chat.AddPetModule
 import com.gersonsilvafilho.petfunding.model.pet.Pet
-import com.gersonsilvafilho.petfunding.util.PetApplication
 import com.jakewharton.rxbinding3.view.clicks
 import dagger.android.AndroidInjection
 import io.reactivex.Observable
@@ -33,7 +31,7 @@ class AddPetActivity : AppCompatActivity(), AddPetContract.View {
     override fun saveButtonClick(): Observable<Unit> = addPetButtonSave.clicks()
 
     @Inject
-    lateinit var mActionsListener: AddPetContract.Presenter
+    lateinit var presenter: AddPetContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -45,6 +43,7 @@ class AddPetActivity : AppCompatActivity(), AddPetContract.View {
         setupToolbar()
         setupViewPager(viewpager, pet)
         tabs.setupWithViewPager(viewpager)
+        presenter.onCreate()
     }
 
     private fun setupToolbar()
@@ -52,15 +51,15 @@ class AddPetActivity : AppCompatActivity(), AddPetContract.View {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         toolbar.setTitle("Adicionar PET")
         setSupportActionBar(toolbar)
-        getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun setupViewPager(viewPager: ViewPager, pet:Pet?) {
         val adapter = ViewPagerAdapter(supportFragmentManager)
-        adapter.addFragment(AboutAddFragment(mActionsListener, pet), "Info")
-        adapter.addFragment(InfoAddFragment(mActionsListener, pet), "Dados")
-        adapter.addFragment(ConditionAddFragment(mActionsListener, pet), "Condição")
-        adapter.addFragment(ContactAddFragment(mActionsListener, pet), "Contato")
+        adapter.addFragment(AboutAddFragment(presenter, pet), "Info")
+        adapter.addFragment(InfoAddFragment(presenter, pet), "Dados")
+        adapter.addFragment(ConditionAddFragment(presenter, pet), "Condição")
+        adapter.addFragment(ContactAddFragment(presenter, pet), "Contato")
         viewPager.adapter = adapter
     }
 

@@ -12,84 +12,79 @@ import java.util.ArrayList
 /**
  * Created by GersonSilva on 5/6/17.
  */
-class AddPetPresenter : AddPetContract.Presenter {
+class AddPetPresenter(val view: AddPetContract.View, val petRepository: PetRepository, val userRepository: UserRepository) : AddPetContract.Presenter {
 
-    private var mCurrentPet: Pet
-
-    private var  mUserRepository: UserRepository
-    private var mPetRepository: PetRepository
-
-    var mView : AddPetContract.View
     lateinit var mAboutView : AddPetContract.ViewAbout
     lateinit var mInfoView : AddPetContract.ViewInfo
     lateinit var mConditionView : AddPetContract.ViewCondition
     lateinit var mContactView : AddPetContract.ViewContact
 
-    constructor(addPetView: AddPetContract.View, petRepository: PetRepository, userRepository: UserRepository, currentPet: Pet? = Pet())
-    {
-        mCurrentPet = currentPet!!
-        mView = addPetView
-        mView.saveButtonClick().subscribe { validatePet(mCurrentPet) }
+    private val currentPet: Pet = Pet()
 
-        mPetRepository = petRepository
-        mUserRepository = userRepository
-
+    override fun onCreate() {
+        view.saveButtonClick().subscribe { validatePet(currentPet) }
     }
 
     override fun initAbout(aboutAddFragment: AddPetContract.ViewAbout) {
         mAboutView = aboutAddFragment
-        mAboutView.nameChanges().subscribe { a -> mCurrentPet.name = a.toString() }
-        mAboutView.descriptionChanges().subscribe { a -> mCurrentPet.description = a.toString() }
+        mAboutView.nameChanges().subscribe { a -> currentPet.name = a.toString() }
+        mAboutView.descriptionChanges().subscribe { a -> currentPet.description = a.toString() }
     }
 
     override fun initInfo(infoAddFragment: AddPetContract.ViewInfo) {
         mInfoView = infoAddFragment
-        mInfoView.typeChanges().subscribe { a -> mCurrentPet.type = a.toString() }
-        mInfoView.sexChanges().subscribe { a -> mCurrentPet.sex = a.toString() }
-        mInfoView.ageChanges().subscribe { a -> mCurrentPet.birthDate = a }
-        mInfoView.sizeChanges().subscribe { a -> mCurrentPet.size = a.toString() }
-        mInfoView.furSizeChanges().subscribe { a -> mCurrentPet.furSize = a.toString() }
-        mInfoView.furColorChanges().subscribe { a -> mCurrentPet.furColors = ArrayList<String>(a)  }
+        mInfoView.typeChanges().subscribe { a -> currentPet.type = a.toString() }
+        mInfoView.sexChanges().subscribe { a -> currentPet.sex = a.toString() }
+        mInfoView.ageChanges().subscribe { a -> currentPet.birthDate = a }
+        mInfoView.sizeChanges().subscribe { a -> currentPet.size = a.toString() }
+        mInfoView.furSizeChanges().subscribe { a -> currentPet.furSize = a.toString() }
+        mInfoView.furColorChanges().subscribe { a -> currentPet.furColors = ArrayList<String>(a) }
     }
 
     override fun initCondition(conditionView: AddPetContract.ViewCondition)
     {
         mConditionView = conditionView
-        mConditionView.stateChanges().subscribe { a -> mCurrentPet.castrated = a.contains("Castrado")
-                                                       mCurrentPet.vaccinated = a.contains("Vacinado")
-                                                       mCurrentPet.dewormed = a.contains("Desverminado")}
+        mConditionView.stateChanges().subscribe { a ->
+            currentPet.castrated = a.contains("Castrado")
+            currentPet.vaccinated = a.contains("Vacinado")
+            currentPet.dewormed = a.contains("Desverminado")
+        }
 
-        mConditionView.likeChanges().subscribe { a -> mCurrentPet.likeAnimals = a.contains("Crianças")
-                                                       mCurrentPet.likeChildren = a.contains("Outros Animais")
-                                                       mCurrentPet.likeElders = a.contains("Idosos")}
+        mConditionView.likeChanges().subscribe { a ->
+            currentPet.likeAnimals = a.contains("Crianças")
+            currentPet.likeChildren = a.contains("Outros Animais")
+            currentPet.likeElders = a.contains("Idosos")
+        }
 
-        mConditionView.specialNeedsChanges().subscribe { a -> mCurrentPet.hasLocomotionProblems = a.contains("Problema Físico")
-                                                       mCurrentPet.blind = a.contains("Cego")
-                                                       mCurrentPet.hasBadBehaviour = a.contains("Comportamento")}
+        mConditionView.specialNeedsChanges().subscribe { a ->
+            currentPet.hasLocomotionProblems = a.contains("Problema Físico")
+            currentPet.blind = a.contains("Cego")
+            currentPet.hasBadBehaviour = a.contains("Comportamento")
+        }
 
-        mConditionView.personalityChanges().subscribe { a -> mCurrentPet.behaviour = ArrayList<String>(a) }
+        mConditionView.personalityChanges().subscribe { a -> currentPet.behaviour = ArrayList<String>(a) }
     }
 
     override fun initContact(contactView: AddPetContract.ViewContact, pet:Pet?) {
         mContactView = contactView
         //If pet already exists
         if(pet != null) {
-            mCurrentPet.contactName = pet.contactName
-            mCurrentPet.contactPhone = pet.contactPhone
+            currentPet.contactName = pet.contactName
+            currentPet.contactPhone = pet.contactPhone
         }
         else {//If is creating a new pet
-            mCurrentPet.contactName = mUserRepository.getCurrentUser().name
+            currentPet.contactName = userRepository.getCurrentUser().name
         }
 
-        mContactView.setUsernameInitialValue(mCurrentPet.contactName)
-        mContactView.setUserContactInitialValue(mCurrentPet.contactPhone)
+        mContactView.setUsernameInitialValue(currentPet.contactName)
+        mContactView.setUserContactInitialValue(currentPet.contactPhone)
 
 
-        mContactView.ufChanges().subscribe { a -> mCurrentPet.state = a.toString() }
-        mContactView.cityChanges().subscribe { a -> mCurrentPet.city = a.toString() }
-        mContactView.contactNameChanges().subscribe { a -> mCurrentPet.contactName = a.toString() }
-        mContactView.contactPhoneChanges().subscribe { a -> mCurrentPet.contactPhone = a.toString() }
-        mContactView.ongChanges().subscribe { a -> mCurrentPet.ongName = a.toString() }
+        mContactView.ufChanges().subscribe { a -> currentPet.state = a.toString() }
+        mContactView.cityChanges().subscribe { a -> currentPet.city = a.toString() }
+        mContactView.contactNameChanges().subscribe { a -> currentPet.contactName = a.toString() }
+        mContactView.contactPhoneChanges().subscribe { a -> currentPet.contactPhone = a.toString() }
+        mContactView.ongChanges().subscribe { a -> currentPet.ongName = a.toString() }
 
 
 
@@ -101,79 +96,79 @@ class AddPetPresenter : AddPetContract.Presenter {
 
         if (pet.photosUrl.count() == 0)
         {
-            mView.showTab(0)
+            view.showTab(0)
             mAboutView.showInvalidPhotosMessage()
             return
         }
         else if(pet.name.length < 2)
         {
-            mView.showTab(0)
+            view.showTab(0)
             mAboutView.showInvalidName()
             return
         }
         else if (pet.description.length < 2)
         {
-            mView.showTab(0)
+            view.showTab(0)
             mAboutView.showInvalidDescription()
             return
         }
         else if(pet.type.isNullOrEmpty())
         {
-            mView.showTab(1)
+            view.showTab(1)
             mInfoView.setTypeError()
             return
         }
         else if(pet.sex.isNullOrEmpty())
         {
-            mView.showTab(1)
+            view.showTab(1)
             mInfoView.setSexError()
             return
         }
         else if(pet.birthDate > 1.day.ago)
         {
-            mView.showTab(1)
+            view.showTab(1)
             mInfoView.setAgeError()
             return
         }
         else if(pet.size.isNullOrEmpty())
         {
-            mView.showTab(1)
+            view.showTab(1)
             mInfoView.setSizeError()
             return
         }
         else if(pet.furSize.isEmpty())
         {
-            mView.showTab(1)
+            view.showTab(1)
             mInfoView.setFurSizeError()
             return
         }
         else if(pet.furColors.isEmpty())
         {
-            mView.showTab(1)
+            view.showTab(1)
             mInfoView.setFurColorError()
             return
         }
         else if(pet.contactName.isNullOrEmpty())
         {
-            mView.showTab(3)
+            view.showTab(3)
             mContactView.setContactNameError()
             return
         }
         else if(pet.contactPhone.isNullOrEmpty())
         {
-            mView.showTab(3)
+            view.showTab(3)
             mContactView.setContactPhoneError()
             return
         }
 
 
 
-        if (mUserRepository.getCurrentUserId() != null && pet.uid.isNullOrBlank())
+        if (userRepository.getCurrentUserId() != null && pet.uid.isNullOrBlank())
         {
-            pet.createdBy = mUserRepository.getCurrentUserId()!!
-            mPetRepository.addPet(pet).doOnComplete {
-                mView.showSuccessMessage()
-                mView.finishActivity()
+            pet.createdBy = userRepository.getCurrentUserId()!!
+            petRepository.addPet(pet).doOnComplete {
+                view.showSuccessMessage()
+                view.finishActivity()
             }.doOnError {
                 //Error
             }.subscribe()
@@ -181,9 +176,9 @@ class AddPetPresenter : AddPetContract.Presenter {
         }
         else
         {
-            mPetRepository.updatePet(pet).doOnComplete {
-                mView.showSuccessMessage()
-                mView.finishActivity()
+            petRepository.updatePet(pet).doOnComplete {
+                view.showSuccessMessage()
+                view.finishActivity()
             }.doOnError {
                 //Error
             }.subscribe()
@@ -191,8 +186,9 @@ class AddPetPresenter : AddPetContract.Presenter {
     }
 
     override fun imageReady(num: Int, file: File) {
-        mPetRepository.sendPetPhoto(num, file)
+        petRepository.sendPetPhoto(num, file)
                 .subscribe { a -> Log.d("RXAndroid", "Deu boa! - " + a)
-            mCurrentPet.photosUrl.add(a)}
+                    currentPet.photosUrl.add(a)
+                }
     }
 }

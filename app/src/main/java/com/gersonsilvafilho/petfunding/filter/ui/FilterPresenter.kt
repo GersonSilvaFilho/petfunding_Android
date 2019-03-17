@@ -8,6 +8,8 @@ import io.reactivex.disposables.CompositeDisposable
  * Created by GersonSilva on 3/21/17.
  */
 class FilterPresenter(private val view: FilterContract.View) : FilterContract.Presenter {
+    private val compositeDisposable = CompositeDisposable()
+
     override fun initFilterCache(filter: FilterList) {
         getListFromType(filter, Filter.Type.AnimalType)?.let {
             view.setTypeList(it)
@@ -34,10 +36,7 @@ class FilterPresenter(private val view: FilterContract.View) : FilterContract.Pr
         }
     }
 
-    private val compositeDisposable = CompositeDisposable()
-
-    init {
-
+    override fun onCreate() {
         compositeDisposable.add(
             view.applyButtonClicked()
                 .subscribe {
@@ -45,8 +44,6 @@ class FilterPresenter(private val view: FilterContract.View) : FilterContract.Pr
                     view.finishFilter(filters)
                 }
         )
-
-
     }
 
     override fun onStop() {
@@ -64,7 +61,6 @@ class FilterPresenter(private val view: FilterContract.View) : FilterContract.Pr
     private fun getFilterCondition(): Filter<List<String>> = Filter(Filter.Type.Condition, view.filterConditionList())
 
     private fun getLikeFilter(): Filter<List<String>> = Filter(Filter.Type.Likes, view.filterLikeList())
-
 
     private fun getListFromType(filter: FilterList, type: Filter.Type) = filter.filters.firstOrNull { it.type == type }?.value as? List<String>
 

@@ -33,6 +33,7 @@ class FilterActivity : AppCompatActivity(), FilterContract.View {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_filter)
         presenter.initFilterCache(intent.getSerializableExtra("filters") as FilterList)
+        presenter.onCreate()
     }
 
     override fun setTypeList(list: List<String>) = group_choices_type.setObjectsWithNames(list)

@@ -24,18 +24,8 @@ class ChatPresenter(
 
     private var userId: String? = null
 
-    init {
-
-        userRepository.getCurrentUserId()?.let {
-            userId = it
-            view.initChatView(it)
-        }
-
-        view.onSendMessageClick().map { mCurrentText != null }.subscribe { sendMessage(mCurrentText!!) }
-        view.onTextChange().subscribe { s -> mCurrentText = s.toString() }
-    }
-
-    override fun initChat(pet: Pet, userId: String?) {
+    override fun initChat(pet: Pet, userId: String) {
+        this.userId = userId
         if (pet.createdBy == userRepository.getCurrentUserId() && !userId.isNullOrEmpty()) {
             matchReposity.getMatch(pet.uid, userId!!).subscribe { match ->
                 mCurrentChatId = match.chatId
@@ -71,6 +61,9 @@ class ChatPresenter(
                 }
 
         }
+
+        view.onSendMessageClick().map { mCurrentText != null }.subscribe { sendMessage(mCurrentText!!) }
+        view.onTextChange().subscribe { s -> mCurrentText = s.toString() }
     }
 
 

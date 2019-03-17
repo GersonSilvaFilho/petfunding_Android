@@ -3,7 +3,7 @@ package com.gersonsilvafilho.petfunding.addpet
 import com.gersonsilvafilho.petfunding.model.pet.Pet
 import io.reactivex.Observable
 import java.io.File
-import java.util.*
+import java.util.Date
 
 
 /**
@@ -73,6 +73,7 @@ interface AddPetContract {
         fun  initInfo(infoAddFragment: AddPetContract.ViewInfo)
         fun  initCondition(conditionView: AddPetContract.ViewCondition)
         fun  initContact(contactView: AddPetContract.ViewContact, pet: Pet?)
+        fun onCreate()
 
         fun  imageReady(num:Int, file: File)
     }

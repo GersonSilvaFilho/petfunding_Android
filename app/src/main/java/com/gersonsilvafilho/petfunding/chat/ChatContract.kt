@@ -21,6 +21,6 @@ interface ChatContract {
     interface Presenter
     {
         fun sendMessage(message:String)
-        fun initChat(pet: Pet, userId: String?)
+        fun initChat(pet: Pet, userId: String)
     }
 }

@@ -21,7 +21,7 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
 
 
     @Inject
-    lateinit var mActionsListener: ChatContract.Presenter
+    lateinit var presenter: ChatContract.Presenter
 
     private lateinit var adapter: MessagesListAdapter<Message>
 
@@ -32,7 +32,7 @@ class ChatActivity : AppCompatActivity(), ChatContract.View {
 
         val pet = intent.getSerializableExtra("pet") as Pet
         val userId = intent.getStringExtra("userId")
-        mActionsListener.initChat(pet, userId)
+        presenter.initChat(pet, userId)
     }
 
     private fun initDagger()
