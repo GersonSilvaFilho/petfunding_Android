@@ -12,7 +12,7 @@ import javax.inject.Singleton
 interface UserRepository
 {
     fun loginWithFacebook(token: String): Observable<Boolean>
-    fun userStatus(): Observable<Boolean>
+    fun isUserLoggedIn(): Observable<Boolean>
     fun userLogout()
     fun getCurrentUserId(): String?
     fun addUnmatch(petId:String): Completable

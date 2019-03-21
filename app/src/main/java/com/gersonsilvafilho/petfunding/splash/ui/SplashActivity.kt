@@ -57,10 +57,8 @@ class SplashActivity : AppCompatActivity(), View {
         super.onStop()
     }
 
-    override fun showToast(message: String)
-    {
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-    }
+    override fun showToast(resourceId: Int) = Toast.makeText(this, resourceId, Toast.LENGTH_LONG).show()
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         super.onActivityResult(requestCode, resultCode, data)

@@ -22,31 +22,44 @@ class SplashPresenterTest {
 
     @Test
     fun `test init with user already logged`() {
-        whenever(userRepository.userStatus()).thenReturn(Observable.just(true))
+        whenever(userRepository.isUserLoggedIn()).thenReturn(Observable.just(true))
         presenter = SplashPresenter(view, userRepository)
 
+        verify(userRepository).isUserLoggedIn()
         verify(view).goToMainMenuActivity()
-        verify(userRepository).monitorCurrentUser()
     }
 
     @Test
     fun `test init with user not logged`() {
-        whenever(userRepository.userStatus()).thenReturn(Observable.just(false))
+        whenever(userRepository.isUserLoggedIn()).thenReturn(Observable.just(false))
         presenter = SplashPresenter(view, userRepository)
 
+        verify(userRepository).isUserLoggedIn()
         verify(view, never()).goToMainMenuActivity()
-        verify(userRepository, never()).monitorCurrentUser()
     }
 
     @Test
     fun `test facebook login button success`() {
         val token = "facebook token"
-        whenever(userRepository.userStatus()).thenReturn(Observable.just(false))
+        whenever(userRepository.isUserLoggedIn()).thenReturn(Observable.just(false))
         whenever(userRepository.loginWithFacebook(any())).thenReturn(Observable.just(true))
         presenter = SplashPresenter(view, userRepository)
         presenter.facebookSuccess(token)
 
         verify(userRepository).loginWithFacebook(token)
         verify(view).goToMainMenuActivity()
+        verify(view).showToast(R.string.login_success_facebook)
+    }
+
+    @Test
+    fun `test facebook login button failed`() {
+        val token = "facebook token"
+        whenever(userRepository.isUserLoggedIn()).thenReturn(Observable.just(false))
+        whenever(userRepository.loginWithFacebook(any())).thenReturn(Observable.just(false))
+        presenter = SplashPresenter(view, userRepository)
+        presenter.facebookSuccess(token)
+
+        verify(userRepository).loginWithFacebook(token)
+        verify(view, never()).goToMainMenuActivity()
     }
 }

@@ -29,7 +29,7 @@ class MainMenuPresenter(
 
     override fun onCreate() {
         compositeDisposable.add(
-            userRepository.userStatus()
+            userRepository.isUserLoggedIn()
                 .filter { !it }
                 .subscribe {
                     setUserProfile()

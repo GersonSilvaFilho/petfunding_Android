@@ -1,5 +1,6 @@
 package com.gersonsilvafilho.petfunding.splash.ui
 
+import com.gersonsilvafilho.petfunding.R
 import com.gersonsilvafilho.petfunding.model.user.UserRepository
 import io.reactivex.disposables.CompositeDisposable
 
@@ -12,19 +13,17 @@ class SplashPresenter(private val view: SplashContract.View, private val userRep
 
     init {
         compositeDisposable.add(
-            userRepository.userStatus()
+            userRepository.isUserLoggedIn()
                 .take(1)
-                .subscribe { logged ->
-                    if (logged) {
+                .filter { it }
+                .subscribe {
                         view.goToMainMenuActivity()
-//                        userRepository.monitorCurrentUser()
-                    }
                 })
     }
 
     override fun facebookSuccess(token: String)
     {
-        view.showToast("Facebook Success")
+        view.showToast(R.string.login_success_facebook)
         compositeDisposable.add(
             userRepository.loginWithFacebook(token)
                 .take(1)
@@ -34,9 +33,9 @@ class SplashPresenter(private val view: SplashContract.View, private val userRep
         )
     }
 
-    override fun facebookCancel() = view.showToast("User canceled")
+    override fun facebookCancel() = view.showToast(R.string.user_canceled_facebook)
 
-    override fun facebookOnError() = view.showToast("Error on try to login on Facebook")
+    override fun facebookOnError() = view.showToast(R.string.error_login_facebook)
 
     override fun onStop() = compositeDisposable.clear()
 

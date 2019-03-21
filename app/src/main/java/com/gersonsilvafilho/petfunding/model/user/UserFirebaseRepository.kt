@@ -39,7 +39,7 @@ class UserFirebaseRepository : UserRepository
     }
 
 
-    override fun userStatus(): Observable<Boolean> {
+    override fun isUserLoggedIn(): Observable<Boolean> {
         return userIsLoggedSubject
     }
 

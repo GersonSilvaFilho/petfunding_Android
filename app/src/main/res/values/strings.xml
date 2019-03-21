@@ -104,4 +104,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_scrolling">ScrollingActivity</string>
+    <string name="user_canceled_facebook">User canceled</string>
+    <string name="error_login_facebook">Error on try to login on Facebook</string>
+    <string name="login_success_facebook">Facebook Success</string>
 </resources>
