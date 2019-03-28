@@ -21,7 +21,6 @@ android:
     - platform-tools
     - build-tools-$ANDROID_BUILD_TOOLS_VERSION
     - $ANDROID_TARGET
-    - android-28 
 
     # Support library
     - extra-android-support
