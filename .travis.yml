@@ -12,7 +12,8 @@ env:
     - ANDROID_BUILD_TOOLS_VERSION=28.0.3
     - ADB_INSTALL_TIMEOUT=20 # install timeout in minutes (2 minutes by default)
   matrix:
-    - ANDROID_TARGET=android-28 ANDROID_ABI=armeabi-v7a
+    - ANDROID_TARGET=android-28 
+    - ANDROID_ABI=google_apis/armeabi-v7a
 
 android:
   components:
