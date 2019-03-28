@@ -1,82 +1,47 @@
-{
-  "language": "android",
-  "jdk": "oraclejdk8",
-  "sudo": "required",
-  "before_cache": [
-    "rm -f ${TRAVIS_BUILD_DIR}/gradle/caches/modules-2/modules-2.lock",
-    "rm -f ${TRAVIS_BUILD_DIR}/gradle/caches/3.3/classAnalysis/classAnalysis.lock",
-    "rm -f ${TRAVIS_BUILD_DIR}/gradle/caches/3.3/jarSnapshots/jarSnapshots.lock"
-  ],
-  "cache": {
-    "directories": [
-      "${TRAVIS_BUILD_DIR}/gradle/caches/",
-      "${TRAVIS_BUILD_DIR}/gradle/wrapper/dists/"
-    ]
-  },
-  "android": {
-    "components": [
-      "tools",
-      "build-tools-25.0.0",
-      "platform-tools",
-      "tools"
-    ]
-  },
-  "before_install": [
-    "export EMULATOR=\"system-images;android-${API};${TAG};${ABI}\"",
-    "echo 'count=0' > /home/travis/.android/repositories.cfg"
-  ],
-  "install": [
-    "sdkmanager --list || true",
-    "sdkmanager --uninstall \"system-images;android-15;default;armeabi-v7a\"",
-    "sdkmanager --uninstall \"system-images;android-16;default;armeabi-v7a\"",
-    "sdkmanager --uninstall \"system-images;android-17;default;armeabi-v7a\"",
-    "sdkmanager --uninstall \"system-images;android-18;default;armeabi-v7a\"",
-    "sdkmanager --uninstall \"system-images;android-19;default;armeabi-v7a\"",
-    "sdkmanager --uninstall \"system-images;android-21;default;armeabi-v7a\"",
-    "sdkmanager --uninstall \"extras;google;google_play_services\"",
-    "sdkmanager --uninstall \"extras;android;support\"",
-    "sdkmanager --uninstall \"platforms;android-10\"",
-    "sdkmanager --uninstall \"platforms;android-15\"",
-    "sdkmanager --uninstall \"platforms;android-16\"",
-    "sdkmanager --uninstall \"platforms;android-17\"",
-    "sdkmanager --uninstall \"platforms;android-18\"",
-    "sdkmanager --uninstall \"platforms;android-19\"",
-    "sdkmanager --uninstall \"platforms;android-20\"",
-    "sdkmanager --uninstall \"platforms;android-21\"",
-    "sdkmanager --uninstall \"build-tools;21.1.2\"",
-    "echo yes | sdkmanager \"tools\"",
-    "echo yes | sdkmanager \"platforms;android-25\"",
-    "echo yes | sdkmanager \"platforms;android-${API}\"",
-    "echo yes | sdkmanager \"extras;android;m2repository\"",
-    "echo yes | sdkmanager \"extras;google;m2repository\"",
-    "echo yes | sdkmanager \"extras;m2repository;com;android;support;constraint;constraint-layout;1.0.2\"",
-    "echo yes | sdkmanager \"extras;m2repository;com;android;support;constraint;constraint-layout-solver;1.0.2\"",
-    "echo yes | sdkmanager \"$EMULATOR\"",
-    "echo no | avdmanager create avd -n acib -k \"$EMULATOR\" -f --abi \"$ABI\" --tag \"$TAG\"",
-    "emulator -avd acib -engine classic -no-window -camera-back none -camera-front none -verbose -qemu -m 512 &",
-    "adb wait-for-device get-serialno",
-    "cd ${TRAVIS_BUILD_DIR} && ./gradlew --version",
-    "cd ${TRAVIS_BUILD_DIR} && ./gradlew clean build",
-    "sdkmanager --list || true"
-  ],
-  "before_script": [
-    "android-wait-for-emulator",
-    "adb shell settings put global window_animation_scale 0 &",
-    "adb shell settings put global transition_animation_scale 0 &",
-    "adb shell settings put global animator_duration_scale 0 &",
-    "sleep 30",
-    "adb shell input keyevent 82 &"
-  ],
-  "script": [
-    "cd ${TRAVIS_BUILD_DIR} && ./gradlew connectedCheck",
-    " ./gradlew connectedAndroidTest coveralls"
-  ],
-  "after_script": [
-    "cat ${TRAVIS_BUILD_DIR}/*/build/outputs/androidTest-results/connected/*",
-    "cat ${TRAVIS_BUILD_DIR}/*/build/reports/lint-results.xml"
-  ],
-  "global_env": "API=25 TAG=google_apis ABI=armeabi-v7a QEMU_AUDIO_DRV=none GRADLE_USER_HOME=\"${TRAVIS_BUILD_DIR}/gradle\" ANDROID_HOME=/usr/local/android-sdk-24.0.2 TOOLS=${ANDROID_HOME}/tools PATH=${ANDROID_HOME}:${ANDROID_HOME}/emulator:${TOOLS}:${TOOLS}/bin:${ANDROID_HOME}/platform-tools:${PATH} ADB_INSTALL_TIMEOUT=20",
-  "group": "stable",
-  "dist": "precise",
-  "os": "linux"
-}
+
+language: android
+
+# Use the Travis Container-Based Infrastructure
+sudo: false
+
+jdk:
+  - oraclejdk8
+
+env:
+  global:
+    - ANDROID_BUILD_TOOLS_VERSION=25.0.2
+    - ADB_INSTALL_TIMEOUT=20 # install timeout in minutes (2 minutes by default)
+  matrix:
+    - ANDROID_TARGET=android-22 ANDROID_ABI=armeabi-v7a
+
+android:
+  components:
+    - tools # to get the new `repository-11.xml`
+    - tools # to install new Android SDK tools
+    - platform-tools
+    - build-tools-$ANDROID_BUILD_TOOLS_VERSION
+    - $ANDROID_TARGET
+    - android-25
+
+    # Support library
+    - extra-android-support
+    - extra-android-m2repository
+
+    # System images
+    - sys-img-${ANDROID_ABI}-${ANDROID_TARGET}
+
+before_script:
+  - chmod +x ./gradlew
+  # Emulator Management: Create, Start and Wait
+  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
+  - emulator -avd test -no-audio -no-window &
+  - android-wait-for-emulator
+
+script:
+  - ./gradlew clean
+  - ./gradlew check # Local unit tests
+  - ./gradlew connectedCheck # Instrumented unit tests
+  - ./gradlew jacocoTestReport
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
