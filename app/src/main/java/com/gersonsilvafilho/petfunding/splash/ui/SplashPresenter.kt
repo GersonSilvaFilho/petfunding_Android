@@ -17,7 +17,7 @@ class SplashPresenter(private val view: SplashContract.View, private val userRep
                 .take(1)
                 .filter { it }
                 .subscribe {
-                        view.goToMainMenuActivity()
+                    proceedToMainMenu()
                 })
     }
 
@@ -28,7 +28,11 @@ class SplashPresenter(private val view: SplashContract.View, private val userRep
             userRepository.loginWithFacebook(token)
                 .take(1)
                 .subscribe {
-                    view.goToMainMenuActivity()
+                    if (it) {
+                        proceedToMainMenu()
+                    } else {
+                        facebookOnError()
+                    }
                 }
         )
     }
@@ -38,5 +42,7 @@ class SplashPresenter(private val view: SplashContract.View, private val userRep
     override fun facebookOnError() = view.showToast(R.string.error_login_facebook)
 
     override fun onStop() = compositeDisposable.clear()
+
+    private fun proceedToMainMenu() = view.goToMainMenuActivity()
 
 }
