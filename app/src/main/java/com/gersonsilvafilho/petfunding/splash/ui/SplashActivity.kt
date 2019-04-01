@@ -59,8 +59,7 @@ class SplashActivity : AppCompatActivity(), View {
 
     override fun showToast(resourceId: Int) = Toast.makeText(this, resourceId, Toast.LENGTH_LONG).show()
 
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         // Pass the activity result back to the Facebook SDK

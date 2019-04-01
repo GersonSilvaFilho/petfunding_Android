@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="defaultUncheckedTextColor">#FFFFFFFF</color>
+    <color name="defaultCheckedTextColor">#FFFFFFFF</color>
+    <color name="defaultCheckedColor">#FF4081</color>
+    <color name="defaultUncheckedColor">#00000000</color>
+</resources>
